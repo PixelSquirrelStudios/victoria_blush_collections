@@ -1,5 +1,7 @@
 @import 'tailwindcss';
 
+@plugin 'tailwindcss-animate';
+
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;

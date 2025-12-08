@@ -1,23 +1,41 @@
-import { FaXTwitter, FaFacebookF, FaInstagram } from 'react-icons/fa6';
+import { Mail, Phone } from 'lucide-react';
+import { FaFacebookF, FaInstagram } from 'react-icons/fa6';
 
 const SocialBar = () => {
   return (
-    <div className='flex flex-row gap-6 py-4'>
-      <div className='rounded-full border-2 border-solid border-white p-2'>
-        <a href='https://www.facebook.com/lostrecordsfans' target='_blank'>
-          <FaFacebookF className='text-lg text-white' />
-        </a>
-      </div>
-      <div className='rounded-full border-2 border-solid border-white p-2'>
-        <a href='https://twitter.com/lostrecordsfans' target='_blank'>
-          <FaXTwitter className='text-xl text-white' />
-        </a>
-      </div>
-      <div className='rounded-full border-2 border-solid border-white p-2'>
-        <a href='https://www.instagram.com/lostrecordsfans/' target='_blank'>
-          <FaInstagram className='text-xl text-white' />
-        </a>
-      </div>
+    <div className="flex gap-4">
+      <a
+        href="https://instagram.com/victoriablushcollections"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="p-3 bg-brand-primary rounded-full hover:bg-interactive-active transition-colors duration-300"
+        aria-label="Instagram"
+      >
+        <FaInstagram className="w-5 h-5" />
+      </a>
+      <a
+        href="https://facebook.com/victoriablushcollections"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="p-3 bg-brand-primary rounded-full hover:bg-interactive-active transition-colors duration-300"
+        aria-label="Facebook"
+      >
+        <FaFacebookF className="w-5 h-5" />
+      </a>
+      <a
+        href="mailto:hello@victoriablush.com"
+        className="p-3 bg-brand-primary rounded-full hover:bg-interactive-active transition-colors duration-300"
+        aria-label="Email"
+      >
+        <Mail className="w-5 h-5" />
+      </a>
+      <a
+        href="tel:+447123456789"
+        className="p-3 bg-brand-primary rounded-full hover:bg-interactive-active transition-colors duration-300"
+        aria-label="Phone"
+      >
+        <Phone className="w-5 h-5" />
+      </a>
     </div>
   );
 };

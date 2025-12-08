@@ -23,7 +23,6 @@ export type UserData = Promise<{
 }>;
 
 export interface SidebarLink {
-  icon: ReactNode;
   route: string;
   label: string;
 }

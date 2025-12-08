@@ -16,6 +16,7 @@ import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import SocialBar from './SocialBar';
+import { Logo } from '../Logo';
 
 interface MobileSidebarProps {
   variant: string;
@@ -43,25 +44,15 @@ const MobileSidebar = ({ variant }: MobileSidebarProps) => {
         </SheetTrigger>
         <SheetContent
           className={cn(
-            'pt-20 flex w-[390px] flex-col justify-between gap-1 border-none bg-black/90 text-white',
+            'pt-24 pb-10 px-4 flex w-[390px] flex-col justify-between gap-1 border-none bg-black/90 text-white',
             query.trim() ? 'overflow-hidden' : 'overflow-y-auto'
           )}
           side="left"
         >
-          <SheetTitle className="hidden text-white items-center justify-between px-4 py-2 text-3xl font-bold">
-            Lost Records Fans
+          <SheetTitle className="hidden text-white items-center justify-between px-4 py-2 text-3xl font-medium">
+            Victoria Blush Collections
           </SheetTitle>
-          <div className="w-[280px] h-[70px] ml-[-10px] px-0 py-4">
-            <Image
-              src="/assets/images/Lost_Records_Fans_Logo_Wide.png"
-              alt="Logo"
-              className="w-full h-full object-contain"
-              width={800}
-              height={200}
-              priority
-            />
-          </div>
-          <div className="flex flex-col justify-between gap-1 py-4">
+          <div className="flex flex-start flex-col gap-4 py-4">
             {(showDashboardMenu ? dashboardLinks : sidebarLinks).map((item) => {
               const isActive =
                 (pathname.includes(item.route) && item.route.length > 1) ||
@@ -72,40 +63,36 @@ const MobileSidebar = ({ variant }: MobileSidebarProps) => {
                   href={item.route}
                   key={item.route}
                   className={`${isActive
-                    ? variant === 'main'
-                      ? 'ml-[-12px] rounded-xl bg-primary-main px-3 py-1.5 text-white'
-                      : 'ml-[-12px] rounded-xl bg-secondary-main px-3 py-1.5 text-white'
-                    : 'text-white'
-                    } flex items-center gap-6 py-4 text-2xl font-semibold`}
+                    ? 'rounded-xl bg-brand-primary text-white shadow-lg'
+                    : 'text-white hover:bg-white/10 rounded-xl'
+                    } flex items-center px-4 py-3 text-xl font-medium transition-all duration-200`}
                 >
-                  <div className="text-3xl">{item.icon}</div>
-                  <div className="text-lg font-normal">{item.label}</div>
+                  <div>{item.label}</div>
+                </Link>
+              );
+            })}
+            <Separator className="opacity-10" />
+            {settingsLinks.map((item) => {
+              const isActive =
+                (pathname.includes(item.route) && item.route.length > 1) ||
+                pathname === item.route;
+
+              return (
+                <Link
+                  href={item.route}
+                  key={item.route}
+                  className={`${isActive
+                    ? 'rounded-xl bg-brand-primary text-white shadow-lg'
+                    : 'text-white hover:bg-white/10 rounded-xl'
+                    } flex items-center px-4 py-3 text-lg font-medium transition-all duration-200`}
+                >
+                  <div>{item.label}</div>
                 </Link>
               );
             })}
           </div>
-          <Separator className="opacity-[10%]" />
-          {settingsLinks.map((item) => {
-            const isActive =
-              (pathname.includes(item.route) && item.route.length > 1) ||
-              pathname === item.route;
-
-            return (
-              <Link
-                href={item.route}
-                key={item.route}
-                className={`${isActive
-                  ? 'ml-[-12px] rounded-xl bg-secondary-main px-3 py-1.5 text-white'
-                  : 'text-white'
-                  } flex items-center gap-6 py-4 text-2xl font-semibold`}
-              >
-                <div className="text-3xl">{item.icon}</div>
-                <div className="text-lg font-normal">{item.label}</div>
-              </Link>
-            );
-          })}
-          <Separator className="opacity-[10%]" />
-          <div className="flex justify-items-end">
+          <Separator className="opacity-10" />
+          <div className="flex">
             <SocialBar />
           </div>
         </SheetContent>
