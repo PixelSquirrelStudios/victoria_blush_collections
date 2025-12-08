@@ -1,26 +1,126 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+/* Base styles */
+@layer base {
+  * {
+    border-color: hsl(0 0% 89%);
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  body {
+    background: white;
+    color: hsl(0 0% 20%);
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+
+    height: 3px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #ffffff;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: oklch(71.2% 0.194 13.428);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: oklch(70.547% 0.18993 13.361 / 0.9);
+  }
+
+  button,
+  [role='button'] {
+    cursor: pointer;
+  }
+
+  :disabled {
+    cursor: default;
+  }
+  /* Scroll margin to account for fixed navigation */
+  section[id] {
+    scroll-margin-top: 80px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Semantic color system */
+@theme inline {
+  /* Brand Colors - Main buttons and CTAs */
+  --color-brand-primary: oklch(from theme(colors.stone.800) l c h);
+  --color-brand-primary-hover: oklch(from theme(colors.stone.900) l c h);
+  --color-brand-secondary: oklch(from theme(colors.rose.400) l c h);
+  --color-brand-secondary-hover: oklch(from theme(colors.rose.400 / 0.9) l c h);
+
+  /* Text Hierarchy */
+  --color-text-primary: oklch(
+    from theme(colors.stone.900) l c h
+  ); /* Headings, important text */
+  --color-text-secondary: oklch(
+    from theme(colors.stone.700) l c h
+  ); /* Stats, secondary headings */
+  --color-text-body: oklch(
+    from theme(colors.stone.600) l c h
+  ); /* Body text, descriptions */
+  --color-text-muted: oklch(
+    from theme(colors.stone.400) l c h
+  ); /* Footer text, placeholders */
+
+  /* Backgrounds */
+  --color-bg-primary: oklch(
+    from theme(colors.white) l c h
+  ); /* Main background */
+  --color-bg-subtle: oklch(
+    from theme(colors.stone.50) l c h
+  ); /* Very light sections */
+  --color-bg-muted: oklch(
+    from theme(colors.stone.100) l c h
+  ); /* Light containers, icons */
+  --color-bg-section: oklch(
+    from theme(colors.stone.300) l c h
+  ); /* Section backgrounds */
+  --color-bg-dark: oklch(
+    from theme(colors.stone.900) l c h
+  ); /* Footer, dark sections */
+
+  /* Borders */
+  --color-border-light: oklch(
+    from theme(colors.stone.100) l c h
+  ); /* Subtle borders */
+  --color-border-default: oklch(
+    from theme(colors.stone.200) l c h
+  ); /* Default borders */
+  --color-border-medium: oklch(
+    from theme(colors.stone.300) l c h
+  ); /* Section separators */
+  --color-border-emphasis: oklch(
+    from theme(colors.stone.400) l c h
+  ); /* Strong borders */
+
+  /* Interactive States */
+  --color-interactive-hover: oklch(
+    from theme(colors.stone.500) l c h
+  ); /* Hover states */
+  --color-interactive-active: oklch(
+    from theme(colors.stone.700) l c h
+  ); /* Active/selected states */
+  --color-interactive-focus: oklch(
+    from theme(colors.stone.600) l c h
+  ); /* Focus states */
+
+  /* Accent Colors (rose highlights) */
+  --color-accent-subtle: oklch(
+    from theme(colors.rose.50) l c h
+  ); /* Light accent backgrounds */
+  --color-accent-default: oklch(
+    from theme(colors.rose.300) l c h
+  ); /* Accent borders, highlights */
+  --color-accent-emphasis: oklch(
+    from theme(colors.rose.600) l c h
+  ); /* Strong accent hovers */
 }
