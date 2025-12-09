@@ -17,6 +17,7 @@ import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import SocialBar from './SocialBar';
 import { Logo } from '../Logo';
+import { supabaseClient } from '@/lib/supabase/browserClient';
 
 interface MobileSidebarProps {
   variant: string;
@@ -27,6 +28,13 @@ const MobileSidebar = ({ variant }: MobileSidebarProps) => {
   const showDashboardMenu = pathname.includes('/dashboard') || pathname.includes('/profile');
   const [query, setQuery] = useState('');
   const [open, setOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    supabaseClient.auth.getClaims().then(({ data }) => {
+      setUser(data?.claims || null);
+    });
+  }, []);
 
   useEffect(() => {
     setQuery('');
@@ -71,25 +79,29 @@ const MobileSidebar = ({ variant }: MobileSidebarProps) => {
                 </Link>
               );
             })}
-            <Separator className="opacity-10" />
-            {settingsLinks.map((item) => {
-              const isActive =
-                (pathname.includes(item.route) && item.route.length > 1) ||
-                pathname === item.route;
+            {user && (
+              <>
+                <Separator className="opacity-10" />
+                {settingsLinks.map((item) => {
+                  const isActive =
+                    (pathname.includes(item.route) && item.route.length > 1) ||
+                    pathname === item.route;
 
-              return (
-                <Link
-                  href={item.route}
-                  key={item.route}
-                  className={`${isActive
-                    ? 'rounded-xl bg-brand-primary text-white shadow-lg'
-                    : 'text-white hover:bg-white/10 rounded-xl'
-                    } flex items-center px-4 py-3 text-lg font-medium transition-all duration-200`}
-                >
-                  <div>{item.label}</div>
-                </Link>
-              );
-            })}
+                  return (
+                    <Link
+                      href={item.route}
+                      key={item.route}
+                      className={`${isActive
+                        ? 'rounded-xl bg-brand-primary text-white shadow-lg'
+                        : 'text-white hover:bg-white/10 rounded-xl'
+                        } flex items-center px-4 py-3 text-lg font-medium transition-all duration-200`}
+                    >
+                      <div>{item.label}</div>
+                    </Link>
+                  );
+                })}
+              </>
+            )}
           </div>
           <Separator className="opacity-10" />
           <div className="flex">

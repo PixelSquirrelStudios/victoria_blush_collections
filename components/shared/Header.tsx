@@ -43,7 +43,7 @@ const Header = async ({ mobileVariant, isHome = false }: HeaderProps) => {
               </div>
             </Link>
           </div>
-          <div className="md:hidden w-full flex justify-end">
+          <div className="md:hidden w-full flex justify-end mr-4">
             <MobileSidebar variant={mobileVariant} />
           </div>
         </div>
