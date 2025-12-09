@@ -17,7 +17,7 @@ export default function Hero() {
           className="space-y-8"
         >
           <div className="space-y-4">
-            <p className="text-brand-secondary font-medium tracking-wider uppercase text-sm inline-block pb-1">
+            <p className="text-brand-secondary font-medium tracking-wider uppercase text-sm inline-block pt-3 pb-1">
               Premium Hair Artistry
             </p>
             <h1 className="text-5xl md:text-[80px] font-bold text-bg-dark/95 leading-tight">
@@ -29,6 +29,29 @@ export default function Hero() {
               and bespoke styling that celebrates your unique beauty.
             </p>
           </div>
+
+          {/* Image Content - Mobile Only */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="relative lg:hidden"
+          >
+            <div className="relative aspect-3/4 rounded-3xl overflow-hidden shadow-2xl">
+              <Image
+                src="/assets/images/victoria-hero.jpg"
+                alt="Victoria - Master Hair Stylist"
+                fill
+                className="object-cover"
+                priority
+                placeholder="blur"
+                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWEREiMxUf/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyJckliyjqTzSlT54b6bk+h0R//2Q=="
+              />
+              {/* Decorative Elements */}
+              <div className="absolute -top-6 -right-6 w-32 h-32 bg-border-medium rounded-full blur-3xl opacity-40"></div>
+              <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-border-default rounded-full blur-3xl opacity-40"></div>
+            </div>
+          </motion.div>
 
           <div className="flex flex-col sm:flex-row gap-4">
             <a
@@ -60,12 +83,12 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        {/* Image Content */}
+        {/* Image Content - Desktop Only */}
         <motion.div
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="relative"
+          className="relative hidden lg:block"
         >
           <div className="relative aspect-3/4 xl:rounded-t-none rounded-b-3xl rounded-t-3xl overflow-hidden shadow-2xl">
             <Image
