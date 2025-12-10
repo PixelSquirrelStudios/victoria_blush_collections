@@ -70,15 +70,15 @@ export default function Hero() {
           <div className="grid grid-cols-3 gap-8 pt-8 border-t border-border-medium">
             <div>
               <p className="text-3xl font-bold text-text-secondary">8+</p>
-              <p className="text-text-body text-sm">Years Experience</p>
+              <p className="text-text-body md:text-sm text-xs">Years Experience</p>
             </div>
             <div>
               <p className="text-3xl font-bold text-text-secondary">500+</p>
-              <p className="text-text-body text-sm">Happy Clients</p>
+              <p className="text-text-body md:text-sm text-xs">Happy Clients</p>
             </div>
             <div>
               <p className="text-3xl font-bold text-text-secondary">★ 5.0</p>
-              <p className="text-text-body text-sm">Client Rating</p>
+              <p className="text-text-body md:text-sm text-xs">Client Rating</p>
             </div>
           </div>
         </motion.div>

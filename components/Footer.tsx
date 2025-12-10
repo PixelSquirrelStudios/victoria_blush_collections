@@ -111,7 +111,7 @@ export default function Footer() {
 
             {/* Single inline line; no flex */}
             <p className="max-sm:px-8 text-text-primary text-sm text-center md:text-right">
-              <span className="text-brand-secondary whitespace-nowrap">
+              <span className="text-text-primary font-semibold whitespace-nowrap">
                 Victoria Blush Collections Limited
               </span>{' '}
               is a company registered in England and Wales with the company number{' '}
