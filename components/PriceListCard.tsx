@@ -19,11 +19,11 @@ export default function PriceListCard({
   return (
     <div className={`
       group relative bg-bg-primary rounded-lg p-6 shadow-sm hover:shadow-xl transition-all duration-300
-      border-2 ${highlight ? 'border-brand-secondary-hover' : 'border-border-default'} hover:border-brand-secondary-hover
+      border-2 ${highlight ? 'border-interactive-active' : 'border-border-default'} hover:border-interactive-active
     `}>
       {highlight && (
         <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-          <span className="bg-rose-400 text-white text-xs font-bold px-4 py-1 rounded uppercase tracking-wide">
+          <span className="bg-interactive-active text-white text-xs font-bold px-4 py-1 rounded uppercase tracking-wide">
             Popular
           </span>
         </div>

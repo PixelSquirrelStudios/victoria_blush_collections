@@ -18,19 +18,19 @@ export default function PriceListCardList({
   return (
     <div className={`
       group relative bg-bg-primary rounded-lg p-4 shadow-sm hover:shadow-md transition-all duration-300
-      border ${highlight ? 'border-accent-default' : 'border-border-default'} hover:border-accent-default
+      border ${highlight ? 'border-interactive-active' : 'border-border-default'} hover:border-interactive-active
       flex items-center gap-4
     `}>
       {highlight && (
         <div className="absolute -top-2 -right-2">
-          <span className="bg-rose-400 text-white text-xs font-bold px-3 py-1 rounded uppercase tracking-wide">
+          <span className="bg-interactive-active text-white text-xs font-bold px-3 py-1 rounded uppercase tracking-wide">
             Popular
           </span>
         </div>
       )}
 
       {/* Icon */}
-      <div className="flex-shrink-0">
+      <div className="shrink-0">
         <Image
           src={icon}
           alt={title}

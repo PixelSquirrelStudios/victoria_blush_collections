@@ -50,7 +50,7 @@ export default function Contact() {
           viewport={{ once: true }}
           className="text-center max-w-2xl mx-auto mb-16"
         >
-          <p className="text-rose-400 font-medium tracking-wider uppercase text-sm mb-4">
+          <p className="text-text-primary font-medium tracking-wider uppercase text-sm mb-4">
             Get In Touch
           </p>
           <h2 className="text-4xl md:text-5xl font-bold text-text-primary mb-6">
@@ -256,7 +256,7 @@ export default function Contact() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full px-8 py-4 bg-brand-primary text-white font-semibold rounded hover:bg-brand-primary-hover transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full px-8 py-4 bg-interactive-active hover:bg-interactive-active/90 text-brand-primary font-semibold rounded hover:text-shadow-text-primary transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {isSubmitting ? (
                   <>

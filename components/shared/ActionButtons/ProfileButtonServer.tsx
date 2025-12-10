@@ -49,12 +49,12 @@ const ProfileButtonServer = async ({ user, profile }: ProfileButtonProps) => {
               alt={`${username}'s avatar`}
               width={36}
               height={36}
-              className="rounded-full object-cover border-2 border-stone-300"
+              className="rounded-full object-cover border-2 border-text-secondary"
             />
           </div>
         </PopoverTrigger>
         <PopoverContent
-          className="z-10000 w-84 px-6 pt-6 pb-4 bg-stone-900 text-stone-100 border border-stone-800 rounded-xl shadow-lg"
+          className="z-10000 w-84 px-6 pt-6 pb-4 bg-brand-primary text-text-primary border border-text-secondary rounded-xl shadow-lg"
           side="bottom"
           sideOffset={36}
           align="start"
@@ -65,7 +65,7 @@ const ProfileButtonServer = async ({ user, profile }: ProfileButtonProps) => {
               alt={`${username}'s avatar`}
               width={40}
               height={40}
-              className="rounded-full object-cover border-2 border-stone-300"
+              className="rounded-full object-cover border-2 border-text-secondary"
             />
             <div className="flex flex-col">
               <div className="flex flex-row flex-wrap items-center gap-2">
@@ -86,7 +86,7 @@ const ProfileButtonServer = async ({ user, profile }: ProfileButtonProps) => {
             )}
             <Link
               href="/dashboard/settings"
-              className="w-full flex items-center gap-1.5 py-2 px-2 rounded-xl text-[16px] font-medium transition-colors duration-200 hover:bg-stone-700/50 focus:outline-none focus-visible:ring-0"
+              className="w-full flex items-center gap-1.5 py-2 px-2 rounded-xl text-[16px] font-medium transition-colors duration-200 hover:hover:bg-brand-secondary/60 focus:outline-none focus-visible:ring-0"
             >
               <FaUserCog className="mr-2 text-xl" />
               Profile Settings
@@ -94,7 +94,7 @@ const ProfileButtonServer = async ({ user, profile }: ProfileButtonProps) => {
             <form action={signOutAction} className="w-full">
               <button
                 type="submit"
-                className="w-full text-left text-base font-medium rounded-xl flex items-center justify-start gap-1.5 py-2 px-2 transition-colors duration-200 hover:bg-stone-700/50 focus:outline-none focus-visible:ring-0"
+                className="w-full text-left text-base font-medium rounded-xl flex items-center justify-start gap-1.5 py-2 px-2 transition-colors duration-200 hover:bg-brand-secondary/60 focus:outline-none focus-visible:ring-0"
               >
                 <FaSignOutAlt className="mr-2 text-xl" />
                 <span>Sign Out</span>

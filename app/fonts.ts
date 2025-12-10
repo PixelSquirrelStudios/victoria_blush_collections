@@ -1,8 +1,4 @@
-import {
-  Poppins,
-  League_Gothic,
-  Outfit,
-} from 'next/font/google';
+import { Poppins, League_Gothic, Outfit, Moderustic } from 'next/font/google';
 
 export const poppins = Poppins({
   subsets: ['latin'],
@@ -14,6 +10,12 @@ export const outfit = Outfit({
   subsets: ['latin'],
   weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
   variable: '--font-outfit',
+});
+
+export const moderustic = Moderustic({
+  subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700', '800'],
+  variable: '--font-moderustic',
 });
 
 export const leagueGothic = League_Gothic({

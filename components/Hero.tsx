@@ -17,14 +17,14 @@ export default function Hero() {
           className="space-y-8"
         >
           <div className="space-y-4">
-            <p className="text-brand-secondary font-medium tracking-wider uppercase text-sm inline-block pt-3 pb-1">
+            <p className="text-text-primary font-medium tracking-wider uppercase text-sm inline-block pt-3 pb-1">
               Premium Hair Artistry
             </p>
             <h1 className="text-5xl md:text-[80px] font-bold text-bg-dark/95 leading-tight">
               Victoria Blush
-              <span className="block text-5xl md:text-6xl text-brand-secondary">Collections</span>
+              <span className="block text-5xl md:text-6xl text-text-primary/60">Collections</span>
             </h1>
-            <p className="text-xl text-text-body leading-relaxed max-w-xl">
+            <p className="text-xl text-text-body leading-relaxed max-w-2xl">
               Transforming hair into art. Specialising in balayage, lived-in color,
               and bespoke styling that celebrates your unique beauty.
             </p>
@@ -56,13 +56,13 @@ export default function Hero() {
           <div className="flex flex-col sm:flex-row gap-4">
             <a
               href="#contact"
-              className="px-8 py-4 bg-brand-primary text-white font-semibold rounded-md hover:bg-brand-primary-hover transition-all duration-300 shadow-lg hover:shadow-xl text-center"
+              className="px-8 py-4 bg-interactive-active text-brand-primary font-semibold rounded-md hover:bg-interactive-active/90 transition-all duration-300 shadow-lg hover:shadow-xl text-center"
             >
               Book Appointment
             </a>
             <a
               href="#prices"
-              className="px-8 py-4 bg-bg-primary border-2 border-border-emphasis text-text-primary font-semibold rounded-md hover:bg-bg-subtle transition-all duration-300 text-center"
+              className="px-8 py-4 bg-brand-primary border-2 border-interactive-hover text-text-primary font-semibold rounded-md hover:bg-brand-secondary transition-all duration-300 text-center"
             >
               View Prices
             </a>

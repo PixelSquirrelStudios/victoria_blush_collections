@@ -1,7 +1,7 @@
 import './globals.css';
 import React from 'react';
 import type { Metadata } from 'next';
-import { outfit } from './fonts';
+import { moderustic, outfit } from './fonts';
 import ScrollToTopButton from '@/components/shared/ScrollToTopButton';
 import { Toaster } from 'sonner';
 
@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={`${outfit.className} custom-scrollbar font-sans overflow-x-hidden`}>
+      <body className={`${moderustic.className} custom-scrollbar font-sans overflow-x-hidden`}>
         {children}
         <ScrollToTopButton />
         <Toaster expand />

@@ -117,7 +117,7 @@ export default function PriceList() {
           viewport={{ once: true }}
           className="text-center max-w-2xl mx-auto mb-8"
         >
-          <p className="text-brand-secondary font-medium tracking-wider uppercase text-sm mb-4">
+          <p className="text-bg-secondary font-medium tracking-wider uppercase text-sm mb-4">
             Transparent Pricing
           </p>
           <h2 className="text-4xl md:text-5xl font-bold text-text-primary mb-6">
@@ -136,8 +136,8 @@ export default function PriceList() {
             className={`
               flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-300
               ${viewMode === 'grid'
-                ? 'bg-interactive-active text-white shadow-lg'
-                : 'bg-bg-primary text-text-body hover:bg-bg-muted border border-border-default'
+                ? 'bg-interactive-active text-brand-primary shadow-lg'
+                : 'bg-interactive-hover text-brand-primary hover:bg-interactive-active border border-border-default'
               }
             `}
           >
@@ -150,7 +150,7 @@ export default function PriceList() {
               flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-300
               ${viewMode === 'list'
                 ? 'bg-interactive-active text-white shadow-lg'
-                : 'bg-bg-primary text-text-body hover:bg-bg-muted border border-border-default'
+                : 'bg-interactive-hover text-brand-primary hover:bg-interactive-active border border-border-default'
               }
             `}
           >
@@ -200,9 +200,9 @@ export default function PriceList() {
         >
           <div className="bg-bg-muted border-2 border-border-medium rounded-lg p-8 text-center">
             <div className="flex items-center justify-center gap-3 mb-4">
-              <div className="w-2 h-2 bg-brand-secondary rounded-full animate-pulse"></div>
+              <div className="w-2 h-2 bg-text-primary rounded-full animate-pulse"></div>
               <p className="text-text-primary font-bold text-lg">Important Notice</p>
-              <div className="w-2 h-2 bg-brand-secondary rounded-full animate-pulse"></div>
+              <div className="w-2 h-2 bg-text-primary rounded-full animate-pulse"></div>
             </div>
             <p className="text-text-secondary leading-relaxed">
               A skin test is required if it's your first visit with me or if you haven't had

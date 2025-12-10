@@ -76,7 +76,7 @@ const SignUpForm = ({ profileDetails, onCancel }: Props) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex h-full w-full flex-col items-center justify-center gap-5 rounded-2xl bg-transparent text-white"
+        className="flex h-full w-full flex-col items-center justify-center gap-5 rounded-2xl bg-transparent text-text-primary"
       >
         <FormField
           control={form.control}
@@ -171,7 +171,7 @@ const SignUpForm = ({ profileDetails, onCancel }: Props) => {
         <Button
           type="submit"
           disabled={isSubmitting}
-          className='mt-2 w-full bg-bg-primary hover:bg-bg-muted hover:bg-primary/90 text-text-primary transition-all duration-300'
+          className='mt-2 w-full bg-interactive-active hover:bg-interactive-active/90 text-brand-primary transition-all duration-300'
         >
           {isSubmitting ? "Signing Up..." : "Sign Up"}
         </Button>

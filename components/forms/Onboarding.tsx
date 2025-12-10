@@ -18,7 +18,6 @@ import { useState } from "react";
 import Image from "next/image";
 import Uploader from '../Uploader';
 import { OnboardingSchema } from '@/lib/validations';
-import { Switch } from '../ui/switch';
 import { showCustomToast } from '../shared/CustomToast';
 import { supabaseClient } from '@/lib/supabase/browserClient';
 import StylisedButton from '../shared/ActionButtons/StylisedButton';
@@ -195,7 +194,7 @@ const Onboarding = ({ profileDetails }: Props) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex w-full max-w-xl flex-col items-start gap-10 bg-[#111] p-10 text-white"
+        className="flex w-full max-w-xl flex-col items-start gap-10 bg-brand-secondary p-10 text-text-primary rounded-xl shadow-md"
       >
         <div className='text-2xl font-bold'>
           Complete Your Sign-Up
@@ -215,7 +214,7 @@ const Onboarding = ({ profileDetails }: Props) => {
                   className="rounded-lg border-[#666] bg-[#eee] text-[#111]"
                 />
               </FormControl>
-              <FormDescription>Change your Username here if you wish.</FormDescription>
+              <FormDescription className='mt-1 text-xs text-text-primary/70'>Change your Username here if you wish</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -241,7 +240,7 @@ const Onboarding = ({ profileDetails }: Props) => {
                       />
                       <button
                         type="button"
-                        className="flex w-auto justify-center items-center rounded-md bg-red-500 hover:bg-red-500/85 transition-all duration-500 px-3 py-1 text-lg"
+                        className="flex w-auto justify-center items-center rounded-md bg-red-500 hover:bg-red-500/85 transition-all duration-500 px-3 py-1 text-lg text-brand-primary"
                         onClick={handleRemove}
                       >
                         Remove Image
@@ -261,7 +260,7 @@ const Onboarding = ({ profileDetails }: Props) => {
                   )}
                 </div>
               </FormControl>
-              <FormDescription className="text-stone-500 mt-1">
+              <FormDescription className="text-text-primary/70 mt-1">
                 {avatarUrl ? 'Your current Avatar is shown. Click the Remove button to upload a different one' : 'No Avatar uploaded. Click the button to add one now or a default Avatar will be used.'}
               </FormDescription>
               <FormMessage />
@@ -269,11 +268,9 @@ const Onboarding = ({ profileDetails }: Props) => {
           )}
         />
         <div className="w-full flex justify-center">
-          <StylisedButton>
-            <button type="submit" className="text-text-primary font-semibold py-2 px-6">
-              Submit & Complete Sign-Up
-            </button>
-          </StylisedButton>
+          <button type="submit" className="bg-interactive-active hover:bg-interactive-active/90 transition-all duration-300 text-brand-primary font-semibold py-2 px-6">
+            Submit & Complete Sign-Up
+          </button>
         </div>
       </form>
     </Form>

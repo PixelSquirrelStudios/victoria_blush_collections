@@ -97,7 +97,7 @@ const SignInForm = ({ currentUser, profileDetails, onCancel }: Props) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex h-full w-full flex-col items-center justify-center gap-5 rounded-2xl bg-transparent text-stone-100"
+        className="flex h-full w-full flex-col items-center justify-center gap-5 rounded-2xl bg-transparent text-text-primary"
       >
         <FormField
           control={form.control}
@@ -139,7 +139,7 @@ const SignInForm = ({ currentUser, profileDetails, onCancel }: Props) => {
           )}
         />
         <Link
-          className="text-xs text-stone-300 underline"
+          className="text-xs text-text-body underline"
           href="/forgot-password"
         >
           Forgot Password?
@@ -147,7 +147,7 @@ const SignInForm = ({ currentUser, profileDetails, onCancel }: Props) => {
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="mt-2 w-full bg-bg-primary hover:bg-bg-muted hover:bg-primary/90 text-text-primary transition-all duration-300"
+          className="mt-2 w-full bg-interactive-active hover:bg-interactive-active/90 text-brand-primary transition-all duration-300"
         >
           {isSubmitting ? "Signing In..." : "Sign In"}
         </Button>

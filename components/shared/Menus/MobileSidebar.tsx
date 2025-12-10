@@ -45,19 +45,19 @@ const MobileSidebar = ({ variant }: MobileSidebarProps) => {
     <div className="z-16000 lg:hidden flex items-center">
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger
-          className="text-3xl text-white"
+          className="text-3xl text-text-primary"
           onClick={() => setOpen(true)}
         >
           <FaBars />
         </SheetTrigger>
         <SheetContent
           className={cn(
-            'pt-24 pb-10 px-4 flex w-[390px] flex-col justify-between gap-1 border-none bg-black/90 text-white',
+            'pt-24 pb-10 px-4 flex w-[350px] flex-col justify-between gap-1 border-none bg-brand-primary text-text-primary',
             query.trim() ? 'overflow-hidden' : 'overflow-y-auto'
           )}
           side="left"
         >
-          <SheetTitle className="hidden text-white items-center justify-between px-4 py-2 text-3xl font-medium">
+          <SheetTitle className="hidden text-text-primary items-center justify-between px-4 py-2 text-3xl font-medium">
             Victoria Blush Collections
           </SheetTitle>
           <div className="flex flex-start flex-col gap-4 py-4">
@@ -71,8 +71,8 @@ const MobileSidebar = ({ variant }: MobileSidebarProps) => {
                   href={item.route}
                   key={item.route}
                   className={`${isActive
-                    ? 'rounded-xl bg-brand-primary text-white shadow-lg'
-                    : 'text-white hover:bg-white/10 rounded-xl'
+                    ? 'rounded-xl bg-brand-secondary text-text-primary shadow-lg'
+                    : 'text-text-primary hover:bg-brand-secondary/60 rounded-xl'
                     } flex items-center px-4 py-3 text-xl font-medium transition-all duration-200`}
                 >
                   <div>{item.label}</div>

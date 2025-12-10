@@ -29,7 +29,7 @@ export default function ForgotPassword() {
   return (
     <form
       action={handleSubmit}
-      className="mx-auto flex h-auto w-full flex-1 flex-col rounded-xl bg-bg-dark text-card-foreground p-10 shadow-lg xl:min-w-[350px] xl:max-w-[450px]"
+      className="mx-auto flex h-auto w-full flex-1 flex-col rounded-xl bg-brand-secondary text-text-primary p-10 shadow-lg xl:min-w-[350px] xl:max-w-[450px]"
     >
       <div>
         <div className="flex w-full justify-center px-0 pb-8">
@@ -37,23 +37,23 @@ export default function ForgotPassword() {
             className="w-full object-contain max-w-[300px]"
             width={300}
             height={200}
-            forceTheme="dark"
+            forceTheme="light"
           />
         </div>
         <Separator className="opacity-20" />
-        <h1 className="mt-4 text-2xl font-semibold text-stone-200">
+        <h1 className="mt-4 text-2xl font-semibold text-text-primary">
           Reset Password
         </h1>
-        <p className="mt-1 text-sm text-text-muted/80">
+        <p className="mt-1 text-sm text-text-body">
           Already have an account?{' '}
-          <Link className="font-medium underline text-stone-200" href="/sign-in">
+          <Link className="font-medium underline text-text-primary" href="/sign-in">
             Sign in
           </Link>
         </p>
       </div>
 
       <div className="mt-8 flex flex-col gap-2 [&>input]:mb-3">
-        <Label htmlFor="email" className="text-stone-200">
+        <Label htmlFor="email" className="text-text-primary">
           Email
         </Label>
         <Input
@@ -66,7 +66,7 @@ export default function ForgotPassword() {
         <Button
           type="submit"
           disabled={loading}
-          className="mt-4 w-full bg-bg-primary hover:bg-bg-muted hover:bg-primary/90 text-text-primary transition-all duration-300"
+          className="mt-4 w-full bg-interactive-active hover:bg-interactive-active/90 text-brand-primary transition-all duration-300"
         >
           {loading ? 'Sending...' : 'Reset Password'}
         </Button>

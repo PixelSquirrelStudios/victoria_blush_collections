@@ -82,7 +82,7 @@ export default function About() {
               <div className="pt-6">
                 <a
                   href="#contact"
-                  className="inline-block bg-brand-primary hover:bg-brand-primary-hover text-white px-8 py-4 rounded-lg font-medium transition-all duration-300 shadow-md hover:shadow-xl"
+                  className="inline-block bg-interactive-active hover:bg-interactive-active/90 text-white px-8 py-4 rounded-lg font-medium transition-all duration-300 shadow-md hover:shadow-xl"
                 >
                   Book Your Appointment
                 </a>
