@@ -15,10 +15,14 @@ export default function Footer() {
             {/* <h3 className="text-3xl font-semibold mb-4">
               Victoria Blush <span className="text-brand-secondary font-bold">Collections</span>
             </h3> */}
-            <p className="text-text-primary mb-6 leading-relaxed">
-              Where hair artistry meets individuality. Creating beautiful, lived-in looks
-              that make you feel confident.
-            </p>
+            <div className='flex flex-col gap-1'>
+              <p className="text-text-primary leading-relaxed font-light">
+                Where hair artistry meets individuality.
+              </p>
+              <p className="text-text-primary mb-6 leading-relaxed font-light">Creating beautiful, lived-in looks
+                that make you feel truly confident.
+              </p>
+            </div>
             <div className="flex gap-4">
               <a
                 href="https://instagram.com/victoriablushcollections"

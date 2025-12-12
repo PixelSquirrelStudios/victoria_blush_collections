@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import Link from 'next/link';
+import { cormorant } from '@/app/fonts';
 
 const showcaseImages = [
   {
@@ -71,13 +72,13 @@ export default function Gallery() {
           viewport={{ once: true }}
           className="text-center max-w-2xl mx-auto mb-12"
         >
-          <p className="text-text-primary font-medium tracking-wider uppercase text-sm mb-4">
+          <p className="text-text-primary tracking-widest uppercase mb-4">
             Portfolio
           </p>
-          <h2 className="text-4xl md:text-5xl font-bold text-text-primary mb-6">
+          <h2 className={`${cormorant.className} text-4xl md:text-5xl font-medium uppercase text-text-primary mb-6`}>
             My Latest Work
           </h2>
-          <p className="text-lg text-text-body">
+          <p className="text-lg text-text-body font-light">
             Explore transformations that celebrate individuality and style
           </p>
         </motion.div>

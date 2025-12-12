@@ -1,5 +1,6 @@
 'use client';
 
+import { cormorant } from '@/app/fonts';
 import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react';
 import { useState } from 'react';
@@ -50,13 +51,13 @@ export default function Contact() {
           viewport={{ once: true }}
           className="text-center max-w-2xl mx-auto mb-16"
         >
-          <p className="text-text-primary font-medium tracking-wider uppercase text-sm mb-4">
+          <p className="text-text-primary tracking-widest uppercase mb-4">
             Get In Touch
           </p>
-          <h2 className="text-4xl md:text-5xl font-bold text-text-primary mb-6">
+          <h2 className={`${cormorant.className} text-4xl md:text-5xl font-medium uppercase text-text-primary mb-6`}>
             Book Your Appointment
           </h2>
-          <p className="text-lg text-text-body">
+          <p className="text-lg text-text-body font-light">
             Ready for a transformation? Let's create something beautiful together.
           </p>
         </motion.div>

@@ -1,5 +1,6 @@
 'use client';
 
+import { cormorant } from '@/app/fonts';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
@@ -15,14 +16,14 @@ export default function About() {
             transition={{ duration: 0.6 }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl md:text-5xl font-bold text-text-primary mb-4">
+            <h2 className={`${cormorant.className} text-4xl md:text-5xl font-medium uppercase text-text-primary mb-4`}>
               About Me
             </h2>
             <div className="w-24 h-1 bg-brand-primary mx-auto"></div>
           </motion.div>
 
           {/* Content Grid */}
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-12 items-start">
             {/* Image Column */}
             <motion.div
               initial={{ opacity: 0, x: -30 }}
@@ -48,7 +49,7 @@ export default function About() {
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="space-y-6 text-text-body"
+              className="space-y-6 text-text-body font-light"
             >
               <p className="text-base leading-7">
                 Hi, I'm Victoria — freelance hairstylist, educator and mum of four (yes… four. Coffee is my personality at this point).
@@ -82,7 +83,7 @@ export default function About() {
               <div className="pt-6">
                 <a
                   href="#contact"
-                  className="inline-block bg-interactive-active hover:bg-interactive-active/90 text-white px-8 py-4 rounded-lg font-medium transition-all duration-300 shadow-md hover:shadow-xl"
+                  className="inline-block bg-interactive-active hover:bg-interactive-active/90 text-white px-8 py-4 rounded-lg font-medium  transition-all duration-300 shadow-md hover:shadow-xl"
                 >
                   Book Your Appointment
                 </a>

@@ -5,6 +5,7 @@ import PriceListCardList from './PriceListCardList';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { LayoutGrid, List } from 'lucide-react';
+import { cormorant } from '@/app/fonts';
 
 const services = [
   {
@@ -117,13 +118,13 @@ export default function PriceList() {
           viewport={{ once: true }}
           className="text-center max-w-2xl mx-auto mb-8"
         >
-          <p className="text-bg-secondary font-medium tracking-wider uppercase text-sm mb-4">
+          <p className="text-text-primary tracking-widest uppercase mb-4">
             Transparent Pricing
           </p>
-          <h2 className="text-4xl md:text-5xl font-bold text-text-primary mb-6">
+          <h2 className={`${cormorant.className} text-4xl md:text-5xl font-medium uppercase text-text-primary mb-6`}>
             Services & Pricing
           </h2>
-          <p className="text-lg text-text-body">
+          <p className="text-lg text-text-body font-light">
             Premium hair services tailored to your unique style and needs.
             All prices include consultation and aftercare advice.
           </p>
@@ -201,10 +202,10 @@ export default function PriceList() {
           <div className="bg-bg-muted border-2 border-border-medium rounded-lg p-8 text-center">
             <div className="flex items-center justify-center gap-3 mb-4">
               <div className="w-2 h-2 bg-text-primary rounded-full animate-pulse"></div>
-              <p className="text-text-primary font-bold text-lg">Important Notice</p>
+              <p className="text-text-primary/90 font-semibold text-lg">Important Notice</p>
               <div className="w-2 h-2 bg-text-primary rounded-full animate-pulse"></div>
             </div>
-            <p className="text-text-secondary leading-relaxed">
+            <p className="text-text-secondary font-light leading-relaxed">
               A skin test is required if it's your first visit with me or if you haven't had
               your hair colored for 6 months. This ensures your safety and the best results.
             </p>
