@@ -100,7 +100,7 @@ export default function Footer() {
               </li>
               <li className="flex justify-between">
                 <span>Fri</span>
-                <span className="font-medium text-text-primary">9AM - 7PM</span>
+                <span className="font-medium text-text-primary">9AM - 5PM</span>
               </li>
               <li className="flex justify-between">
                 <span>Sat</span>
