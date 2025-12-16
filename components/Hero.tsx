@@ -26,8 +26,8 @@ export default function Hero() {
               <span className="block text-5xl md:text-[4rem] text-text-primary/60 tracking-wide">Collections</span>
             </h1>
             <p className='text-lg text-text-body font-light leading-8 max-w-og-2xl'>
-              Transforming hair into art. Specialising in balayage, lived-in color,
-              and bespoke styling that celebrates your unique beauty.
+              A calm, friendly space where you can relax and enjoy beautiful hair.
+              One-to-one appointments specialising in balayage, lived-in colour, colour correction and precision cutting — helping you feel like the best version of you.
             </p>
           </div>
 
@@ -70,7 +70,7 @@ export default function Hero() {
           </div>
           <div className="grid grid-cols-3 gap-8 pt-8 border-t border-border-medium">
             <div>
-              <p className="text-3xl font-semibold text-text-secondary">8+</p>
+              <p className="text-3xl font-semibold text-text-secondary">15+</p>
               <p className="text-text-body md:text-sm text-xs">Years Experience</p>
             </div>
             <div>

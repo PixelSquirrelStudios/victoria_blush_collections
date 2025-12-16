@@ -18,7 +18,7 @@ export default function PriceListCard({
 }: PriceListCardProps) {
   return (
     <div className={`
-      group relative bg-bg-primary rounded-lg p-6 shadow-sm hover:shadow-xl transition-all duration-300
+      group relative bg-bg-primary rounded-lg p-6 shadow-sm hover:shadow-xl transition-all duration-300 h-full 
       border-2 ${highlight ? 'border-interactive-active' : 'border-border-default'} hover:border-interactive-active
     `}>
       {highlight && (
@@ -29,7 +29,7 @@ export default function PriceListCard({
         </div>
       )}
 
-      <div className="flex flex-col items-center text-center space-y-4">
+      <div className="flex flex-col items-center text-center space-y-4 h-full">
         {/* Icon */}
         <div className='p-2'>
           <Image
@@ -48,12 +48,12 @@ export default function PriceListCard({
         </h3>
 
         {/* Description */}
-        <p className="text-sm text-text-body leading-relaxed min-h-12 px-10">
+        <p className="text-sm text-text-body leading-relaxed min-h-12 px-10 flex-1">
           {description}
         </p>
 
-        {/* Price */}
-        <div className="pt-4 border-t border-border-default w-full">
+        {/* Price - Always at bottom */}
+        <div className="pt-4 border-t border-border-default w-full mt-auto">
           <p className="text-2xl font-bold text-text-primary">
             {price}
           </p>

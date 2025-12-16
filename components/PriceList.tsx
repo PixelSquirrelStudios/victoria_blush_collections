@@ -25,7 +25,7 @@ const services = [
   {
     icon: '/assets/icons/balayage.svg',
     title: 'Full Lived In / Balayage',
-    description: 'Natural, sun-kissed dimension and depth',
+    description: 'Recommended every 9-12 months',
     price: '£140-£200',
     highlight: true,
     category: 'coloring'
@@ -33,15 +33,15 @@ const services = [
   {
     icon: '/assets/icons/balayage.svg',
     title: 'Maintenance Lived In',
-    description: 'Touch-up for your existing balayage',
+    description: 'Recommended every 3-6 months',
     price: '£120-£140',
     category: 'coloring'
   },
   {
     icon: '/assets/icons/foils_full.svg',
     title: 'Full Head Foils',
-    description: 'Complete coverage with beautiful highlights',
-    price: '£130-£180',
+    description: 'Including toning and root shadowing If required - Recommended every 6-12 months',
+    price: '£130-£200',
     category: 'colouring'
   },
   {
@@ -97,8 +97,8 @@ const services = [
   },
   {
     icon: '/assets/icons/colour_correction.svg',
-    title: 'Colour Correction',
-    description: 'Expert correction for previous colour issues',
+    title: 'Refresh Your Colour',
+    description: 'Refresh your colour (Including toning and root shadowing If required)',
     price: 'On Quotation',
     category: 'specialist',
     highlight: true

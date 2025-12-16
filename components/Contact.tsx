@@ -94,8 +94,9 @@ export default function Contact() {
                   <div>
                     <p className="font-semibold text-text-primary mb-1">Location</p>
                     <p className="text-text-body">
-                      36 Commercial Street,<br />
-                      Tredegar, NP22 3DJ
+                      Bodi Studios, Unit 8,<br />
+                      Wilcox House,<br />
+                      Cardiff CF11 0BA
                     </p>
                   </div>
                 </div>
@@ -131,8 +132,11 @@ export default function Contact() {
                   <div>
                     <p className="font-semibold text-text-primary mb-1">Opening Hours</p>
                     <div className="text-text-body space-y-1">
-                      <p>Monday - Friday: 9:00 AM - 5:00 PM</p>
-                      <p>Saturday: 9:00 AM - 3:00 PM</p>
+                      <p>Monday & Tuesday: 9:00 AM - 7:00 PM (Alternating Weeks)</p>
+                      <p>Wednesday: 9:00 AM - 7:00 PM</p>
+                      <p>Thursday: CLOSED</p>
+                      <p>Friday: 9:00 AM - 5:00 PM</p>
+                      <p>Saturday: 8:00 AM - 4:00 PM</p>
                       <p>Sunday: CLOSED</p>
                     </div>
                   </div>
