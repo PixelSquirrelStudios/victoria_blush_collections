@@ -3,8 +3,9 @@
 import { cormorant } from '@/app/fonts';
 import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react';
+import Link from 'next/link';
 import { useState } from 'react';
-import { FaInstagram } from 'react-icons/fa';
+import { FaInstagram, FaRegClock } from 'react-icons/fa';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -60,6 +61,17 @@ export default function Contact() {
           <p className="text-lg text-text-body font-light">
             Ready for a transformation? Let's create something beautiful together.
           </p>
+
+          <Link href="https://victoria-blush-collections-limited.book.app/book-now" target="_blank" rel="noopener noreferrer">
+            <div className='w-full flex justify-center'>
+              <div className='mt-6 flex flex-row items-center w-72 justify-center px-8 py-4 bg-interactive-active text-brand-primary font-medium tracking-wide rounded-full hover:bg-interactive-active/90 transition-all duration-300 shadow-lg hover:shadow-xl text-center'>
+                <FaRegClock className="inline w-5 h-5 mr-2" />
+                <div>
+                  Book Now With Ovatu
+                </div>
+              </div>
+            </div>
+          </Link>
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
@@ -159,129 +171,134 @@ export default function Contact() {
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="bg-bg-primary rounded-lg shadow-xl p-8"
           >
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-semibold text-text-primary mb-2">
-                  Your Name *
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 border-2 border-border-default rounded focus:border-interactive-focus focus:outline-none transition-colors"
-                  placeholder="Jane Doe"
-                />
-              </div>
+            <h3 className="text-2xl font-bold text-text-primary mb-6">
+              General Enquiries
+            </h3>
+            <div className='bg-bg-primary rounded-lg shadow-xl p-8'>
 
-              <div className="grid md:grid-cols-2 gap-4">
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div>
-                  <label htmlFor="email" className="block text-sm font-semibold text-text-primary mb-2">
-                    Email *
+                  <label htmlFor="name" className="block text-sm font-semibold text-text-primary mb-2">
+                    Your Name *
                   </label>
                   <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-3 border-2 border-border-default rounded focus:border-interactive-focus focus:outline-none transition-colors"
-                    placeholder="jane@example.com"
+                    placeholder="Jane Doe"
                   />
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-semibold text-text-primary mb-2">
+                      Email *
+                    </label>
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      required
+                      className="w-full px-4 py-3 border-2 border-border-default rounded focus:border-interactive-focus focus:outline-none transition-colors"
+                      placeholder="jane@example.com"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor="phone" className="block text-sm font-semibold text-text-primary mb-2">
+                      Phone
+                    </label>
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      value={formData.phone}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 border-2 border-border-default rounded focus:border-interactive-focus focus:outline-none transition-colors"
+                      placeholder="+44 7123 456789"
+                    />
+                  </div>
                 </div>
 
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-semibold text-text-primary mb-2">
-                    Phone
+                  <label htmlFor="service" className="block text-sm font-semibold text-text-primary mb-2">
+                    Service Interested In *
                   </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
+                  <select
+                    id="service"
+                    name="service"
+                    value={formData.service}
                     onChange={handleChange}
+                    required
                     className="w-full px-4 py-3 border-2 border-border-default rounded focus:border-interactive-focus focus:outline-none transition-colors"
-                    placeholder="+44 7123 456789"
+                  >
+                    <option value="">Select a service</option>
+                    <option value="cut-finish">Cut and Finish</option>
+                    <option value="blowdry">Blow Dry & Styling</option>
+                    <option value="balayage">Full Lived In / Balayage</option>
+                    <option value="maintenance">Maintenance Lived In</option>
+                    <option value="full-foils">Full Head Foils</option>
+                    <option value="half-foils">Half Head Foils</option>
+                    <option value="global-color">Global Colour</option>
+                    <option value="roots">Global Roots</option>
+                    <option value="toning">Toning Service</option>
+                    <option value="correction">Colour Correction</option>
+                    <option value="treatments">Hair Treatments</option>
+                    <option value="consultation">Consultation</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label htmlFor="message" className="block text-sm font-semibold text-text-primary mb-2">
+                    Message
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    rows={4}
+                    className="w-full px-4 py-3 border-2 border-border-default rounded focus:border-interactive-focus focus:outline-none transition-colors resize-none"
+                    placeholder="Tell me about your hair goals..."
                   />
                 </div>
-              </div>
 
-              <div>
-                <label htmlFor="service" className="block text-sm font-semibold text-text-primary mb-2">
-                  Service Interested In *
-                </label>
-                <select
-                  id="service"
-                  name="service"
-                  value={formData.service}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-4 py-3 border-2 border-border-default rounded focus:border-interactive-focus focus:outline-none transition-colors"
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full px-8 py-4 bg-interactive-active hover:bg-interactive-active/90 text-brand-primary font-semibold rounded hover:text-shadow-text-primary transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
-                  <option value="">Select a service</option>
-                  <option value="cut-finish">Cut and Finish</option>
-                  <option value="blowdry">Blow Dry & Styling</option>
-                  <option value="balayage">Full Lived In / Balayage</option>
-                  <option value="maintenance">Maintenance Lived In</option>
-                  <option value="full-foils">Full Head Foils</option>
-                  <option value="half-foils">Half Head Foils</option>
-                  <option value="global-color">Global Colour</option>
-                  <option value="roots">Global Roots</option>
-                  <option value="toning">Toning Service</option>
-                  <option value="correction">Colour Correction</option>
-                  <option value="treatments">Hair Treatments</option>
-                  <option value="consultation">Consultation</option>
-                </select>
-              </div>
+                  {isSubmitting ? (
+                    <>
+                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-5 h-5" />
+                      Send Message
+                    </>
+                  )}
+                </button>
 
-              <div>
-                <label htmlFor="message" className="block text-sm font-semibold text-text-primary mb-2">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows={4}
-                  className="w-full px-4 py-3 border-2 border-border-default rounded focus:border-interactive-focus focus:outline-none transition-colors resize-none"
-                  placeholder="Tell me about your hair goals..."
-                />
-              </div>
-
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full px-8 py-4 bg-interactive-active hover:bg-interactive-active/90 text-brand-primary font-semibold rounded hover:text-shadow-text-primary transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-              >
-                {isSubmitting ? (
-                  <>
-                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    Sending...
-                  </>
-                ) : (
-                  <>
-                    <Send className="w-5 h-5" />
-                    Send Message
-                  </>
+                {submitMessage && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="p-4 bg-green-50 border-2 border-green-200 rounded-xl text-green-800 text-center font-medium"
+                  >
+                    {submitMessage}
+                  </motion.div>
                 )}
-              </button>
-
-              {submitMessage && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="p-4 bg-green-50 border-2 border-green-200 rounded-xl text-green-800 text-center font-medium"
-                >
-                  {submitMessage}
-                </motion.div>
-              )}
-            </form>
+              </form>
+            </div>
           </motion.div>
         </div>
       </div>
