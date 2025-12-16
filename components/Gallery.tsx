@@ -158,7 +158,9 @@ export default function Gallery() {
               </div>
             </div>
           </Link>
+        <script src="https://elfsightcdn.com/platform.js" async></script>
         </motion.div>
+        <div className="elfsight-app-b5c63793-7124-4070-8649-eca569fb4f4c" data-elfsight-app-lazy></div>
       </div>
     </section >
   );
