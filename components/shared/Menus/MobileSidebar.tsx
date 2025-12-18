@@ -15,7 +15,7 @@ import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import SocialBar from './SocialBar';
+import SocialBar from '../SocialBar';
 import { Logo } from '../Logo';
 import { supabaseClient } from '@/lib/supabase/browserClient';
 

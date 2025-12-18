@@ -1,8 +1,8 @@
 import { fetchUserData } from '@/app/hooks/useUser';
 import Link from 'next/link';
-import MobileSidebar from './Menus/MobileSidebar';
-import { Logo } from './Logo';
-import ProfileButtonServer from './ActionButtons/ProfileButtonServer';
+import MobileSidebar from './MobileSidebar';
+import { Logo } from '../Logo';
+import ProfileButtonServer from '../ActionButtons/ProfileButtonServer';
 
 interface HeaderProps {
   mobileVariant: 'main' | 'dashboard';

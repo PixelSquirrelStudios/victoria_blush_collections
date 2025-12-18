@@ -1,7 +1,7 @@
 import '../globals.css';
 import React, { Suspense } from 'react';
 import { AudioProvider } from '@/app/providers/AudioProvider';
-import Header from '@/components/shared/Header';
+import Header from '@/components/shared/Menus/Header';
 import { Metadata } from 'next';
 import { fetchUserData } from '../hooks/useUser';
 import LoadingOverlay from '../providers/LoadingOverlay';

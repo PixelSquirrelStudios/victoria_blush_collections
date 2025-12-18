@@ -1,7 +1,7 @@
 'use client';
 
-import PriceListCard from './PriceListCard';
-import PriceListCardList from './PriceListCardList';
+import PriceListCard from '../cards/PriceListCard';
+import PriceListCardList from '../cards/PriceListCardList';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { LayoutGrid, List } from 'lucide-react';
@@ -24,9 +24,9 @@ const services = [
   },
   {
     icon: '/assets/icons/balayage.svg',
-    title: 'Full Lived In / Balayage',
+    title: 'Full Lived In Balayage',
     description: 'Recommended every 9-12 months',
-    price: '£140-£200',
+    price: '£140-£220',
     highlight: true,
     category: 'coloring'
   },
@@ -34,14 +34,14 @@ const services = [
     icon: '/assets/icons/balayage.svg',
     title: 'Maintenance Lived In',
     description: 'Recommended every 3-6 months',
-    price: '£120-£140',
+    price: '£120-£150',
     category: 'coloring'
   },
   {
     icon: '/assets/icons/foils_full.svg',
     title: 'Full Head Foils',
     description: 'Including toning and root shadowing If required - Recommended every 6-12 months',
-    price: '£130-£200',
+    price: '£130-£220',
     category: 'colouring'
   },
   {
@@ -70,7 +70,7 @@ const services = [
     icon: '/assets/icons/toning.svg',
     title: 'Toning Service',
     description: 'Perfect your colour tone',
-    price: 'from £30',
+    price: 'from £50',
     category: 'colouring',
     highlight: true
   },
@@ -94,6 +94,13 @@ const services = [
     description: 'Revolutionary molecular repair',
     price: '£25',
     category: 'treatments'
+  },
+  {
+    icon: '/assets/icons/grey_blending.svg',
+    title: 'Grey Blending',
+    description: 'Seamless grey coverage for a natural look',
+    price: '£130 - £220',
+    category: 'specialist',
   },
   {
     icon: '/assets/icons/colour_correction.svg',

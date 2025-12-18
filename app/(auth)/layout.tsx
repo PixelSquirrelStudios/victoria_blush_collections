@@ -1,7 +1,7 @@
 import '../../app/globals.css';
 import { Suspense } from 'react';
 import LoadingOverlay from '../providers/LoadingOverlay';
-import Header from '@/components/shared/Header';
+import Header from '@/components/shared/Menus/Header';
 
 export default function AuthLayout({
   children,

@@ -1,6 +1,6 @@
 import { Mail, Phone, Heart } from 'lucide-react';
 import { FaFacebookF, FaInstagram } from 'react-icons/fa';
-import { Logo } from './shared/Logo';
+import { Logo } from '../shared/Logo';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();

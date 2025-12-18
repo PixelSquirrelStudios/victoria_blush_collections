@@ -16,7 +16,7 @@ import { updateUser } from "@/lib/actions/user.actions";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import Image from "next/image";
-import Uploader from '../Uploader';
+import Uploader from '../shared/Uploader';
 import { OnboardingSchema } from '@/lib/validations';
 import { showCustomToast } from '../shared/CustomToast';
 import { supabaseClient } from '@/lib/supabase/browserClient';

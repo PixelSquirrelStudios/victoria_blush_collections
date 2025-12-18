@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import { FaBell } from 'react-icons/fa';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { useNotificationStore } from '@/app/stores/notificationStore';
-import NotificationsDrawer from './Menus/NotificationsDrawer';
-import RealtimeUpdates from './Menus/RealtimeUpdates';
+import NotificationsDrawer from './NotificationsDrawer';
+import RealtimeUpdates from './RealtimeUpdates';
 
 interface HeaderClientProps {
   userId: string;

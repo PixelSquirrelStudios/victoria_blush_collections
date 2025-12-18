@@ -1,13 +1,13 @@
 'use client';
 
 import { useEffect } from 'react';
-import Navigation from '@/components/Navigation';
-import Hero from '@/components/Hero';
-import About from '@/components/About';
-import PriceList from '@/components/PriceList';
-import Gallery from '@/components/Gallery';
-import Contact from '@/components/Contact';
-import Footer from '@/components/Footer';
+import Navigation from '@/components/shared/Menus/Navigation';
+import Hero from '@/components/sections/Hero';
+import About from '@/components/sections/About';
+import PriceList from '@/components/sections/PriceList';
+import Gallery from '@/components/sections/Gallery';
+import Contact from '@/components/sections/Contact';
+import Footer from '@/components/sections/Footer';
 
 export default function Home() {
   useEffect(() => {

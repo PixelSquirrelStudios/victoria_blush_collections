@@ -10,15 +10,15 @@ import '@uppy/image-editor/css/style.min.css';
 
 import { useEffect, useMemo, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { showCustomToast } from './shared/CustomToast';
-import { Button } from './ui/button';
+import { showCustomToast } from './CustomToast';
+import { Button } from '../ui/button';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from './ui/dialog';
+} from '../ui/dialog';
 import { FaImage } from 'react-icons/fa';
 import { createClient } from '@/lib/supabase/client';
 

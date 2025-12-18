@@ -8,15 +8,15 @@ import '@uppy/dashboard/css/style.min.css';
 
 import { useEffect, useMemo, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { showCustomToast } from './shared/CustomToast';
+import { showCustomToast } from './CustomToast';
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from './ui/dialog';
-import { Button } from './ui/button';
+} from '../ui/dialog';
+import { Button } from '../ui/button';
 import { FaImage, FaVideo } from 'react-icons/fa';
 import { createClient } from '@/lib/supabase/client';
 
