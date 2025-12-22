@@ -1,8 +1,7 @@
 import { SidebarLink, SidebarLinkExtended } from '@/types';
 import { LucideAppWindow } from 'lucide-react';
-import { FaCog, FaEnvelope, FaHome, FaImage, FaImages, FaList, FaListAlt, FaQuestionCircle, FaStar, FaUser, FaUserCog } from 'react-icons/fa';
+import { FaEnvelope, FaHome, FaImage, FaListAlt, FaUser } from 'react-icons/fa';
 import { TbEdit, TbHomeEdit, TbPhotoEdit } from "react-icons/tb";
-import { MdEditNote } from 'react-icons/md';
 import { StylesConfig } from 'react-select';
 
 export const NOTIFICATION_AUDIO_URL = '/assets/audio/notification.mp3';
@@ -23,7 +22,7 @@ export const dashboardLinks: SidebarLink[] = [
   { route: '/dashboard/edit-profile', label: 'Edit Profile' },
   { route: '/dashboard/edit-homepage', label: 'Edit Homepage' },
   { route: '/dashboard/services', label: 'Services' },
-  { route: '/dashboard/gallery', label: 'Gallery' },
+  { route: '/dashboard/gallery-images', label: 'Gallery Images' },
 ];
 
 export const dashboardLinksAdmin: SidebarLink[] = [

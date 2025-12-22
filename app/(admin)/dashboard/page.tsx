@@ -67,61 +67,61 @@ const DashboardPage = async () => {
             <div className='mb-4 text-3xl font-bold'>Quick Links</div>
             <div className='grid h-auto grid-cols-2 content-center items-center justify-center gap-x-2 gap-y-8'>
               <div className='flex flex-row items-center gap-2'>
-                <div className='rounded-full bg-primary-main bg-opacity-85 p-2.5'>
-                  <FaUserCog className='text-2xl text-text-primary' />
+                <div className='rounded-full bg-primary-main bg-opacity-85 md:p-2.5'>
+                  <FaUserCog className='text-2xl text-text-primary max-sm:hidden' />
                 </div>
                 <Link href='/dashboard/edit-profile'>
-                  <div className='text-xl font-semibold underline'>
+                  <div className='md:text-xl text-lg font-semibold underline'>
                     Edit Profile
                   </div>
                 </Link>
               </div>
               <div className='flex flex-row items-center gap-2'>
-                <div className='rounded-full bg-primary-main bg-opacity-85 p-2.5'>
-                  <TbHomeEdit className='text-xl text-text-primary' />
+                <div className='rounded-full bg-primary-main bg-opacity-85 md:p-2.5'>
+                  <TbHomeEdit className='md:text-xl text-lg text-text-primary max-sm:hidden' />
                 </div>
                 <Link href='/dashboard/edit-homepage'>
-                  <div className='text-xl font-semibold underline'>
+                  <div className='md:text-xl text-lg font-semibold underline'>
                     Edit Homepage
                   </div>
                 </Link>
               </div>
               <div className='flex flex-row items-center gap-2'>
-                <div className='rounded-full bg-primary-main bg-opacity-85 p-2.5'>
-                  <FaListAlt className='text-xl text-text-primary' />
+                <div className='rounded-full bg-primary-main bg-opacity-85 md:p-2.5'>
+                  <FaListAlt className='md:text-xl text-lg text-text-primary max-sm:hidden' />
                 </div>
                 <Link href='/dashboard/services/add-service'>
-                  <div className='text-xl font-semibold underline'>
+                  <div className='md:text-xl text-lg font-semibold underline'>
                     Add A Service
                   </div>
                 </Link>
               </div>
               <div className='flex flex-row items-center gap-2'>
-                <div className='rounded-full bg-primary-main bg-opacity-85 p-2.5'>
-                  <IoSwapVerticalOutline className='text-2xl text-text-primary' />
+                <div className='rounded-full bg-primary-main bg-opacity-85 md:p-2.5'>
+                  <IoSwapVerticalOutline className='md:text-xl text-lg text-text-primary max-sm:hidden' />
                 </div>
                 <Link href='/dashboard/services/reorder/'>
-                  <div className='text-xl font-semibold underline'>
+                  <div className='md:text-xl text-lg font-semibold underline'>
                     Reorder Services
                   </div>
                 </Link>
               </div>
               <div className='flex flex-row items-center gap-2'>
-                <div className='rounded-full bg-primary-main bg-opacity-85 p-2.5'>
-                  <FaImage className='text-xl text-text-primary' />
+                <div className='rounded-full bg-primary-main bg-opacity-85 md:p-2.5'>
+                  <FaImage className='md:text-xl text-lg text-text-primary max-sm:hidden' />
                 </div>
                 <Link href='/dashboard/gallery-images/add-gallery-image/'>
-                  <div className='text-xl font-semibold underline'>
+                  <div className='md:text-xl text-lg font-semibold underline'>
                     Add A Gallery Image
                   </div>
                 </Link>
               </div>
               <div className='flex flex-row items-center gap-2'>
-                <div className='rounded-full bg-primary-main bg-opacity-85 p-2.5'>
-                  <IoSwapVerticalOutline className='text-2xl text-text-primary' />
+                <div className='rounded-full bg-primary-main bg-opacity-85 md:p-2.5'>
+                  <IoSwapVerticalOutline className='md:text-xl text-lg text-text-primary max-sm:hidden' />
                 </div>
                 <Link href='/dashboard/gallery-images/reorder/'>
-                  <div className='text-xl font-semibold underline'>
+                  <div className='md:text-xl text-lg font-semibold underline'>
                     Reorder Images
                   </div>
                 </Link>

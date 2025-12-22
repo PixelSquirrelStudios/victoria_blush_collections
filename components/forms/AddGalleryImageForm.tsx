@@ -240,7 +240,7 @@ const AddGalleryImageForm = ({ type, currentUser, imageDetails }: Props) => {
       <div className="flex w-full flex-col items-start gap-10 bg-brand-secondary p-10 text-text-primary rounded-xl shadow-md">
         <div className="flex flex-row items-center gap-2 pb-2">
           <h1 className="text-2xl text-text-primary font-semibold">
-            {type === 'Edit' ? 'Edit Gallery Image' : 'Add Gallery Image'}
+            {type === 'Edit' ? 'Edit Image' : 'Add Gallery Image'}
           </h1>
           {type === 'Edit' ? (
             <Link href='/dashboard/gallery-images'>
@@ -274,7 +274,7 @@ const AddGalleryImageForm = ({ type, currentUser, imageDetails }: Props) => {
                   <div>
                     {imageUrl ? (
                       <>
-                        <div className='flex flex-row  items-center gap-4 w-full h-auto'>
+                        <div className='flex xl:flex-row flex-col items-center gap-4 w-full h-auto'>
                           <Image
                             src={imageUrl}
                             alt="Gallery Image"

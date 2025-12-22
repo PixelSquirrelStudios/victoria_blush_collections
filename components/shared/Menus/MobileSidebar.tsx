@@ -11,7 +11,6 @@ import { FaBars } from 'react-icons/fa';
 import { Separator } from '@/components/ui/separator';
 import Link from 'next/link';
 import { sidebarLinks, settingsLinks, dashboardLinks } from '@/constants';
-import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
@@ -93,6 +92,7 @@ const MobileSidebar = ({ variant }: MobileSidebarProps) => {
                 <Link
                   href={item.route}
                   key={item.route}
+                  onClick={() => setOpen(false)}
                   className={`${isActive
                     ? 'rounded-xl bg-brand-secondary text-text-primary shadow-lg'
                     : 'text-text-primary hover:bg-brand-secondary/60 rounded-xl'
@@ -116,6 +116,7 @@ const MobileSidebar = ({ variant }: MobileSidebarProps) => {
                     <Link
                       href={item.route}
                       key={item.route}
+                      onClick={() => setOpen(false)}
                       className={`${isActive
                         ? 'rounded-xl bg-brand-secondary text-text-primary shadow-lg'
                         : 'text-white hover:bg-white/10 rounded-xl'
