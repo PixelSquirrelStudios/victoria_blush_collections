@@ -92,7 +92,21 @@ const MobileSidebar = ({ variant }: MobileSidebarProps) => {
                 <Link
                   href={item.route}
                   key={item.route}
-                  onClick={() => setOpen(false)}
+                  onClick={(e) => {
+                    setOpen(false);
+                    // If it's a hash link, handle scrolling after sheet closes
+                    if (item.route.includes('#')) {
+                      e.preventDefault();
+                      const hash = item.route.split('#')[1];
+                      setTimeout(() => {
+                        window.location.hash = hash;
+                        const element = document.getElementById(hash);
+                        if (element) {
+                          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        }
+                      }, 300);
+                    }
+                  }}
                   className={`${isActive
                     ? 'rounded-xl bg-brand-secondary text-text-primary shadow-lg'
                     : 'text-text-primary hover:bg-brand-secondary/60 rounded-xl'

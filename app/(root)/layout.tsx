@@ -5,6 +5,7 @@ import Header from '@/components/shared/Menus/Header';
 import { Metadata } from 'next';
 import { fetchUserData } from '../hooks/useUser';
 import LoadingOverlay from '../providers/LoadingOverlay';
+import HashScrollHandler from '@/components/shared/HashScrollHandler';
 
 export const metadata: Metadata = {
   title: 'Victoria Blush Collections',
@@ -22,6 +23,7 @@ async function UserWrapper({
   return (
     <div className="w-full h-full">
       <AudioProvider userId={userId}>
+        <HashScrollHandler />
         <Header mobileVariant="main" isHome={true} />
         {children}
       </AudioProvider>
