@@ -50,3 +50,72 @@ export interface DeleteNotificationParams {
   notification_type: string;
   related_user?: string;
 }
+
+export interface CreateServiceParams {
+  icon: string;
+  title: string;
+  description: string;
+  price: string;
+  categories: string[];
+  is_highlighted?: boolean;
+  path: string;
+}
+
+export interface EditServiceParams {
+  serviceId: string;
+  icon: string;
+  title: string;
+  description: string;
+  price: string;
+  categories: string[];
+  is_highlighted?: boolean;
+  path: string;
+}
+
+export interface DeleteServiceParams {
+  serviceId: string;
+}
+
+export interface GetServicesParams {
+  page?: number;
+  page_size?: number;
+  next?: string;
+  previous?: string;
+  searchQuery?: string | string[] | null;
+  sort_by?: string | string[] | null;
+  categories?: string | string[] | null;
+  list_type?: string | string[] | null;
+  is_highlighted?: string | string[] | null;
+}
+
+export interface CreateGalleryImageParams {
+  image_url: string;
+  title: string;
+  description: string;
+  categories: string[];
+  path: string;
+}
+
+export interface EditGalleryImageParams {
+  imageId: string;
+  image_url: string;
+  title: string;
+  description: string;
+  categories: string[];
+  path: string;
+}
+
+export interface DeleteGalleryImageParams {
+  imageId: string;
+}
+
+export interface GetGalleryImagesParams {
+  page?: number;
+  page_size?: number;
+  next?: string;
+  previous?: string;
+  searchQuery?: string | string[] | null;
+  sort_by?: string | string[] | null;
+  categories?: string | string[] | null;
+  list_type?: string | string[] | null;
+}

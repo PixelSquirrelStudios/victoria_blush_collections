@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-interface PriceListCardListProps {
+interface ServiceCardListProps {
   icon: string;
   title: string;
   description: string;
@@ -8,13 +8,13 @@ interface PriceListCardListProps {
   highlight?: boolean;
 }
 
-export default function PriceListCardList({
+export default function ServiceCardList({
   icon,
   title,
   description,
   price,
   highlight = false
-}: PriceListCardListProps) {
+}: ServiceCardListProps) {
   return (
     <div className={`
       group relative bg-bg-primary rounded-lg p-4 shadow-sm hover:shadow-md transition-all duration-300

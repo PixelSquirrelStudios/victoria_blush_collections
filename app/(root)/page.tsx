@@ -1,36 +1,24 @@
-'use client';
-
-import { useEffect } from 'react';
-import Navigation from '@/components/shared/Menus/Navigation';
 import Hero from '@/components/sections/Hero';
 import About from '@/components/sections/About';
-import PriceList from '@/components/sections/PriceList';
 import Gallery from '@/components/sections/Gallery';
 import Contact from '@/components/sections/Contact';
 import Footer from '@/components/sections/Footer';
+import HashScrollHandler from '@/components/shared/HashScrollHandler';
+import { getPublicServices } from '@/lib/actions/service.actions';
+import { getPublicGalleryImages } from '@/lib/actions/image.actions';
+import Services from '@/components/sections/Services';
 
-export default function Home() {
-  useEffect(() => {
-    // Handle hash navigation on page load
-    if (window.location.hash) {
-      const hash = window.location.hash;
-      // Small delay to ensure page is rendered
-      setTimeout(() => {
-        const element = document.querySelector(hash);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
-      }, 100);
-    }
-  }, []);
+export default async function Home() {
+  const { data: services } = await getPublicServices();
+  const { data: galleryImages } = await getPublicGalleryImages();
 
   return (
     <main className="min-h-screen">
-      {/* <Navigation /> */}
+      <HashScrollHandler />
       <Hero />
       <About />
-      <PriceList />
-      <Gallery />
+      <Services services={services || []} />
+      <Gallery images={(galleryImages as any) || []} />
       <Contact />
       <Footer />
     </main>

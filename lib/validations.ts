@@ -45,3 +45,23 @@ export const UserSchema = z.object({
   username: z.string().min(1, { message: 'Username required' }),
   avatar_url: z.string(),
 });
+
+export const ServiceSchema = z.object({
+  icon: z.string().min(1, { message: 'Icon is required' }),
+  title: z.string().min(1, { message: 'Title is required' }),
+  description: z.string().min(1, { message: 'Description is required' }),
+  price: z.string().min(1, { message: 'Price is required' }),
+  categories: z
+    .array(z.string())
+    .min(1, { message: 'At least one category is required' }),
+  is_highlighted: z.boolean().optional(),
+});
+
+export const GalleryImageSchema = z.object({
+  image_url: z.string().min(1, { message: 'Image is required' }),
+  title: z.string().min(1, { message: 'Title is required' }),
+  description: z.string().optional(),
+  categories: z
+    .array(z.string())
+    .min(1, { message: 'At least one category is required' }),
+});

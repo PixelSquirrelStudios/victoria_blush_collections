@@ -37,7 +37,7 @@ export function CustomToast({
   return (
     <div
       className={cn(
-        'relative flex items-start gap-4 min-w-[350px] max-w-sm px-8 py-4 rounded-lg shadow-lg border border-stone-800 bg-linear-to-b from-stone-900 via-black to-stone-950',
+        'relative flex items-start gap-4 min-w-[350px] max-w-sm px-8 py-4 rounded-lg shadow-lg border border-stone-800 bg-brand-primary',
         variantStyles[variant],
       )}
     >
@@ -50,15 +50,15 @@ export function CustomToast({
       />
       {/* Content */}
       <div className="flex-1 z-10">
-        <h1 className="font-medium text-stone-100 text-base">{title}</h1>
+        <h1 className="font-medium text-stone-900 text-base">{title}</h1>
         {message && (
-          <p className="text-stone-300 text-sm mt-1">{message}</p> // This `message` will now render JSX correctly
+          <p className="text-stone-800 text-sm mt-1">{message}</p> // This `message` will now render JSX correctly
         )}
       </div>
       {/* Close button */}
       <button
         type="button"
-        className="absolute top-2 right-2 text-stone-400 hover:text-stone-100 transition"
+        className="absolute top-2 right-2 text-stone-800 hover:text-stone-900 transition"
         onClick={() => {
           if (onClose) onClose();
           if (t) toast.dismiss(t);

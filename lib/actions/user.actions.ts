@@ -1,5 +1,6 @@
 'use server';
 
+import { revalidatePath } from 'next/cache';
 import { createClient } from '../supabase/server';
 import { UpdateUserParams } from './shared.types';
 
@@ -28,13 +29,7 @@ export async function updateUser(params: UpdateUserParams) {
   try {
     const supabase = await createClient();
 
-    const {
-      userId,
-      username,
-      avatar_url,
-      has_onboarded,
-      path,
-    } = params;
+    const { userId, username, avatar_url, has_onboarded, path } = params;
 
     const { error: profileUpdateError } = await supabase
       .from('profiles')
@@ -50,6 +45,11 @@ export async function updateUser(params: UpdateUserParams) {
       throw new Error(
         'Failed to update profile details after vibe check update.'
       );
+    }
+
+    if (path) {
+      revalidatePath(path);
+      revalidatePath('/dashboard');
     }
   } catch (error) {
     return { data: null, error };

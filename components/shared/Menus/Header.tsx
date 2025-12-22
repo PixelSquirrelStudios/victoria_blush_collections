@@ -15,7 +15,7 @@ const Header = async ({ mobileVariant, isHome = false }: HeaderProps) => {
   const sections = [
     { name: 'Home', id: '' },
     { name: 'About', id: 'about' },
-    { name: 'Price List', id: 'prices' },
+    { name: 'Services', id: 'services' },
     { name: 'Gallery', id: 'gallery' },
   ];
 

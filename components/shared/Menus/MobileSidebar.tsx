@@ -18,6 +18,8 @@ import { cn } from '@/lib/utils';
 import SocialBar from '../SocialBar';
 import { Logo } from '../Logo';
 import { supabaseClient } from '@/lib/supabase/browserClient';
+import { signOutAction } from '@/app/(auth)/actions';
+import { FaSignOutAlt } from 'react-icons/fa';
 
 interface MobileSidebarProps {
   variant: string;
@@ -42,18 +44,32 @@ const MobileSidebar = ({ variant }: MobileSidebarProps) => {
   }, [pathname]);
 
   return (
-    <div className="z-16000 lg:hidden flex items-center">
+    <div className="lg:hidden flex items-center">
       <Sheet open={open} onOpenChange={setOpen}>
-        <SheetTrigger
-          className="text-3xl text-text-primary"
-          onClick={() => setOpen(true)}
-        >
-          <FaBars />
-        </SheetTrigger>
+        {variant === 'dashboard' ? (
+          <SheetTrigger
+            className="mb-4 bg-bg-primary shadow-md px-3 py-1 rounded-sm text-2xl text-text-primary"
+            onClick={() => setOpen(true)}
+          >
+            <div className='flex flex-row gap-2 items-center'>
+              <FaBars />
+              <div className='text-2xl font-medium'>MENU</div>
+            </div>
+          </SheetTrigger>
+        ) : (
+          <SheetTrigger
+            className="bg-bg-primary shadow-md px-3 py-2 rounded-sm text-2xl text-text-primary"
+            onClick={() => setOpen(true)}
+          >
+            <FaBars />
+          </SheetTrigger>
+        )}
         <SheetContent
           className={cn(
-            'pt-24 pb-10 px-4 flex w-[350px] flex-col justify-between gap-1 border-none bg-brand-primary text-text-primary',
-            query.trim() ? 'overflow-hidden' : 'overflow-y-auto'
+            'pb-10 px-4 flex w-[350px] flex-col justify-between gap-1 border-none bg-brand-primary text-text-primary',
+            query.trim() ? 'overflow-hidden' : 'overflow-y-auto',
+            variant === 'dashboard' ? 'pt-10' : 'pt-20'
+
           )}
           side="left"
         >
@@ -61,9 +77,16 @@ const MobileSidebar = ({ variant }: MobileSidebarProps) => {
             Victoria Blush Collections
           </SheetTitle>
           <div className="flex flex-start flex-col gap-4 py-4">
+            {variant === 'dashboard' && (
+              <div>
+                <Logo sizes='small' className="h-18 w-auto" />
+              </div>
+            )}
             {(showDashboardMenu ? dashboardLinks : sidebarLinks).map((item) => {
               const isActive =
-                (pathname.includes(item.route) && item.route.length > 1) ||
+                (pathname.includes(item.route + '/') &&
+                  item.route !== '/dashboard' &&
+                  item.route.length > 1) ||
                 pathname === item.route;
 
               return (
@@ -84,7 +107,9 @@ const MobileSidebar = ({ variant }: MobileSidebarProps) => {
                 <Separator className="opacity-10" />
                 {settingsLinks.map((item) => {
                   const isActive =
-                    (pathname.includes(item.route) && item.route.length > 1) ||
+                    (pathname.includes(item.route + '/') &&
+                      item.route !== '/dashboard' &&
+                      item.route.length > 1) ||
                     pathname === item.route;
 
                   return (
@@ -92,7 +117,7 @@ const MobileSidebar = ({ variant }: MobileSidebarProps) => {
                       href={item.route}
                       key={item.route}
                       className={`${isActive
-                        ? 'rounded-xl bg-brand-primary text-white shadow-lg'
+                        ? 'rounded-xl bg-brand-secondary text-text-primary shadow-lg'
                         : 'text-white hover:bg-white/10 rounded-xl'
                         } flex items-center px-4 py-3 text-lg font-medium transition-all duration-200`}
                     >
@@ -100,13 +125,24 @@ const MobileSidebar = ({ variant }: MobileSidebarProps) => {
                     </Link>
                   );
                 })}
+                <form action={signOutAction} className="w-full">
+                  <button
+                    type="submit"
+                    className="w-full text-left text-text-primary hover:bg-brand-secondary/60 rounded-xl flex items-center justify-start gap-3 px-4 py-3 text-xl font-medium transition-all duration-200"
+                  >
+                    <FaSignOutAlt className="text-xl" />
+                    <span>Sign Out</span>
+                  </button>
+                </form>
               </>
             )}
           </div>
           <Separator className="opacity-10" />
-          <div className="flex">
-            <SocialBar />
-          </div>
+          {variant !== 'dashboard' && (
+            <div className="flex">
+              <SocialBar />
+            </div>
+          )}
         </SheetContent>
       </Sheet>
     </div>

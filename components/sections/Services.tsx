@@ -1,122 +1,59 @@
 'use client';
 
-import PriceListCard from '../cards/PriceListCard';
-import PriceListCardList from '../cards/PriceListCardList';
+import PriceListCard from '../cards/ServiceCard';
+import PriceListCardList from '../cards/ServiceCardList';
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { LayoutGrid, List } from 'lucide-react';
 import { cormorant } from '@/app/fonts';
 
-const services = [
-  {
-    icon: '/assets/icons/cut.svg',
-    title: 'Cut and Finish',
-    description: 'Expert precision cutting with professional styling',
-    price: '£75',
-    category: 'cutting'
-  },
-  {
-    icon: '/assets/icons/blowdry.svg',
-    title: 'Blow Dry & Styling',
-    description: 'Luxurious blow dry with beautiful styling',
-    price: '£45',
-    category: 'cutting'
-  },
-  {
-    icon: '/assets/icons/balayage.svg',
-    title: 'Full Lived In Balayage',
-    description: 'Recommended every 9-12 months',
-    price: '£140-£220',
-    highlight: true,
-    category: 'coloring'
-  },
-  {
-    icon: '/assets/icons/balayage.svg',
-    title: 'Maintenance Lived In',
-    description: 'Recommended every 3-6 months',
-    price: '£120-£150',
-    category: 'coloring'
-  },
-  {
-    icon: '/assets/icons/foils_full.svg',
-    title: 'Full Head Foils',
-    description: 'Including toning and root shadowing If required - Recommended every 6-12 months',
-    price: '£130-£220',
-    category: 'colouring'
-  },
-  {
-    icon: '/assets/icons/foils.svg',
-    title: 'Half Head Foils',
-    description: 'Targeted highlighting for a fresh look',
-    price: '£110-£150',
-    category: 'colouring'
-  },
-  {
-    icon: '/assets/icons/colour.svg',
-    title: 'Global Colour',
-    description: 'All-over color transformation',
-    price: 'from £100',
-    category: 'colouring'
-  },
-  {
-    icon: '/assets/icons/roots.svg',
-    title: 'Global Roots',
-    description: 'Root touch-up service',
-    price: 'from £75',
-    category: 'colouring',
-    highlight: true
-  },
-  {
-    icon: '/assets/icons/toning.svg',
-    title: 'Toning Service',
-    description: 'Perfect your colour tone',
-    price: 'from £50',
-    category: 'colouring',
-    highlight: true
-  },
-  {
-    icon: '/assets/icons/bleach.svg',
-    title: 'Global Bleach',
-    description: 'Full bleach application',
-    price: 'On Quotation',
-    category: 'specialist'
-  },
-  {
-    icon: '/assets/icons/kerastase.svg',
-    title: 'Kérastase Fusio',
-    description: 'Luxury treatment for hair health',
-    price: '£25',
-    category: 'treatments'
-  },
-  {
-    icon: '/assets/icons/k18.svg',
-    title: 'K18 Treatment',
-    description: 'Revolutionary molecular repair',
-    price: '£25',
-    category: 'treatments'
-  },
-  {
-    icon: '/assets/icons/grey_blending.svg',
-    title: 'Grey Blending',
-    description: 'Seamless grey coverage for a natural look',
-    price: '£130 - £220',
-    category: 'specialist',
-  },
-  {
-    icon: '/assets/icons/colour_correction.svg',
-    title: 'Refresh Your Colour',
-    description: 'Refresh your colour (Including toning and root shadowing If required)',
-    price: 'On Quotation',
-    category: 'specialist',
-    highlight: true
-  },
-];
+interface Service {
+  id: string;
+  icon: string;
+  title: string;
+  description: string;
+  price: string;
+  is_highlighted: boolean;
+  created_at: string;
+  categories_services: { categories: { id: string; name: string; } | { id: string; name: string; }[]; }[];
+}
 
-export default function PriceList() {
+interface ServicesProps {
+  services: Service[];
+}
+
+export default function Services({ services }: ServicesProps) {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [selectedCategory, setSelectedCategory] = useState('All');
+
+  // Extract unique categories from services
+  const categories = ['All', ...Array.from(
+    new Set(
+      services.flatMap(service =>
+        service.categories_services
+          ?.filter(cs => cs?.categories)
+          .map(cs => {
+            const cat = cs.categories;
+            return Array.isArray(cat) ? cat[0]?.name : cat?.name;
+          })
+          .filter(Boolean) || []
+      )
+    )
+  ).sort()];
+
+  // Filter services based on selected category
+  const filteredServices = selectedCategory === 'All'
+    ? services
+    : services.filter(service =>
+      service.categories_services?.some(cs => {
+        const cat = cs?.categories;
+        const catName = Array.isArray(cat) ? cat[0]?.name : cat?.name;
+        return catName === selectedCategory;
+      })
+    );
 
   return (
-    <section id="prices" className="py-24 bg-linear-to-b from-bg-muted via-bg-section to-bg-section">
+    <section id="services" className="py-24 bg-linear-to-b from-bg-muted via-bg-section to-bg-section">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <motion.div
@@ -136,6 +73,25 @@ export default function PriceList() {
             All prices include consultation and aftercare advice.
           </p>
         </motion.div>
+
+        {/* Category Filter */}
+        <div className="flex flex-wrap justify-center gap-3 mb-8">
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => setSelectedCategory(category)}
+              className={`
+                px-6 py-2 rounded font-medium transition-all duration-300 cursor-pointer
+                ${selectedCategory === category
+                  ? 'bg-interactive-active text-white shadow-lg'
+                  : 'bg-interactive-hover text-brand-primary hover:bg-interactive-active'
+                }
+              `}
+            >
+              {category}
+            </button>
+          ))}
+        </div>
 
         {/* View Toggle */}
         <div className="flex justify-center gap-2 mb-12">
@@ -170,29 +126,44 @@ export default function PriceList() {
         {/* Services Grid/List */}
         {viewMode === 'grid' ? (
           <div className="flex flex-wrap justify-center gap-8 mb-12">
-            {services.map((service, index) => (
+            {filteredServices.map((service, index) => (
               <motion.div
-                key={service.title}
+                key={service.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.05 }}
                 className="w-[320px]"
               >
-                <PriceListCard {...service} />
+                <PriceListCard
+                  id={service.id}
+                  icon={service.icon}
+                  title={service.title}
+                  description={service.description}
+                  price={service.price}
+                  highlight={service.is_highlighted}
+                  categories={service.categories_services?.map((cs: any) => cs.categories).filter(Boolean) || []
+                  }
+                />
               </motion.div>
             ))}
           </div>
         ) : (
           <div className="max-w-7xl mx-auto mb-12">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-              {services.map((service, index) => (
+              {filteredServices.map((service, index) => (
                 <motion.div
-                  key={service.title}
+                  key={service.id}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: index * 0.03 }}
                 >
-                  <PriceListCardList {...service} />
+                  <PriceListCardList
+                    icon={service.icon}
+                    title={service.title}
+                    description={service.description}
+                    price={service.price}
+                    highlight={service.is_highlighted}
+                  />
                 </motion.div>
               ))}
             </div>

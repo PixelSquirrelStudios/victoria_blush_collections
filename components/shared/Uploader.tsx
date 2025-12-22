@@ -125,7 +125,6 @@ export default function Uploader({
       proudlyDisplayPoweredByUppy={false}
       showRemoveButtonAfterComplete
       hideProgressDetails={false}
-      theme="dark"
       width="100%"
       height={500}
       plugins={contentType === 'profiles' ? ['ImageEditor'] : []}
@@ -149,7 +148,7 @@ export default function Uploader({
           </button>
         )}
       </DialogTrigger>
-      <DialogContent className="max-w-full bg-stone-900 text-white xl:max-w-[40vw]">
+      <DialogContent className="max-w-full bg-brand-secondary text-text-primary xl:max-w-[40vw]">
         <DialogHeader>
           <DialogTitle>Upload {previewType}</DialogTitle>
         </DialogHeader>

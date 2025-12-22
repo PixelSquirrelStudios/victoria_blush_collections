@@ -26,3 +26,23 @@ export interface SidebarLink {
   route: string;
   label: string;
 }
+
+export interface SidebarLinkExtended {
+  route: string;
+  label: string;
+  icon: ReactNode;
+}
+
+export interface DashboardCardProps {
+  dashboardCardIcon: ReactNode;
+  dashboardCardCount: promise | number;
+  dashboardCardLabel: string;
+  dashboardCardLabelPlural: string;
+  dashboardCardButtonLink: string;
+  dashboardCardButtonLabel: string;
+}
+
+export type CreateCategoryParams = {
+  name: string;
+  type: string;
+};

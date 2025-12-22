@@ -228,7 +228,7 @@ const Onboarding = ({ profileDetails }: Props) => {
                 Avatar
               </FormLabel>
               <FormControl className="mt-1.5">
-                <div className="flex flex-row items-center justify-center gap-4">
+                <div className="flex flex-row items-center gap-4">
                   {avatarUrl ? (
                     <>
                       <Image

@@ -36,7 +36,7 @@ const ProfileButtonServer = async ({ user, profile }: ProfileButtonProps) => {
     );
   }
 
-  const username =  profile && profile?.username || 'Unknown User';
+  const username = profile && profile?.username || 'Unknown User';
   const avatarUrl = profile && profile?.avatar_url || DEFAULT_AVATAR_URL;
 
   return (
@@ -68,28 +68,19 @@ const ProfileButtonServer = async ({ user, profile }: ProfileButtonProps) => {
               className="rounded-full object-cover border-2 border-text-secondary"
             />
             <div className="flex flex-col">
-              <div className="flex flex-row flex-wrap items-center gap-2">
+              <div className="text-text-primary flex flex-row flex-wrap items-center gap-2">
                 <div className="mt-0.5 font-semibold">{username}</div>
               </div>
             </div>
           </div>
           <Separator className="my-4 opacity-50" />
           <div className="flex flex-col gap-1">
-            {profile?.role === 'admin' && (
-              <Link
-                href="/dashboard"
-                className="w-full flex items-center gap-1.5 py-2 px-2 rounded-xl text-[16px] font-medium transition-colors duration-200 hover:bg-stone-700/50 focus:outline-none focus-visible:ring-0"
-              >
-                <LucideAppWindow className="mr-1 text-xl" />
-                Dashboard
-              </Link>
-            )}
             <Link
-              href="/dashboard/settings"
-              className="w-full flex items-center gap-1.5 py-2 px-2 rounded-xl text-[16px] font-medium transition-colors duration-200 hover:hover:bg-brand-secondary/60 focus:outline-none focus-visible:ring-0"
+              href="/dashboard"
+              className="w-full flex items-center gap-1.5 py-2 px-2 rounded-xl text-[16px] font-medium transition-colors duration-200 hover:bg-stone-700/50 focus:outline-none focus-visible:ring-0"
             >
-              <FaUserCog className="mr-2 text-xl" />
-              Profile Settings
+              <LucideAppWindow className="mr-1 text-xl" />
+              Dashboard
             </Link>
             <form action={signOutAction} className="w-full">
               <button
