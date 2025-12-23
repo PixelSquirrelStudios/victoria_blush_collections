@@ -21,7 +21,7 @@ export default function Hero() {
             <p className="text-text-primary tracking-widest uppercase inline-block pt-3 pb-1">
               Premium Hair Artistry
             </p>
-            <h1 className={`${cormorant.className} text-5xl md:text-[80px] font-semibold uppercase text-bg-dark/95 leading-tight`}>
+            <h1 className={`${cormorant.className} text-6xl max-sm:text-[55px] max-lg:text-6xl xl:text-[80px] font-semibold uppercase text-bg-dark/95 leading-tight text-nowrap`}>
               Victoria Blush
               <span className="block text-5xl md:text-[4rem] text-text-primary/60 tracking-wide">Collections</span>
             </h1>
@@ -62,10 +62,10 @@ export default function Hero() {
               Book Appointment
             </a>
             <a
-              href="#prices"
+              href="#services"
               className="px-8 py-4 bg-brand-primary border-2 border-interactive-hover text-text-primary font-medium tracking-wide rounded-md hover:bg-brand-secondary transition-all duration-300 text-center"
             >
-              View Prices
+              View Services
             </a>
           </div>
           <div className="grid grid-cols-3 gap-8 pt-8 border-t border-border-medium">

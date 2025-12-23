@@ -53,6 +53,7 @@ interface SearchAndFilterProps {
   otherClasses?: string;
   hasButton?: boolean;
   hasAdminButton?: boolean;
+  reorderUrl?: string;
   accordionFilters?: boolean;
   hasCheckboxFilter?: boolean;
   checkboxFilterType?: string;
@@ -91,6 +92,7 @@ const SearchAndFilters = ({
   otherClasses,
   hasButton,
   hasAdminButton,
+  reorderUrl,
   accordionFilters = false,
   hasCheckboxFilter,
   checkboxFilterType,
@@ -284,12 +286,19 @@ const SearchAndFilters = ({
         <div className='flex flex-col items-center gap-4 md:flex-row xl:pl-4'>
           {((currentUser && currentUser.role === 'admin' && hasAdminButton) ||
             hasButton) && (
-              <div>
+              <div className='flex gap-2'>
                 <Link href={contentUrl}>
                   <button className='flex bg-bg-primary rounded-sm px-4 py-1.5 font-semibold tracking-wider text-black/90 hover:bg-bg-primary/90 transition-all duration-300'>
                     Add {contentButtonTitle}
                   </button>
                 </Link>
+                {reorderUrl && currentUser && currentUser.role === 'admin' && (
+                  <Link href={reorderUrl}>
+                    <button className='flex bg-interactive-active rounded-sm px-4 py-1.5 font-semibold tracking-wider text-white hover:bg-interactive-active/90 transition-all duration-300'>
+                      Reorder
+                    </button>
+                  </Link>
+                )}
               </div>
             )}
           <div>

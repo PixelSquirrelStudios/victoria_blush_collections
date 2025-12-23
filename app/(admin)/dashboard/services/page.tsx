@@ -75,6 +75,7 @@ const AllServices = async (props: SearchParamsProps) => {
               otherClasses='flex-1'
               hasButton={false}
               hasAdminButton={true}
+              reorderUrl='/dashboard/services/reorder'
               showResultsCounter={totalServices > 0}
               hasCheckboxFilter={true}
               checkboxFilterType='services'

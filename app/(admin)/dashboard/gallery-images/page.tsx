@@ -75,6 +75,7 @@ const AllGalleryImages = async (props: SearchParamsProps) => {
               otherClasses='flex-1'
               hasButton={false}
               hasAdminButton={true}
+              reorderUrl='/dashboard/gallery-images/reorder'
               showResultsCounter={totalImages > 0}
               hasCheckboxFilter={true}
               checkboxFilterType='images'

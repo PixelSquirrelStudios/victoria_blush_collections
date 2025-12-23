@@ -187,6 +187,7 @@ export async function getAllGalleryImages(params: GetGalleryImagesParams) {
         title,
         description,
         image_url,
+        sort_order,
         created_at,
         categories_images(categories(id, name))
         `,
@@ -226,10 +227,19 @@ export async function getAllGalleryImages(params: GetGalleryImagesParams) {
         images.sort((a, b) => b.title.localeCompare(a.title));
         break;
       default:
-        images.sort(
-          (a, b) =>
+        // Default: sort by sort_order (nulls last), then by created_at
+        images.sort((a, b) => {
+          // Handle sort_order - nulls go to the end
+          if (a.sort_order !== null && b.sort_order !== null) {
+            return a.sort_order - b.sort_order;
+          }
+          if (a.sort_order !== null) return -1;
+          if (b.sort_order !== null) return 1;
+          // Both are null, sort by created_at
+          return (
             new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
-        );
+          );
+        });
         break;
     }
 
@@ -294,6 +304,7 @@ export async function getGalleryImageById(imageId: string) {
         title,
         description,
         image_url,
+        sort_order,
         created_at,
         categories_images(categories(id, name))
         `
@@ -322,10 +333,12 @@ export async function getPublicGalleryImages() {
         title,
         description,
         image_url,
+        sort_order,
         created_at,
         categories_images(categories(id, name))
         `
       )
+      .order('sort_order', { ascending: true, nullsFirst: false })
       .order('created_at', { ascending: true });
 
     if (error) throw error;
@@ -334,6 +347,31 @@ export async function getPublicGalleryImages() {
   } catch (error) {
     console.error('Error fetching public images:', error);
     return { data: null, error };
+  }
+}
+
+export async function updateGalleryImagesOrder(
+  images: { id: string; sort_order: number }[]
+) {
+  try {
+    const supabase = await createClient();
+
+    // Update each image's sort_order
+    for (const image of images) {
+      const { error } = await supabase
+        .from('gallery_images')
+        .update({ sort_order: image.sort_order })
+        .eq('id', image.id);
+
+      if (error) throw error;
+    }
+
+    revalidatePath('/dashboard/gallery-images');
+    revalidatePath('/');
+    return { success: true };
+  } catch (error) {
+    console.error('Error updating images order:', error);
+    throw error;
   }
 }
 

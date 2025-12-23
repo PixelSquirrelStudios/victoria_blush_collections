@@ -207,6 +207,7 @@ export async function getAllServices(params: GetServicesParams) {
         description,
         price,
         is_highlighted,
+        sort_order,
         created_at,
         categories_services(categories(id, name))
         `,
@@ -250,10 +251,19 @@ export async function getAllServices(params: GetServicesParams) {
         services.sort((a, b) => b.title.localeCompare(a.title));
         break;
       default:
-        services.sort(
-          (a, b) =>
+        // Default: sort by sort_order (nulls last), then by created_at
+        services.sort((a, b) => {
+          // Handle sort_order - nulls go to the end
+          if (a.sort_order !== null && b.sort_order !== null) {
+            return a.sort_order - b.sort_order;
+          }
+          if (a.sort_order !== null) return -1;
+          if (b.sort_order !== null) return 1;
+          // Both are null, sort by created_at
+          return (
             new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
-        );
+          );
+        });
         break;
     }
 
@@ -320,6 +330,7 @@ export async function getServiceById(serviceId: string) {
         description,
         price,
         is_highlighted,
+        sort_order,
         created_at,
         categories_services(categories(id, name))
         `
@@ -350,10 +361,12 @@ export async function getPublicServices() {
         description,
         price,
         is_highlighted,
+        sort_order,
         created_at,
         categories_services(categories(id, name))
         `
       )
+      .order('sort_order', { ascending: true, nullsFirst: false })
       .order('created_at', { ascending: true });
 
     if (error) throw error;
@@ -362,6 +375,31 @@ export async function getPublicServices() {
   } catch (error) {
     console.error('Error fetching public services:', error);
     return { data: null, error };
+  }
+}
+
+export async function updateServicesOrder(
+  services: { id: string; sort_order: number }[]
+) {
+  try {
+    const supabase = await createClient();
+
+    // Update each service's sort_order
+    for (const service of services) {
+      const { error } = await supabase
+        .from('services')
+        .update({ sort_order: service.sort_order })
+        .eq('id', service.id);
+
+      if (error) throw error;
+    }
+
+    revalidatePath('/dashboard/services');
+    revalidatePath('/');
+    return { success: true };
+  } catch (error) {
+    console.error('Error updating services order:', error);
+    throw error;
   }
 }
 

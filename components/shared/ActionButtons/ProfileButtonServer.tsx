@@ -77,7 +77,7 @@ const ProfileButtonServer = async ({ user, profile }: ProfileButtonProps) => {
           <div className="flex flex-col gap-1">
             <Link
               href="/dashboard"
-              className="w-full flex items-center gap-1.5 py-2 px-2 rounded-xl text-[16px] font-medium transition-colors duration-200 hover:bg-stone-700/50 focus:outline-none focus-visible:ring-0"
+              className="w-full flex items-center gap-1.5 py-2 px-2 rounded-xl text-[16px] font-medium transition-colors duration-200 hover:bg-brand-secondary/60 focus:outline-none focus-visible:ring-0"
             >
               <LucideAppWindow className="mr-1 text-xl" />
               Dashboard
