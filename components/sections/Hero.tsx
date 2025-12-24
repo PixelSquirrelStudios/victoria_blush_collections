@@ -7,8 +7,6 @@ import { cormorant } from '@/app/fonts';
 export default function Hero() {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-linear-to-br from-rose-50 via-white to-stone-50">
-      <div className="absolute inset-0 bg-[url('/assets/patterns/subtle-dots.svg')] opacity-5"></div>
-
       <div className="container mx-auto px-4 py-20 grid lg:grid-cols-2 gap-12 items-center relative z-10">
         {/* Text Content */}
         <motion.div
@@ -43,6 +41,7 @@ export default function Hero() {
                 src="/assets/images/victoria-hero.jpg"
                 alt="Victoria - Master Hair Stylist"
                 fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover"
                 priority
                 placeholder="blur"
@@ -96,6 +95,7 @@ export default function Hero() {
               src="/assets/images/victoria-hero.jpg"
               alt="Victoria - Master Hair Stylist"
               fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover"
               priority
               placeholder="blur"

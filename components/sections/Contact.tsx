@@ -6,6 +6,7 @@ import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
 import { FaInstagram, FaRegClock } from 'react-icons/fa';
+import { sendContactEmail, type ContactFormData } from '@/lib/actions/contact.actions';
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -21,18 +22,27 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitMessage('');
 
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    try {
+      const result = await sendContactEmail(formData as ContactFormData);
 
-    setSubmitMessage('Thank you! I\'ll get back to you within 24 hours.');
-    setIsSubmitting(false);
-
-    // Reset form
-    setTimeout(() => {
-      setFormData({ name: '', email: '', phone: '', service: '', message: '' });
-      setSubmitMessage('');
-    }, 3000);
+      if (result.success) {
+        setSubmitMessage(result.message || 'Thank you! I\'ll get back to you within 24 hours.');
+        // Reset form after successful submission
+        setTimeout(() => {
+          setFormData({ name: '', email: '', phone: '', service: '', message: '' });
+          setSubmitMessage('');
+        }, 5000);
+      } else {
+        setSubmitMessage(result.error || 'Something went wrong. Please try again.');
+      }
+    } catch (error) {
+      console.error('Form submission error:', error);
+      setSubmitMessage('Failed to send message. Please try emailing hello@victoriablushcollections.co.uk directly.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {

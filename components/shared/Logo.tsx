@@ -97,7 +97,7 @@ export function Logo({
       sizes={sizes}
       priority={priority}
       className={className}
-      style={{ objectFit }}
+      style={{ objectFit, width: 'auto', height: 'auto' }}
     />
   );
 }
