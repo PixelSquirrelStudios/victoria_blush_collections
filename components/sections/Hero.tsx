@@ -21,9 +21,9 @@ export default function Hero() {
             <p className="text-text-primary tracking-widest uppercase inline-block pt-3 pb-1">
               Premium Hair Artistry
             </p>
-            <h1 className={`${cormorant.className} text-6xl max-sm:text-[55px] max-lg:text-6xl xl:text-[80px] font-semibold uppercase text-bg-dark/95 leading-tight text-nowrap`}>
+            <h1 className={`${cormorant.className} text-6xl max-sm:text-[48px] max-lg:text-6xl xl:text-[80px] font-semibold uppercase text-bg-dark/95 leading-tight text-nowrap`}>
               Victoria Blush
-              <span className="block text-5xl md:text-[4rem] text-text-primary/60 tracking-wide">Collections</span>
+              <span className="block text-5xl md:text-[4rem] max-sm:text-[45px] text-text-primary/60 tracking-wide">Collections</span>
             </h1>
             <p className='text-lg text-text-body font-light leading-8 max-w-og-2xl'>
               A calm, friendly space where you can relax and enjoy beautiful hair.

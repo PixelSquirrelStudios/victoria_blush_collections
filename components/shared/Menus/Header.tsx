@@ -33,23 +33,16 @@ const Header = async ({ mobileVariant, isHome = false }: HeaderProps) => {
 
   return (
     <div className="fixed top-0 left-0 z-10000 w-full h-[75px] lg:h-[90px] bg-brand-secondary border-b border-brand-secondary text-stone-800 shadow-md">
-      <div className="flex w-full h-full items-center justify-between px-4 lg:px-24 2xl:px-52">
-        {/* Left: Logo + Mobile sidebar */}
-        <div className="flex items-center max-md:w-full justify-between">
-          <div className="flex-row items-center gap-22 flex">
-            <Link href="/" className="mr-6 lg:mr-10">
-              <div className="h-auto -ml-2.5 px-0" style={{ width: 150 }}>
-                <Logo width={150} height={40} forceTheme="light" />
-              </div>
-            </Link>
+      <div className="flex w-full h-full items-center justify-between px-5 pr-8 md:px-16 lg:px-24 2xl:px-52">
+        {/* Left: Logo */}
+        <Link href="/" className="mr-4 lg:mr-10 shrink-0">
+          <div className="h-auto -ml-2.5 px-0" style={{ width: 150 }}>
+            <Logo width={150} height={40} forceTheme="light" />
           </div>
-          <div className="md:hidden w-full flex justify-end mr-4">
-            <MobileSidebar variant={mobileVariant} />
-          </div>
-        </div>
+        </Link>
 
-        {/* Right: Desktop nav + optional profile */}
-        <div className="flex flex-row items-center gap-6 lg:gap-8">
+        {/* Right: Profile + Nav + Mobile sidebar */}
+        <div className="flex flex-row items-center gap-3 md:gap-6 lg:gap-8">
           {profile ? <ProfileButtonServer user={user} profile={profile} /> : null}
 
           <div className="hidden md:flex items-center gap-8">
@@ -68,6 +61,10 @@ const Header = async ({ mobileVariant, isHome = false }: HeaderProps) => {
             >
               Book Now
             </a>
+          </div>
+
+          <div className="md:hidden shrink-0">
+            <MobileSidebar variant={mobileVariant} />
           </div>
         </div>
       </div>
