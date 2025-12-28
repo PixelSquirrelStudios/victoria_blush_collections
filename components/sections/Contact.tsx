@@ -8,7 +8,17 @@ import { useState } from 'react';
 import { FaInstagram, FaRegClock } from 'react-icons/fa';
 import { sendContactEmail, type ContactFormData } from '@/lib/actions/contact.actions';
 
-export default function Contact() {
+interface ContactProps {
+  subheading?: string;
+  description?: string;
+  address?: string;
+  phone?: string;
+  email?: string;
+  openingHours?: { label: string; value: string; }[];
+  socialUrl?: string;
+}
+
+export default function Contact({ subheading, description, address, phone, email, openingHours, socialUrl }: ContactProps) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -63,13 +73,13 @@ export default function Contact() {
           className="text-center max-w-2xl mx-auto mb-16"
         >
           <p className="text-text-primary tracking-widest uppercase mb-4">
-            Get In Touch
+            {subheading || 'Get In Touch'}
           </p>
           <h2 className={`${cormorant.className} text-4xl md:text-5xl font-medium uppercase text-text-primary mb-6`}>
             Book Your Appointment
           </h2>
           <p className="text-lg text-text-body font-light">
-            Ready for a transformation? Let's create something beautiful together.
+            {description || `Ready for a transformation? Let's create something beautiful together.`}
           </p>
 
           <Link href="https://victoria-blush-collections-limited.book.app/book-now" target="_blank" rel="noopener noreferrer">
@@ -103,10 +113,8 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="font-semibold text-text-primary mb-1">Location</p>
-                    <p className="text-text-body">
-                      Bodi Studios, Unit 8,<br />
-                      Wilcox House,<br />
-                      Cardiff CF11 0BA
+                    <p className="text-text-body whitespace-pre-line">
+                      {address || 'Bodi Studios, Unit 8,\nWilcox House,\nCardiff CF11 0BA'}
                     </p>
                   </div>
                 </div>
@@ -117,8 +125,8 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="font-semibold text-text-primary mb-1">Phone</p>
-                    <a href="tel:07946722683" className="text-text-body hover:text-text-primary transition-colors">
-                      07946 722 683
+                    <a href={phone ? `tel:${phone}` : 'tel:07946722683'} className="text-text-body hover:text-text-primary transition-colors">
+                      {phone || '07946 722 683'}
                     </a>
                   </div>
                 </div>
@@ -129,8 +137,8 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="font-semibold text-text-primary mb-1">Email</p>
-                    <a href="mailto:hello@victoriablushcollections.com" className="text-text-body hover:text-text-primary transition-colors">
-                      hello@victoriablushcollections.com
+                    <a href={email ? `mailto:${email}` : 'mailto:hello@victoriablushcollections.com'} className="text-text-body hover:text-text-primary transition-colors">
+                      {email || 'hello@victoriablushcollections.com'}
                     </a>
                   </div>
                 </div>
@@ -142,12 +150,20 @@ export default function Contact() {
                   <div>
                     <p className="font-semibold text-text-primary mb-1">Opening Hours</p>
                     <div className="text-text-body space-y-1">
-                      <p>Monday & Tuesday: 9:00 AM - 7:00 PM (Alternating Weeks)</p>
-                      <p>Wednesday: 9:00 AM - 7:00 PM</p>
-                      <p>Thursday: CLOSED</p>
-                      <p>Friday: 9:00 AM - 5:00 PM</p>
-                      <p>Saturday: 8:00 AM - 4:00 PM</p>
-                      <p>Sunday: CLOSED</p>
+                      {openingHours && openingHours.length > 0 ? (
+                        openingHours.map((oh, idx) => (
+                          <p key={idx}>{oh.label}{oh.value ? `: ${oh.value}` : ''}</p>
+                        ))
+                      ) : (
+                        <>
+                          <p>Monday & Tuesday: 9:00 AM - 7:00 PM (Alternating Weeks)</p>
+                          <p>Wednesday: 9:00 AM - 7:00 PM</p>
+                          <p>Thursday: CLOSED</p>
+                          <p>Friday: 9:00 AM - 5:00 PM</p>
+                          <p>Saturday: 8:00 AM - 4:00 PM</p>
+                          <p>Sunday: CLOSED</p>
+                        </>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -159,12 +175,12 @@ export default function Contact() {
                   <div>
                     <p className="font-semibold text-text-primary mb-1">Social Media</p>
                     <a
-                      href="https://instagram.com/victoriablushcollections"
+                      href={socialUrl ? `https://www.instagram.com/${socialUrl}` : 'https://www.instagram.com/victoriablushcollections'}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-text-body hover:text-text-primary transition-colors"
                     >
-                      @victoriablushcollections
+                      @{socialUrl || 'victoriablushcollections'}
                     </a>
                   </div>
                 </div>

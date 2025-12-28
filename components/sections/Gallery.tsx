@@ -28,9 +28,11 @@ interface GalleryImage {
 
 interface GalleryProps {
   images: GalleryImage[];
+  subheading?: string;
+  description?: string;
 }
 
-export default function Gallery({ images }: GalleryProps) {
+export default function Gallery({ images, subheading, description }: GalleryProps) {
   // Extract unique categories from images
   const uniqueCategories = useMemo(
     () => [
@@ -277,7 +279,7 @@ export default function Gallery({ images }: GalleryProps) {
           className="text-center max-w-2xl mx-auto mb-12"
         >
           <p className="text-text-primary tracking-widest uppercase mb-4">
-            Portfolio
+            {subheading || 'Portfolio'}
           </p>
           <h2
             className={`${cormorant.className} text-4xl md:text-5xl font-medium uppercase text-text-primary mb-6`}
@@ -285,7 +287,7 @@ export default function Gallery({ images }: GalleryProps) {
             My Latest Work
           </h2>
           <p className="text-lg text-text-body font-light">
-            Explore transformations that celebrate individuality and style
+            {description || 'Explore transformations that celebrate individuality and style'}
           </p>
         </motion.div>
 

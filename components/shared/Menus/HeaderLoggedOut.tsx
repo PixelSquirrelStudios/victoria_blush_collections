@@ -16,7 +16,7 @@ export default function HeaderLoggedOut({ mobileVariant }: HeaderLoggedOutProps)
           <div className="hidden flex-row items-center gap-22 lg:flex">
             <Link href="/" className="mr-6 lg:mr-10">
               <div className="h-auto w-[280px] -ml-2.5 px-0">
-                <Logo width={200} height={40} />
+                <Logo width={280} height={40} sizes="280px" />
               </div>
             </Link>
           </div>

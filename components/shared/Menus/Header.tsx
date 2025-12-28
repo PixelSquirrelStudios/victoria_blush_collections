@@ -35,8 +35,8 @@ const Header = async ({ mobileVariant, isHome = false }: HeaderProps) => {
     <div className="fixed top-0 left-0 z-10000 w-full h-[75px] lg:h-[90px] bg-brand-secondary border-b border-brand-secondary text-stone-800 shadow-md">
       <div className="flex w-full h-full items-center justify-between px-5 pr-8 md:px-16 lg:px-24 2xl:px-52">
         {/* Left: Logo */}
-        <Link href="/" className="mr-4 lg:mr-10 shrink-0">
-          <Logo width={150} height={40} forceTheme="light" className="h-auto" />
+        <Link href="/" className="mr-4 lg:mr-10">
+          <Logo width={280} height={40} forceTheme="light" sizes="180px" />
         </Link>
 
         {/* Right: Profile + Nav + Mobile sidebar */}

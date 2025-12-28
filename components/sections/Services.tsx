@@ -20,9 +20,12 @@ interface Service {
 
 interface ServicesProps {
   services: Service[];
+  subheading?: string;
+  description?: string;
+  importantNotice?: string;
 }
 
-export default function Services({ services }: ServicesProps) {
+export default function Services({ services, subheading, description, importantNotice }: ServicesProps) {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [selectedCategory, setSelectedCategory] = useState('All');
 
@@ -63,14 +66,13 @@ export default function Services({ services }: ServicesProps) {
           className="text-center max-w-2xl mx-auto mb-8"
         >
           <p className="text-text-primary tracking-widest uppercase mb-4">
-            Transparent Pricing
+            {subheading || 'Transparent Pricing'}
           </p>
           <h2 className={`${cormorant.className} text-4xl md:text-5xl font-medium uppercase text-text-primary mb-6`}>
             Services & Pricing
           </h2>
           <p className="text-lg text-text-body font-light">
-            Premium hair services tailored to your unique style and needs.
-            All prices include consultation and aftercare advice.
+            {description || 'Premium hair services tailored to your unique style and needs. All prices include consultation and aftercare advice.'}
           </p>
         </motion.div>
 
@@ -184,8 +186,7 @@ export default function Services({ services }: ServicesProps) {
               <div className="w-2 h-2 bg-text-primary rounded-full animate-pulse"></div>
             </div>
             <p className="text-text-secondary font-light leading-relaxed">
-              A skin test is required if it's your first visit with me or if you haven't had
-              your hair colored for 6 months. This ensures your safety and the best results.
+              {importantNotice || `A skin test is required if it's your first visit with me or if you haven't had your hair colored for 6 months. This ensures your safety and the best results.`}
             </p>
           </div>
         </motion.div>

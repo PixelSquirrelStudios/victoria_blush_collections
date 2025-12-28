@@ -1,10 +1,15 @@
-'use client';
 
+'use client';
 import { cormorant } from '@/app/fonts';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
-export default function About() {
+interface AboutProps {
+  aboutDescription: string;
+}
+
+export default function About({ aboutDescription }: AboutProps) {
+
   return (
     <section id="about" className="py-24 bg-bg-subtle">
       <div className="container mx-auto px-6">
@@ -51,34 +56,11 @@ export default function About() {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="space-y-6 text-text-body font-light"
             >
-              <p className="text-base leading-7">
-                Hi, I'm Victoria — freelance hairstylist, educator and mum of four (yes… four. Coffee is my personality at this point).
-                I founded and ran Blush in Llandaff, one of Cardiff's most loved salons, before deciding it was time to swap the hustle of running a full team for something more personal — and a lot more peaceful.
-              </p>
-
-              <p className="text-base leading-7">
-                Now I work 1:1 with clients in a calm, friendly space where you will feel free to relax, gossip, offload, laugh, or hide from your responsibilities for a couple of hours. Wanting some quiet time? Perfect. Want to talk about your ex, your job, your dog, life crisis, and everything in between? Even better — I've heard it all.
-              </p>
-
-              <p className="text-base leading-7">
-                I'm known for genuinely seeing people — I listen, I support, I'm honest, which also means I'll gently steer you away from hair ideas you'll regret by the weekend. My goal is simple: hair that suits your vibe, your lifestyle, and your sanity. That's something we will work out together.
-              </p>
-
-              <p className="text-base leading-7">
-                Alongside my freelance work, I also train stylists to meet their potential in colour, cutting, consultation and client care — so yes, I am a bit obsessed with neat blends, perfect placement and making sure your hair behaves when you're not here.
-              </p>
-
-              <p className="text-base leading-7">
-                My chair is a welcoming place for everyone — all ages, all styles, all stages of life.
-              </p>
-
-              <p className="text-base leading-7">
-                If you are looking for hair that feels like you, whether that be a trim, a huge transformation, I'd love to look after you to feel fully yourself.
-              </p>
-
-              <p className="text-base leading-7 italic">
-                (And if you leave feeling amazing and slightly addicted to coming back… don't say I didn't warn you.)
-              </p>
+              {aboutDescription.split(/\r?\n/).filter(Boolean).map((para, idx) => (
+                <p key={idx} className="text-base leading-7">
+                  {para}
+                </p>
+              ))}
               {/* CTA Button */}
               <div className="pt-6">
                 <a
@@ -92,6 +74,6 @@ export default function About() {
           </div>
         </div>
       </div>
-    </section>
+    </section >
   );
 }
