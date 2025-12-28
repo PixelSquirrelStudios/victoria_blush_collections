@@ -36,6 +36,7 @@ const EditHomepageForm = ({ homepageData, currentUser }: Props) => {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const [activeTab, setActiveTab] = useState('hero');
   const form = useForm<z.infer<typeof HomepageSchema>>({
     resolver: zodResolver(HomepageSchema),
     defaultValues: {
@@ -117,7 +118,7 @@ const EditHomepageForm = ({ homepageData, currentUser }: Props) => {
         </div>
 
         <form onSubmit={form.handleSubmit(onSubmit)} className="flex h-full w-full flex-col gap-10">
-          <Tabs defaultValue="hero" className="w-full">
+          <Tabs defaultValue="hero" className="w-full" onValueChange={setActiveTab}>
             <TabsList className="grid w-full grid-cols-3 lg:grid-cols-6 gap-2 h-auto bg-brand-primary p-2 mb-4">
               <TabsTrigger value="hero">Hero</TabsTrigger>
               <TabsTrigger value="about">About</TabsTrigger>
@@ -172,18 +173,27 @@ const EditHomepageForm = ({ homepageData, currentUser }: Props) => {
                             </div>
                           </button>
                         )}
-                        <Uploader
-                          type="modal"
-                          userId={currentUser.user_id}
-                          contentType="homepage"
-                          onUpload={(path) => {
-                            if (path) field.onChange(path);
-                          }}
-                          previewType="image"
-                          bucketName="images"
-                          folderPath="homepage"
-                          fileAttached={field.value || null}
-                        />
+                        {activeTab === 'hero' && (
+                          <Uploader
+                            key={`hero-uploader-${field.value || ''}`}
+                            type="modal"
+                            userId={currentUser.user_id}
+                            contentType="homepage"
+                            uppyId="hero-uploader"
+                            onUpload={(path) => {
+                              if (path) {
+                                const fullUrl = path.startsWith('http')
+                                  ? path
+                                  : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${path}`;
+                                field.onChange(fullUrl);
+                              }
+                            }}
+                            previewType="image"
+                            bucketName="images"
+                            folderPath="homepage"
+                            fileAttached={field.value || null}
+                          />
+                        )}
                       </div>
                     </FormControl>
                     <FormDescription>
@@ -276,18 +286,27 @@ const EditHomepageForm = ({ homepageData, currentUser }: Props) => {
                             </button>
                           </>
                         )}
-                        <Uploader
-                          type="modal"
-                          userId={currentUser.user_id}
-                          contentType="about"
-                          onUpload={(path) => {
-                            if (path) field.onChange(path);
-                          }}
-                          previewType="image"
-                          bucketName="images"
-                          folderPath="homepage"
-                          fileAttached={field.value || null}
-                        />
+                        {activeTab === 'about' && (
+                          <Uploader
+                            key={`about-uploader-${field.value || ''}`}
+                            type="modal"
+                            userId={currentUser.user_id}
+                            contentType="about"
+                            uppyId="about-uploader"
+                            onUpload={(path) => {
+                              if (path) {
+                                const fullUrl = path.startsWith('http')
+                                  ? path
+                                  : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${path}`;
+                                field.onChange(fullUrl);
+                              }
+                            }}
+                            previewType="image"
+                            bucketName="images"
+                            folderPath="homepage"
+                            fileAttached={field.value || null}
+                          />
+                        )}
                       </div>
                     </FormControl>
                     <FormDescription>

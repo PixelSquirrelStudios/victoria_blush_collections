@@ -31,6 +31,7 @@ interface Props {
   contentType?: string;
   previewType?: 'image' | 'video';
   fileAttached: string | null;
+  uppyId?: string;
 }
 
 export default function Uploader({
@@ -42,12 +43,21 @@ export default function Uploader({
   previewType = 'image',
   contentType,
   fileAttached,
+  uppyId,
 }: Props) {
   const [open, setOpen] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  // Ensure fileAttached is unique per uploader instance
+  const [localFileAttached, setLocalFileAttached] = useState<string | null>(fileAttached || null);
+  // Sync with prop if it changes
+  useEffect(() => {
+    setLocalFileAttached(fileAttached || null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fileAttached, uppyId]);
 
   const uppy = useMemo(() => {
     const u = new Uppy({
+      id: uppyId || `uppy-${Math.random().toString(36).substring(2, 10)}`,
       restrictions: {
         maxNumberOfFiles: 1,
         allowedFileTypes: ['image/*', 'video/*'],
@@ -97,6 +107,7 @@ export default function Uploader({
         if (error)
           showCustomToast({ title: 'Upload failed', message: error.message, variant: 'error' });
         else {
+          setLocalFileAttached(path);
           onUpload(path);
           showCustomToast({
             title: 'Upload successful',
@@ -116,10 +127,19 @@ export default function Uploader({
     return u;
   }, [bucketName, folderPath, userId, onUpload, contentType]);
 
-  useEffect(() => () => uppy.destroy(), [uppy]);
+  useEffect(() => {
+    return () => {
+      try {
+        uppy.close({ reason: 'unmount' });
+        uppy.reset();
+        uppy.destroy();
+      } catch (e) { }
+    };
+  }, [uppy]);
 
   const dashboard = (
     <Dashboard
+      key={`dashboard-${uppyId || ''}-${Date.now()}`}
       uppy={uppy}
       hideUploadButton
       proudlyDisplayPoweredByUppy={false}
@@ -127,8 +147,9 @@ export default function Uploader({
       hideProgressDetails={false}
       width="100%"
       height={500}
-      plugins={contentType === 'profiles' ? ['ImageEditor'] : []}
-      autoOpen={contentType === 'profiles' ? 'imageEditor' : null}
+      {...(contentType === 'profiles'
+        ? { plugins: ['ImageEditor'], autoOpen: 'imageEditor' }
+        : {})}
       onRequestCloseModal={() => { }}
     />
   );
@@ -138,7 +159,7 @@ export default function Uploader({
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        {!fileAttached && (
+        {!localFileAttached && (
           <button
             disabled={isUploading}
             className="flex items-center justify-center gap-2 rounded-md bg-bg-primary hover:bg-bg-muted text-text-primary px-4 py-1 text-lg"

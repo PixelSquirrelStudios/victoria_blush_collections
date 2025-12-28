@@ -39,7 +39,7 @@ export default function About({ aboutDescription, aboutImageUrl }: AboutProps) {
             >
               <div className="relative aspect-3/4 rounded-2xl overflow-hidden shadow-2xl">
                 <Image
-                  src={aboutImageUrl || "/assets/images/victoria.jpg"}
+                  src={aboutImageUrl && aboutImageUrl !== '' ? aboutImageUrl : '/assets/images/victoria.jpg'}
                   alt="Victoria - Freelance Hairstylist"
                   fill
                   className="object-cover"
