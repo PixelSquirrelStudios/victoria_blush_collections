@@ -128,7 +128,7 @@ const EditUserForm = ({ profileDetails }: Props) => {
               userId: profileId,
               username: form.getValues('username'),
               avatar_url: '',
-              has_onboarded: form.getValues('has_onboarded'),
+              has_onboarded: parsedProfileDetails?.has_onboarded ?? false,
               path: pathname,
             });
           } catch (err) {
@@ -162,7 +162,7 @@ const EditUserForm = ({ profileDetails }: Props) => {
             userId: profileId,
             username: form.getValues('username'),
             avatar_url: '',
-            has_onboarded: form.getValues('has_onboarded'),
+            has_onboarded: parsedProfileDetails?.has_onboarded ?? false,
             path: pathname,
           });
           setAvatarUrl('');

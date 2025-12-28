@@ -200,7 +200,7 @@ const AddGalleryImageForm = ({ type, currentUser, imageDetails }: Props) => {
           imageId,
           image_url: '',
           title: form.getValues('title'),
-          description: form.getValues('description'),
+          description: form.getValues('description') || '',
           categories: selectedCategories.map((c) => c.label || c.value),
           path: pathname,
         });
