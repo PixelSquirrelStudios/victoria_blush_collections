@@ -118,18 +118,34 @@ const EditUserForm = ({ profileDetails }: Props) => {
       const removed = await deleteFileFromSupabase(relativePath);
 
       if (removed) {
-        const updated = await updateImageInDatabase();
-        if (updated) {
-          setAvatarUrl('');
-          form.setValue('avatar_url', '');
-          form.trigger('avatar_url');
-          showCustomToast({
-            title: "Success",
-            message: "File removed successfully",
-            variant: "success",
-            autoDismiss: true,
-          });
+        setAvatarUrl('');
+        form.setValue('avatar_url', '');
+        form.trigger('avatar_url');
+        // Immediately update the DB column to '' as well
+        if (profileId) {
+          try {
+            await updateUser({
+              userId: profileId,
+              username: form.getValues('username'),
+              avatar_url: '',
+              has_onboarded: form.getValues('has_onboarded'),
+              path: pathname,
+            });
+          } catch (err) {
+            showCustomToast({
+              title: 'Warning',
+              message: 'Avatar removed locally, but failed to update user in database.',
+              variant: 'error',
+              autoDismiss: true,
+            });
+          }
         }
+        showCustomToast({
+          title: "Success",
+          message: "File removed successfully",
+          variant: "success",
+          autoDismiss: true,
+        });
       } else {
         showCustomToast({
           title: "Error",
@@ -140,24 +156,32 @@ const EditUserForm = ({ profileDetails }: Props) => {
       }
     } else {
       // It's an external URL, so simply set avatar_url to null in the database
-      const updated = await updateImageInDatabase();
-      if (updated) {
-        setAvatarUrl('');
-        form.setValue('avatar_url', '');
-        form.trigger('avatar_url');
-        showCustomToast({
-          title: "Success",
-          message: "Avatar removed successfully",
-          variant: "success",
-          autoDismiss: true,
-        });
-      } else {
-        showCustomToast({
-          title: "Error",
-          message: "Could not update the image in the database",
-          variant: "error",
-          autoDismiss: true,
-        });
+      if (profileId) {
+        try {
+          await updateUser({
+            userId: profileId,
+            username: form.getValues('username'),
+            avatar_url: '',
+            has_onboarded: form.getValues('has_onboarded'),
+            path: pathname,
+          });
+          setAvatarUrl('');
+          form.setValue('avatar_url', '');
+          form.trigger('avatar_url');
+          showCustomToast({
+            title: "Success",
+            message: "Avatar removed successfully",
+            variant: "success",
+            autoDismiss: true,
+          });
+        } catch (err) {
+          showCustomToast({
+            title: "Error",
+            message: "Could not update the image in the database",
+            variant: "error",
+            autoDismiss: true,
+          });
+        }
       }
     }
   };

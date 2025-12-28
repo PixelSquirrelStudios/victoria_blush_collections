@@ -78,7 +78,7 @@ const MobileSidebar = ({ variant }: MobileSidebarProps) => {
           <div className="flex flex-start flex-col gap-4 py-4">
             {variant === 'dashboard' && (
               <div>
-                <Logo sizes='small' className="h-18 w-auto" />
+                <Logo sizes='200px' className="h-18 w-auto" />
               </div>
             )}
             {(showDashboardMenu ? dashboardLinks : sidebarLinks).map((item) => {

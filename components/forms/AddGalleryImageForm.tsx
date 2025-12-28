@@ -193,6 +193,26 @@ const AddGalleryImageForm = ({ type, currentUser, imageDetails }: Props) => {
 
     setImageUrl('');
     form.setValue('image_url', '');
+    // Immediately update the DB column to '' as well
+    if (type === 'Edit' && imageId) {
+      try {
+        await editGalleryImage({
+          imageId,
+          image_url: '',
+          title: form.getValues('title'),
+          description: form.getValues('description'),
+          categories: selectedCategories.map((c) => c.label || c.value),
+          path: pathname,
+        });
+      } catch (err) {
+        showCustomToast({
+          title: 'Warning',
+          message: 'Image removed locally, but failed to update image in database.',
+          variant: 'error',
+          autoDismiss: true,
+        });
+      }
+    }
     showCustomToast({
       title: 'Success',
       message: 'Image removed successfully.',

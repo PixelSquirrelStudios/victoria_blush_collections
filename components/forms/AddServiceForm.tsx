@@ -200,6 +200,28 @@ const AddServiceForm = ({ type, currentUser, serviceDetails }: Props) => {
 
     setIconUrl('');
     form.setValue('icon', '');
+    // Immediately update the DB column to '' as well
+    if (type === 'Edit' && serviceId) {
+      try {
+        await editService({
+          serviceId,
+          icon: '',
+          title: form.getValues('title'),
+          description: form.getValues('description'),
+          price: form.getValues('price'),
+          categories: selectedCategories.map((c) => c.label || c.value),
+          is_highlighted: form.getValues('is_highlighted'),
+          path: pathname,
+        });
+      } catch (err) {
+        showCustomToast({
+          title: 'Warning',
+          message: 'Icon removed locally, but failed to update service in database.',
+          variant: 'error',
+          autoDismiss: true,
+        });
+      }
+    }
     showCustomToast({
       title: 'Success',
       message: 'Icon removed successfully.',

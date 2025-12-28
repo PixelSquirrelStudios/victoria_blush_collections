@@ -21,6 +21,7 @@ import {
 } from '../ui/dialog';
 import { FaImage } from 'react-icons/fa';
 import { createClient } from '@/lib/supabase/client';
+import { deleteFileFromSupabase } from '@/lib/supabase/deleteFileFromSupabase';
 
 interface Props {
   type: 'standard' | 'modal';
