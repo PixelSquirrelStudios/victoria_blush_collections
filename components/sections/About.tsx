@@ -6,9 +6,10 @@ import Image from 'next/image';
 
 interface AboutProps {
   aboutDescription: string;
+  aboutImageUrl?: string;
 }
 
-export default function About({ aboutDescription }: AboutProps) {
+export default function About({ aboutDescription, aboutImageUrl }: AboutProps) {
 
   return (
     <section id="about" className="py-24 bg-bg-subtle">
@@ -38,7 +39,7 @@ export default function About({ aboutDescription }: AboutProps) {
             >
               <div className="relative aspect-3/4 rounded-2xl overflow-hidden shadow-2xl">
                 <Image
-                  src="/assets/images/victoria.jpg"
+                  src={aboutImageUrl || "/assets/images/victoria.jpg"}
                   alt="Victoria - Freelance Hairstylist"
                   fill
                   className="object-cover"
