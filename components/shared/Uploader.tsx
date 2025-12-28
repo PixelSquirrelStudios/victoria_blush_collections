@@ -130,8 +130,6 @@ export default function Uploader({
   useEffect(() => {
     return () => {
       try {
-        uppy.close({ reason: 'unmount' });
-        uppy.reset();
         uppy.destroy();
       } catch (e) { }
     };
