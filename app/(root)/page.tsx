@@ -23,7 +23,7 @@ export default async function Home() {
         subheading={homepageData?.hero_subheading}
         description={homepageData?.hero_description}
       />
-      <About aboutDescription={homepageData?.about_description || ''} />
+      <About aboutDescription={homepageData?.about_description || ''} aboutImageUrl={homepageData?.about_image_url || ''} />
       <Services
         services={services || []}
         subheading={homepageData?.services_subheading}
