@@ -113,27 +113,27 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({
     playNotificationSound();
   };
 
-  const updateDatabase = async (value: boolean) => {
-    if (!userId) return;
-    try {
-      const supabase = createClient();
-      const { error } = await supabase
-        .from('profiles')
-        .update({ app_audio_enabled: value })
-        .eq('id', userId);
+  // const updateDatabase = async (value: boolean) => {
+  //   if (!userId) return;
+  //   try {
+  //     const supabase = createClient();
+  //     const { error } = await supabase
+  //       .from('profiles')
+  //       .update({ app_audio_enabled: value })
+  //       .eq('id', userId);
 
-      if (error) console.error('DB update error:', error.message);
-    } catch (err) {
-      console.error('Supabase update failed:', err);
-    }
-  };
+  //     if (error) console.error('DB update error:', error.message);
+  //   } catch (err) {
+  //     console.error('Supabase update failed:', err);
+  //   }
+  // };
 
   const setAudioState = async (value: boolean) => {
     console.log('Setting audio state to:', value);
     setAudioEnabled(value);
     if (typeof window !== 'undefined')
       localStorage.setItem('audioEnabled', value.toString());
-    await updateDatabase(value);
+    //await updateDatabase(value);
     if (value) {
       // Small delay to ensure state is updated
       setTimeout(() => playNotificationSound(), 100);
@@ -163,7 +163,7 @@ export const AudioProvider: React.FC<AudioProviderProps> = ({
     setAudioEnabled(newValue);
     if (typeof window !== 'undefined')
       localStorage.setItem('audioEnabled', newValue.toString());
-    await updateDatabase(newValue);
+    //await updateDatabase(newValue);
   };
 
   if (!mounted) return null;
