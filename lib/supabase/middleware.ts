@@ -50,6 +50,12 @@ export async function updateSession(request: NextRequest) {
   // Callback routes need to work for authentication flow
   const isCallbackRoute = url.pathname.startsWith('/auth/');
 
+  // Redirect unauthenticated users away from dashboard routes
+  if (!user && url.pathname.startsWith('/dashboard')) {
+    url.pathname = '/';
+    return NextResponse.redirect(url);
+  }
+
   // Redirect authenticated users away from auth pages (except callback routes)
   if (user && isAuthPage && !isCallbackRoute) {
     url.pathname = '/';

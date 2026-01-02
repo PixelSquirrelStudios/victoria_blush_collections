@@ -30,6 +30,9 @@ CREATE TABLE IF NOT EXISTS public.homepage (
   
   -- Footer section
   footer_description TEXT NOT NULL,
+
+  -- Maintenance mode
+  enable_maintenance BOOLEAN DEFAULT FALSE,
   
   -- Timestamps
   created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc'::text, NOW()) NOT NULL,

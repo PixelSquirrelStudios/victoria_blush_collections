@@ -13,6 +13,8 @@ export const metadata: Metadata = {
 };
 
 // move user fetch into an async child so Suspense can handle it
+import { getHomepageData } from '@/lib/actions/homepage.actions';
+
 async function UserWrapper({
   children,
 }: {
@@ -20,11 +22,13 @@ async function UserWrapper({
 }) {
   const user = await fetchUserData();
   const userId = user?.profile?.id;
+  const { data: homepageData } = await getHomepageData();
+  const showHeader = !(homepageData?.enable_maintenance && !user?.user);
   return (
     <div className="w-full h-full">
       <AudioProvider userId={userId}>
         <HashScrollHandler />
-        <Header mobileVariant="main" isHome={true} />
+        {showHeader && <Header mobileVariant="main" isHome={true} />}
         {children}
       </AudioProvider>
     </div>

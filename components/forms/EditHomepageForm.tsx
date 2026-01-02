@@ -26,6 +26,7 @@ import { showCustomToast } from '@/components/shared/CustomToast';
 import Uploader from '../shared/Uploader';
 import { FaTrash, FaPlus } from 'react-icons/fa';
 import Image from 'next/image';
+import { Switch } from '../ui/switch';
 
 interface Props {
   currentUser: any;
@@ -58,6 +59,7 @@ const EditHomepageForm = ({ homepageData, currentUser }: Props) => {
       opening_hours: homepageData?.opening_hours || [{ label: '', value: '' }],
       contact_social_media_url: homepageData?.contact_social_media_url || '',
       footer_description: homepageData?.footer_description || '',
+      enable_maintenance: homepageData?.enable_maintenance || false,
     },
   });
 
@@ -127,6 +129,26 @@ const EditHomepageForm = ({ homepageData, currentUser }: Props) => {
               <TabsTrigger value="contact">Contact</TabsTrigger>
               <TabsTrigger value="footer">Footer</TabsTrigger>
             </TabsList>
+
+            <FormField
+              control={form.control}
+              name="enable_maintenance"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4 shadow-sm bg-white mb-4">
+                  <div>
+                    <FormLabel className="text-md">Enable Maintenance Mode</FormLabel>
+                    <FormDescription>
+                      When enabled, the Homepage will show a Maintenance message to visitors who are not signed in.
+                    </FormDescription>
+                  </div>
+                  <FormControl>
+                    <div className="pl-4">
+                      <Switch checked={!!field.value} onCheckedChange={field.onChange} />
+                    </div>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
 
             {/* Hero Tab */}
             <TabsContent value="hero" className="space-y-6">
@@ -642,6 +664,7 @@ const EditHomepageForm = ({ homepageData, currentUser }: Props) => {
               />
             </TabsContent>
           </Tabs>
+
 
           <Button
             type="submit"

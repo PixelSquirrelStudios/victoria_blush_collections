@@ -1,4 +1,5 @@
 
+
 import Hero from '@/components/sections/Hero';
 import About from '@/components/sections/About';
 import Gallery from '@/components/sections/Gallery';
@@ -9,12 +10,21 @@ import { getHomepageData } from '@/lib/actions/homepage.actions';
 import { getPublicServices } from '@/lib/actions/service.actions';
 import { getPublicGalleryImages } from '@/lib/actions/image.actions';
 import Services from '@/components/sections/Services';
+import Maintenance from '@/components/sections/Maintenance';
+import { fetchUserData } from '../hooks/useUser';
 
 
 export default async function Home() {
   const { data: services } = await getPublicServices();
   const { data: galleryImages } = await getPublicGalleryImages();
   const { data: homepageData } = await getHomepageData();
+  const { user } = await fetchUserData();
+
+  // If maintenance mode is enabled and user is not signed in, show Maintenance page
+  if (homepageData?.enable_maintenance && !user) {
+    return <Maintenance />;
+  }
+
   return (
     <main className="min-h-screen">
       <HashScrollHandler />

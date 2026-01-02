@@ -138,4 +138,7 @@ export const HomepageSchema = z.object({
   footer_description: z
     .string()
     .min(1, { message: 'Footer description is required' }),
+
+  // Maintenance mode
+  enable_maintenance: z.boolean().optional(),
 });
