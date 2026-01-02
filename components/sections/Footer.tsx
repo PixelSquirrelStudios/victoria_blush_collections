@@ -53,7 +53,7 @@ export default function Footer({ description }: FooterProps) {
                 <FaFacebookF className="w-5 h-5" />
               </a>
               <a
-                href="mailto:hello@victoriablush.com"
+                href="mailto:hello@victoriablushcollections.co.uk"
                 className="p-3 bg-brand-primary rounded-full hover:bg-brand-primary-hover transition-colors duration-300"
                 aria-label="Email"
               >
