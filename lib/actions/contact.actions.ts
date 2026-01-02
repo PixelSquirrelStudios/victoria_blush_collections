@@ -49,9 +49,8 @@ export async function sendContactEmail(formData: ContactFormData) {
 
     // Send email using Resend
     const { data, error } = await resend.emails.send({
-      from: 'Victoria Blush Collections <onboarding@resend.dev>',
-      //to: ['hello@victoriablushcollections.co.uk'],
-      to: ['onboarding@resend.dev'], // Temporary for testing
+      from: 'Victoria Blush Collections <hello@victoriablushcollections.co.uk>',
+      to: ['hello@victoriablushcollections.co.uk'],
       replyTo: email,
       subject: `New Contact Form Submission - ${serviceName}`,
       html: `
