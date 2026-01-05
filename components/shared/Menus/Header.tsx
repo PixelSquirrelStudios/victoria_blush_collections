@@ -32,7 +32,7 @@ const Header = async ({ mobileVariant, isHome = false }: HeaderProps) => {
   const bookNowHref = isHome ? '#contact' : '/#contact';
 
   return (
-    <div className="fixed top-0 left-0 z-10000 w-full h-[75px] lg:h-[90px] bg-brand-secondary border-b border-brand-secondary text-stone-800 shadow-md flex items-center px-8 2xl:px-52">
+    <div className="fixed top-0 left-0 z-10000 w-full h-[75px] lg:h-[90px] bg-brand-secondary border-b border-brand-secondary text-stone-800 shadow-md flex items-center px-12 2xl:px-52">
 
       <div className="shrink-0">
         {/* Left: Logo */}
