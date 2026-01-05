@@ -84,7 +84,6 @@ export default function ResetPassword() {
             className="w-full object-contain max-w-[300px]"
             width={300}
             height={200}
-            forceTheme="light"
           />
         </div>
         <Separator className="opacity-20" />
