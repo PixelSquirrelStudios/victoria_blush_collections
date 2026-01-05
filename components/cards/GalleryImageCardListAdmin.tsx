@@ -46,7 +46,7 @@ export default function GalleryImageCardListAdmin({
               <Badge
                 key={category.id}
                 variant="default"
-                className="text-xs"
+                className="text-xs bg-interactive-active text-white"
               >
                 {category.name}
               </Badge>
@@ -55,7 +55,7 @@ export default function GalleryImageCardListAdmin({
         </div>
 
         {/* Action Buttons */}
-        <div className="flex-shrink-0 flex gap-2">
+        <div className="shrink-0 flex gap-2">
           <Link href={`/dashboard/gallery-images/edit/${id}`}>
             <button
               className="p-2 rounded-lg bg-interactive-active/15 hover:bg-interactive-active/25 text-interactive-active-600 hover:text-interactive-active-700 transition-colors duration-300"
@@ -88,8 +88,8 @@ export default function GalleryImageCardListAdmin({
               {categories.map((category) => (
                 <Badge
                   key={category.id}
-                  variant="secondary"
-                  className="text-xs"
+                  variant="default"
+                  className="text-xs bg-interactive-active text-white"
                 >
                   {category.name}
                 </Badge>

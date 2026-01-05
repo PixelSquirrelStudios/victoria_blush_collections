@@ -58,7 +58,7 @@ export default function GalleryImageCard({
                 <Badge
                   key={category.id}
                   variant="default"
-                  className="text-xs"
+                  className="text-xs bg-interactive-active text-white"
                 >
                   {category.name}
                 </Badge>
