@@ -52,7 +52,7 @@ const MobileSidebar = ({ variant }: MobileSidebarProps) => {
           >
             <div className='flex flex-row gap-2 items-center'>
               <FaBars className="text-xl" />
-              <div className='hidden md:block text-xl font-medium'>MENU</div>
+              <div className='text-xl font-medium'>MENU</div>
             </div>
           </SheetTrigger>
         ) : (

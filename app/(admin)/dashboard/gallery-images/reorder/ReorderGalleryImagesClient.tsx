@@ -145,7 +145,7 @@ export default function ReorderGalleryImagesClient({
             <Link href="/dashboard/gallery-images">
               <Button variant="outline" className="gap-2 bg-brand-secondary hover:bg-brand-secondary/90 text-text-primary font-semibold">
                 <ArrowLeft className="h-4 w-4" />
-                Back to Gallery Images
+                Back to Images
               </Button>
             </Link>
             <Button

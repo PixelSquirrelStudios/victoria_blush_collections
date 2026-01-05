@@ -81,7 +81,7 @@ export default function GalleryImageCardListAdmin({
             />
           </div>
           <div className="flex-1 min-w-0">
-            <h3 className="text-lg font-bold text-text-primary mb-2 truncate">
+            <h3 className="text-wrap text-lg font-bold text-text-primary mb-2 truncate">
               {title}
             </h3>
             <div className="flex flex-wrap gap-2">

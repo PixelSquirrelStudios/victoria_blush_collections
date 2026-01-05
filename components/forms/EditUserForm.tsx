@@ -261,10 +261,10 @@ const EditUserForm = ({ profileDetails }: Props) => {
                 Avatar
               </FormLabel>
               <FormControl className="mt-1.5">
-                <div className="flex flex-row items-center gap-4">
+                <div className="flex md:flex-row flex-col items-center gap-4">
                   {avatarUrl ? (
                     <>
-                      <div className='flex flex-row  items-center gap-4 w-full h-auto'>
+                      <div className='flex md:flex-row flex-col items-center gap-4 w-full h-auto'>
                         <Image
                           src={avatarUrl}
                           alt="Avatar"
@@ -311,7 +311,7 @@ const EditUserForm = ({ profileDetails }: Props) => {
             </FormItem>
           )}
         />
-        <div className="w-full flex justify-center gap-4">
+        <div className="w-full flex md:flex-row flex-col justify-center gap-4">
           <button
             type="button"
             onClick={() => router.push('/dashboard')}

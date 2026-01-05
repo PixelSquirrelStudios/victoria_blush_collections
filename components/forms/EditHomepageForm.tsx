@@ -105,7 +105,7 @@ const EditHomepageForm = ({ homepageData, currentUser }: Props) => {
   return (
     <Form {...form}>
       <div className="flex w-full flex-col items-start gap-10 bg-brand-secondary p-10 text-text-primary rounded-xl shadow-md">
-        <div className="flex flex-row items-center gap-2 pb-2">
+        <div className="w-full flex md:flex-row flex-col justify-center items-center gap-4 pb-2">
           <h1 className="text-2xl text-text-primary font-semibold">
             Edit Homepage
           </h1>

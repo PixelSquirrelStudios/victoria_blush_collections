@@ -17,7 +17,7 @@ export default async function DashboardLayout({
 
   return (
     <>
-      <div className='bg-brand-secondary/30 w-full h-full min-h-screen flex justify-center pl-5 pr-5 lg:pl-[400px] lg:pr-[50px] xl:py-10 py-4'>
+      <div className='bg-brand-secondary/30 w-full h-full min-h-screen flex justify-center pl-5 pr-5 xl:pl-[400px] xl:pr-[50px] xl:py-10 py-4'>
         <Sidebar user={user} profile={user.profile} />
         <LoadingOverlay />
         <Suspense fallback={<div aria-busy="true"><LoadingOverlay /></div>}>

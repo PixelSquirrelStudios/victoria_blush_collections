@@ -19,11 +19,11 @@ const ContentHeading = ({
   isLoading,
 }: ContentHeadingProps) => {
   return (
-    <div className='flex items-center gap-2 md:flex-row flex-col'>
-      <div className='flex md:flex-row flex-col items-center gap-2'>
+    <div className='flex items-center gap-2 xl:flex-row flex-col'>
+      <div className='flex xl:flex-row flex-col items-center gap-2'>
         <div className='flex flex-row items-center gap-2'>
           <div className='text-3xl text-text-primary xl:text-4xl'>{contentIcon}</div>
-          <div className='ml-2 md:text-3xl text-2xl font-medium text-text-primary xl:text-4xl'>
+          <div className='ml-2 lg:text-3xl text-2xl font-medium text-text-primary'>
             {contentTitle}
           </div>
         </div>
