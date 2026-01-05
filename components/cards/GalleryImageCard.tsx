@@ -52,7 +52,7 @@ export default function GalleryImageCard({
           </p>
 
           {/* Categories */}
-          {isAdmin && categories && categories.length > 0 && (
+          {categories && categories.length > 0 && (
             <div className="flex flex-wrap gap-2">
               {categories.map((category: any) => (
                 <Badge

@@ -1,4 +1,4 @@
-export default function PriceListCardSkeleton() {
+export default function ServiceCardSkeleton() {
   return (
     <div className="group relative bg-bg-primary rounded-lg p-6 shadow-sm h-full border-2 border-border-default animate-pulse">
       <div className="flex flex-col items-center text-center space-y-4 h-full">

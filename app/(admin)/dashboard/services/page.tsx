@@ -1,10 +1,10 @@
 import { fetchUserData } from '@/app/hooks/useUser';
-import PriceListCard from '@/components/cards/ServiceCard';
-import PriceListCardListAdmin from '@/components/cards/ServiceCardListAdmin';
+import ServiceCard from '@/components/cards/ServiceCard';
+import ServiceCardListAdmin from '@/components/cards/ServiceCardListAdmin';
 import NoResults from '@/components/shared/SearchAndFilters/NoResults';
 import Pagination from '@/components/shared/SearchAndFilters/Pagination';
 import SearchAndFilters from '@/components/shared/SearchAndFilters/SearchAndFilters';
-import PriceListCardSkeleton from '@/components/skeletons/PriceListCardSkeleton';
+import ServiceCardSkeleton from '@/components/skeletons/ServiceCardSkeleton';
 import { getAllServiceCategories, getAllServices } from '@/lib/actions/service.actions';
 import { SearchParamsProps } from '@/types';
 import { Suspense } from 'react';
@@ -87,7 +87,7 @@ const AllServices = async (props: SearchParamsProps) => {
               <Suspense fallback={
                 <div className='grid w-full grid-cols-1 gap-x-6 gap-y-6 px-0 pt-6 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4'>
                   {Array.from({ length: pageSize }, (_, i) => (
-                    <PriceListCardSkeleton key={i} />
+                    <ServiceCardSkeleton key={i} />
                   ))}
                 </div>
               }>
@@ -95,7 +95,7 @@ const AllServices = async (props: SearchParamsProps) => {
                   listType === 'list' ? (
                     <div className='w-full grid xl:grid-cols-2 grid-cols-1 gap-4 pt-6'>
                       {services?.map((service: any) => (
-                        <PriceListCardListAdmin
+                        <ServiceCardListAdmin
                           id={service.id}
                           key={service.id}
                           icon={service.icon}
@@ -110,7 +110,7 @@ const AllServices = async (props: SearchParamsProps) => {
                     <div className='grid w-full grid-cols-1 gap-x-6 gap-y-6 px-0 pt-6 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4'>
                       {services?.map((service: any) => (
                         <div className='mb-6 border-b-2 border-white/5 pt-4 last:mb-0 last:border-b-0' key={service.id}>
-                          <PriceListCard
+                          <ServiceCard
                             id={service.id}
                             icon={service.icon}
                             title={service.title}

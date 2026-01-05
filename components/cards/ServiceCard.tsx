@@ -69,15 +69,18 @@ export default function ServiceCard({
         {/* Categories */}
         {isAdmin && categories && categories.length > 0 && (
           <div className="flex flex-wrap justify-center gap-2">
-            {categories.map((cs: any) => cs.categories).filter(Boolean).map((category: any) => (
-              <Badge
-                key={category.id}
-                variant="default"
-                className="text-xs"
-              >
-                {category.name}
-              </Badge>
-            ))}
+            {categories
+              .map((item: any) => (item && item.name ? item : item?.categories))
+              .filter(Boolean)
+              .map((category: any) => (
+                <Badge
+                  key={category.id}
+                  variant="default"
+                  className="text-xs bg-interactive-active text-white"
+                >
+                  {category.name}
+                </Badge>
+              ))}
           </div>
         )}
 
