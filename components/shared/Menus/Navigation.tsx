@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { Menu, X } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'motion/react';
+const MotionDiv = motion.div as any;
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -77,7 +78,7 @@ export default function Navigation() {
       {/* Mobile Menu */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div
+          <MotionDiv
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
@@ -102,7 +103,7 @@ export default function Navigation() {
                 Book Now
               </a>
             </div>
-          </motion.div>
+          </MotionDiv>
         )}
       </AnimatePresence>
     </nav >

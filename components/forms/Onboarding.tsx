@@ -20,7 +20,6 @@ import Uploader from '../shared/Uploader';
 import { OnboardingSchema } from '@/lib/validations';
 import { showCustomToast } from '../shared/CustomToast';
 import { supabaseClient } from '@/lib/supabase/browserClient';
-import StylisedButton from '../shared/ActionButtons/StylisedButton';
 
 interface Props {
   profileDetails?: string;

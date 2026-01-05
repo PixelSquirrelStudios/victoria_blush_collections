@@ -2,19 +2,9 @@ import Link from 'next/link';
 import { OAUthButtons } from '../oauth-sign-in';
 import { Separator } from '@/components/ui/separator';
 import SignUpForm from '@/components/forms/SignUpForm';
-import { FormMessage, Message } from '@/components/form-message';
 import { Logo } from '@/components/shared/Logo';
 
-export default async function Signup(props: { searchParams: Promise<Message>; }) {
-  const searchParams = await props.searchParams;
-
-  if ('message' in searchParams) {
-    return (
-      <div className="flex h-screen w-full flex-1 items-center justify-center gap-2 p-4 sm:max-w-md">
-        <FormMessage message={searchParams} />
-      </div>
-    );
-  }
+export default async function Signup() {
 
   return (
     <div className="mx-auto flex h-auto w-full flex-1 flex-col rounded-xl bg-brand-secondary text-text-primary p-10 shadow-lg xl:min-w-[350px] xl:max-w-[450px]">
@@ -23,7 +13,6 @@ export default async function Signup(props: { searchParams: Promise<Message>; })
           className="w-full object-contain max-w-[300px]"
           width={300}
           height={200}
-          forceTheme="light"
         />
       </div>
       <Separator className="opacity-20" />
@@ -43,7 +32,6 @@ export default async function Signup(props: { searchParams: Promise<Message>; })
           <span>{'—'}</span>
         </div>
         <OAUthButtons />
-        <FormMessage message={searchParams} />
       </div>
     </div>
   );

@@ -13,7 +13,7 @@ export default function AuthLayout({
       <LoadingOverlay />
       <Header mobileVariant='main' />
       <Suspense fallback={<div aria-busy="true"><LoadingOverlay /></div>}>
-        <main className="relative flex min-h-screen w-screen flex-col items-center justify-center overflow-hidden bg-background lg:px-24 px-10 pt-24">
+        <main className="relative flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-background lg:px-24 px-10 pt-24">
           <div className="h-auto w-full flex flex-col items-center justify-center">
             {children}
           </div>

@@ -1,4 +1,4 @@
-import { Mail, Phone, Heart } from 'lucide-react';
+import { Mail, Phone } from 'lucide-react';
 import { FaFacebookF, FaInstagram } from 'react-icons/fa';
 import { Logo } from '../shared/Logo';
 
@@ -15,7 +15,9 @@ export default function Footer({ description }: FooterProps) {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12 items-center">
           {/* Brand */}
           <div className="md:col-span-2">
-            <Logo sizes='320px' className="mb-6 h-auto" forceTheme='light' />
+            <div className='w-full flex max-sm:justify-center'>
+              <Logo sizes='250px' className="mb-6 h-auto" />
+            </div>
             {/* <h3 className="text-3xl font-semibold mb-4">
               Victoria Blush <span className="text-brand-secondary font-bold">Collections</span>
             </h3> */}

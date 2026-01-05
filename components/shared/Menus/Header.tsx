@@ -32,41 +32,51 @@ const Header = async ({ mobileVariant, isHome = false }: HeaderProps) => {
   const bookNowHref = isHome ? '#contact' : '/#contact';
 
   return (
-    <div className="fixed top-0 left-0 z-10000 w-full h-[75px] lg:h-[90px] bg-brand-secondary border-b border-brand-secondary text-stone-800 shadow-md">
-      <div className="flex w-full h-full items-center justify-between px-5 pr-8 md:px-16 lg:px-24 2xl:px-52">
+    <div className="fixed top-0 left-0 z-10000 w-full h-[75px] lg:h-[90px] bg-brand-secondary border-b border-brand-secondary text-stone-800 shadow-md flex items-center px-8 2xl:px-52">
+
+      <div className="shrink-0">
         {/* Left: Logo */}
-        <Link href="/" className="mr-4 lg:mr-10">
-          <Logo width={280} height={40} forceTheme="light" sizes="180px" />
+        <Link href="/" className="mr-0 lg:mr-8 inline-block">
+          <span className="md:hidden inline-block align-middle">
+            <Logo width={160} height={40} sizes="120px" />
+          </span>
+          <span className="hidden md:inline-block align-middle">
+            <Logo width={280} height={40} sizes="180px" />
+          </span>
         </Link>
+      </div>
+      {/* Right: Profile + Nav + Mobile sidebar */}
+      <div className="ml-auto flex flex-row items-center 2xl:gap-8 gap-4 min-w-0">
+        {profile ? (
+          <div className="shrink-0">
+            <ProfileButtonServer user={user} profile={profile} />
+          </div>
+        ) : null}
 
-        {/* Right: Profile + Nav + Mobile sidebar */}
-        <div className="flex flex-row items-center gap-3 md:gap-6 lg:gap-8">
-          {profile ? <ProfileButtonServer user={user} profile={profile} /> : null}
-
-          <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.href}
-                className="font-medium transition-colors duration-300 text-lg text-stone-800 hover:text-stone-700"
-              >
-                {link.name}
-              </a>
-            ))}
+        <div className="hidden xl:flex items-center gap-8">
+          {navLinks.map((link) => (
             <a
-              href={bookNowHref}
-              className="px-6 py-2 bg-bg-muted text-text-primary font-semibold rounded hover:bg-bg-muted/90 transition-all duration-300 shadow-md hover:shadow-lg"
+              key={link.name}
+              href={link.href}
+              className="font-medium transition-colors duration-300 text-lg text-stone-800 hover:text-stone-700"
             >
-              Book Now
+              {link.name}
             </a>
-          </div>
-
-          <div className="md:hidden shrink-0">
-            <MobileSidebar variant={mobileVariant} />
-          </div>
+          ))}
+          <a
+            href={bookNowHref}
+            className="px-6 py-2 bg-bg-muted text-text-primary font-semibold rounded hover:bg-bg-muted/90 transition-all duration-300 shadow-md hover:shadow-lg"
+          >
+            Book Now
+          </a>
+        </div>
+        <div className="xl:hidden shrink-0">
+          <MobileSidebar variant={mobileVariant} />
         </div>
       </div>
+
     </div>
+
   );
 };
 

@@ -19,7 +19,7 @@ interface ProfileButtonProps {
 const ProfileButtonServer = async ({ user, profile }: ProfileButtonProps) => {
   if (!user) {
     return (
-      <div className="flex items-center gap-4 text-md font-semibold text-foreground">
+      <div className="flex items-center gap-2 sm:gap-4 text-md font-semibold text-foreground">
         <div className="flex w-[30px] h-[30px] items-center justify-center rounded-full bg-muted border border-border">
           <Image
             src={DEFAULT_AVATAR_URL}
@@ -27,6 +27,7 @@ const ProfileButtonServer = async ({ user, profile }: ProfileButtonProps) => {
             width={30}
             height={30}
             className="rounded-full animate-pulse object-cover border-2 border-stone-400"
+            priority
           />
         </div>
         <span className="px-3 py-1 bg-muted rounded-md text-ellipsis overflow-hidden">
@@ -40,16 +41,17 @@ const ProfileButtonServer = async ({ user, profile }: ProfileButtonProps) => {
   const avatarUrl = profile && profile?.avatar_url || DEFAULT_AVATAR_URL;
 
   return (
-    <div className="flex items-center gap-4 text-md font-semibold text-foreground">
+    <div className="flex items-center gap-2 sm:gap-4 text-md font-semibold text-foreground">
       <Popover>
         <PopoverTrigger asChild>
           <div className="cursor-pointer">
             <Image
               src={avatarUrl}
               alt={`${username}'s avatar`}
-              width={36}
-              height={36}
-              className="rounded-full object-cover border-2 border-text-secondary"
+              width={28}
+              height={28}
+              className="rounded-full object-cover border-2 border-text-secondary sm:w-9 sm:h-9"
+              priority
             />
           </div>
         </PopoverTrigger>
@@ -66,6 +68,7 @@ const ProfileButtonServer = async ({ user, profile }: ProfileButtonProps) => {
               width={40}
               height={40}
               className="rounded-full object-cover border-2 border-text-secondary"
+              priority
             />
             <div className="flex flex-col">
               <div className="text-text-primary flex flex-row flex-wrap items-center gap-2">

@@ -1,8 +1,9 @@
 'use client';
 
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { cormorant } from '@/app/fonts';
+
 
 interface HeroProps {
   imageUrl?: string;
@@ -11,6 +12,8 @@ interface HeroProps {
 }
 
 export default function Hero({ imageUrl, subheading, description }: HeroProps) {
+  const MotionDiv = motion.div as any;
+
   // Calculate years of experience from June 1st, 2010
   const startDate = new Date(2010, 5, 1); // Month is 0-indexed, so 5 = June
   const currentDate = new Date();
@@ -27,7 +30,7 @@ export default function Hero({ imageUrl, subheading, description }: HeroProps) {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-linear-to-br from-rose-50 via-white to-stone-50">
       <div className="container mx-auto px-4 py-20 grid lg:grid-cols-2 gap-12 items-center relative z-10">
         {/* Text Content */}
-        <motion.div
+        <MotionDiv
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
@@ -37,9 +40,9 @@ export default function Hero({ imageUrl, subheading, description }: HeroProps) {
             <p className="text-text-primary tracking-widest uppercase inline-block pt-3 pb-1">
               {subheading || 'Premium Hair Artistry'}
             </p>
-            <h1 className={`${cormorant.className} text-6xl max-sm:text-[48px] max-lg:text-6xl xl:text-[80px] font-semibold uppercase text-bg-dark/95 leading-tight text-nowrap`}>
+            <h1 className={`${cormorant.className} text-6xl max-sm:text-[44px] max-lg:text-6xl xl:text-[80px] font-semibold uppercase text-bg-dark/95 leading-tight text-nowrap`}>
               Victoria Blush
-              <span className="block text-5xl md:text-[4rem] max-sm:text-[45px] text-text-primary/60 tracking-wide">Collections</span>
+              <span className="block text-5xl md:text-[4rem] max-sm:text-[40px] text-text-primary/60 tracking-wide">Collections</span>
             </h1>
             <p className='text-lg text-text-body font-light leading-8 max-w-og-2xl'>
               {description || 'A calm, friendly space where you can relax and enjoy beautiful hair. One-to-one appointments specialising in balayage, lived-in colour, colour correction and precision cutting — helping you feel like the best version of you.'}
@@ -47,7 +50,7 @@ export default function Hero({ imageUrl, subheading, description }: HeroProps) {
           </div>
 
           {/* Image Content - Mobile Only */}
-          <motion.div
+          <MotionDiv
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.3 }}
@@ -66,7 +69,7 @@ export default function Hero({ imageUrl, subheading, description }: HeroProps) {
               <div className="absolute -top-6 -right-6 w-32 h-32 bg-border-medium rounded-full blur-3xl opacity-40"></div>
               <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-border-default rounded-full blur-3xl opacity-40"></div>
             </div>
-          </motion.div>
+          </MotionDiv>
 
           <div className="flex flex-col sm:flex-row gap-4">
             <a
@@ -96,10 +99,10 @@ export default function Hero({ imageUrl, subheading, description }: HeroProps) {
               <p className="text-text-body md:text-sm text-xs">Client Rating</p>
             </div>
           </div>
-        </motion.div>
+        </MotionDiv>
 
         {/* Image Content - Desktop Only */}
-        <motion.div
+        <MotionDiv
           initial={{ opacity: 0, x: 30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
@@ -129,7 +132,7 @@ export default function Hero({ imageUrl, subheading, description }: HeroProps) {
             <p className="text-sm text-text-body font-medium">Certified by</p>
             <p className="text-lg font-bold text-text-primary">Kerastase</p>
           </motion.div> */}
-        </motion.div>
+        </MotionDiv>
       </div>
     </section>
   );

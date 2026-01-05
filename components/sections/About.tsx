@@ -1,7 +1,7 @@
 
 'use client';
 import { cormorant } from '@/app/fonts';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import Image from 'next/image';
 
 interface AboutProps {
@@ -11,12 +11,14 @@ interface AboutProps {
 
 export default function About({ aboutDescription, aboutImageUrl }: AboutProps) {
 
+  const MotionDiv = motion.div as any;
+
   return (
     <section id="about" className="py-24 bg-bg-subtle">
       <div className="container mx-auto px-6">
         <div className="max-w-7xl mx-auto">
           {/* Section Header */}
-          <motion.div
+          <MotionDiv
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -26,12 +28,12 @@ export default function About({ aboutDescription, aboutImageUrl }: AboutProps) {
               About Me
             </h2>
             <div className="w-24 h-1 bg-brand-primary mx-auto"></div>
-          </motion.div>
+          </MotionDiv>
 
           {/* Content Grid */}
           <div className="grid lg:grid-cols-2 gap-12 items-start">
             {/* Image Column */}
-            <motion.div
+            <MotionDiv
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
@@ -48,10 +50,10 @@ export default function About({ aboutDescription, aboutImageUrl }: AboutProps) {
               </div>
               {/* Decorative accent */}
               <div className="absolute -bottom-6 -right-6 w-48 h-48 bg-brand-primary opacity-10 rounded-full -z-10"></div>
-            </motion.div>
+            </MotionDiv>
 
             {/* Text Column */}
-            <motion.div
+            <MotionDiv
               initial={{ opacity: 0, x: 30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
@@ -71,7 +73,7 @@ export default function About({ aboutDescription, aboutImageUrl }: AboutProps) {
                   Book Your Appointment
                 </a>
               </div>
-            </motion.div>
+            </MotionDiv>
           </div>
         </div>
       </div>

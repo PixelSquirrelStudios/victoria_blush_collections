@@ -43,24 +43,24 @@ const MobileSidebar = ({ variant }: MobileSidebarProps) => {
   }, [pathname]);
 
   return (
-    <div className="lg:hidden flex items-center">
+    <div className="xl:hidden flex items-center">
       <Sheet open={open} onOpenChange={setOpen}>
         {variant === 'dashboard' ? (
           <SheetTrigger
-            className="mb-4 bg-bg-primary shadow-md px-3 py-1 rounded-sm text-2xl text-text-primary"
+            className="w-auto mb-4 bg-bg-primary px-2 py-1 rounded-sm text-xl text-text-primary"
             onClick={() => setOpen(true)}
           >
             <div className='flex flex-row gap-2 items-center'>
-              <FaBars />
-              <div className='text-2xl font-medium'>MENU</div>
+              <FaBars className="text-xl" />
+              <div className='hidden md:block text-xl font-medium'>MENU</div>
             </div>
           </SheetTrigger>
         ) : (
           <SheetTrigger
-            className="bg-bg-primary shadow-md px-3 py-2 rounded-sm text-2xl text-text-primary"
+            className="bg-bg-primary px-2 py-1 rounded-sm text-xl text-text-primary"
             onClick={() => setOpen(true)}
           >
-            <FaBars />
+            <FaBars className="text-xl" />
           </SheetTrigger>
         )}
         <SheetContent

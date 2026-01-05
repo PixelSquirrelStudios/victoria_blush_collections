@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { cormorant } from '@/app/fonts';
@@ -12,6 +12,7 @@ import {
   DialogDescription,
 } from '@/components/ui/dialog';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+
 
 interface GalleryImage {
   id: string;
@@ -33,6 +34,8 @@ interface GalleryProps {
 }
 
 export default function Gallery({ images, subheading, description }: GalleryProps) {
+  const MotionDiv = motion.div as any;
+
   // Extract unique categories from images
   const uniqueCategories = useMemo(
     () => [
@@ -272,7 +275,7 @@ export default function Gallery({ images, subheading, description }: GalleryProp
     <section id="gallery" className="py-24 bg-white **:outline-none! [&_button]:outline-none! [&_a]:outline-none!">
       <div className="container mx-auto px-4">
         {/* Section Header */}
-        <motion.div
+        <MotionDiv
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -289,7 +292,7 @@ export default function Gallery({ images, subheading, description }: GalleryProp
           <p className="text-lg text-text-body font-light">
             {description || 'Explore transformations that celebrate individuality and style'}
           </p>
-        </motion.div>
+        </MotionDiv>
 
         {/* Category Filter */}
         <div className="flex flex-wrap justify-center gap-3 mb-12">
@@ -328,7 +331,7 @@ export default function Gallery({ images, subheading, description }: GalleryProp
                   key={image.id}
                   className="w-full md:w-[calc(50%-8px)] lg:w-[calc(25%-12px)] shrink-0 snap-start"
                 >
-                  <motion.div
+                  <MotionDiv
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.9 }}
@@ -361,7 +364,7 @@ export default function Gallery({ images, subheading, description }: GalleryProp
                         )}
                       </div>
                     </div>
-                  </motion.div>
+                  </MotionDiv>
                 </div>
               ))}
             </div>
@@ -389,7 +392,7 @@ export default function Gallery({ images, subheading, description }: GalleryProp
           {/* Progress Bar */}
           {filteredImages.length > visibleSlots && (
             <div className="mt-6 h-1 bg-gray-200 rounded-full overflow-hidden">
-              <motion.div
+              <MotionDiv
                 className="h-full bg-linear-to-r from-brand-primary to-brand-secondary rounded-full"
                 initial={{ width: '0%' }}
                 animate={{ width: `${scrollProgress}%` }}
@@ -522,7 +525,7 @@ export default function Gallery({ images, subheading, description }: GalleryProp
         </Dialog>
 
         {/* Instagram CTA */}
-        <motion.div
+        <MotionDiv
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -544,7 +547,7 @@ export default function Gallery({ images, subheading, description }: GalleryProp
             </div>
           </Link>
           <script src="https://elfsightcdn.com/platform.js" async></script>
-        </motion.div>
+        </MotionDiv>
         <div
           className="elfsight-app-b5c63793-7124-4070-8649-eca569fb4f4c"
           data-elfsight-app-lazy

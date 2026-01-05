@@ -2,7 +2,7 @@
 
 import PriceListCard from '../cards/ServiceCard';
 import PriceListCardList from '../cards/ServiceCardList';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { useState } from 'react';
 import { LayoutGrid, List } from 'lucide-react';
 import { cormorant } from '@/app/fonts';
@@ -26,6 +26,8 @@ interface ServicesProps {
 }
 
 export default function Services({ services, subheading, description, importantNotice }: ServicesProps) {
+  const MotionDiv = motion.div as any;
+
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [selectedCategory, setSelectedCategory] = useState('All');
 
@@ -59,7 +61,7 @@ export default function Services({ services, subheading, description, importantN
     <section id="services" className="py-24 bg-linear-to-b from-bg-muted via-bg-section to-bg-section">
       <div className="container mx-auto px-4">
         {/* Section Header */}
-        <motion.div
+        <MotionDiv
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -74,7 +76,7 @@ export default function Services({ services, subheading, description, importantN
           <p className="text-lg text-text-body font-light">
             {description || 'Premium hair services tailored to your unique style and needs. All prices include consultation and aftercare advice.'}
           </p>
-        </motion.div>
+        </MotionDiv>
 
         {/* Category Filter */}
         <div className="flex flex-wrap justify-center gap-3 mb-8">
@@ -129,7 +131,7 @@ export default function Services({ services, subheading, description, importantN
         {viewMode === 'grid' ? (
           <div className="flex flex-wrap justify-center gap-8 mb-12">
             {filteredServices.map((service, index) => (
-              <motion.div
+              <MotionDiv
                 key={service.id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -146,14 +148,14 @@ export default function Services({ services, subheading, description, importantN
                   categories={service.categories_services?.map((cs: any) => cs.categories).filter(Boolean) || []
                   }
                 />
-              </motion.div>
+              </MotionDiv>
             ))}
           </div>
         ) : (
           <div className="max-w-7xl mx-auto mb-12">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               {filteredServices.map((service, index) => (
-                <motion.div
+                <MotionDiv
                   key={service.id}
                   initial={{ opacity: 0, x: -20 }}
                   animate={{ opacity: 1, x: 0 }}
@@ -166,14 +168,14 @@ export default function Services({ services, subheading, description, importantN
                     price={service.price}
                     highlight={service.is_highlighted}
                   />
-                </motion.div>
+                </MotionDiv>
               ))}
             </div>
           </div>
         )}
 
         {/* Important Notice */}
-        <motion.div
+        <MotionDiv
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -189,7 +191,7 @@ export default function Services({ services, subheading, description, importantN
               {importantNotice || `A skin test is required if it's your first visit with me or if you haven't had your hair colored for 6 months. This ensures your safety and the best results.`}
             </p>
           </div>
-        </motion.div>
+        </MotionDiv>
       </div>
     </section>
   );

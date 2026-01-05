@@ -1,7 +1,7 @@
 'use client';
 
 import { cormorant } from '@/app/fonts';
-import { motion } from 'framer-motion';
+import { motion } from 'motion/react';
 import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -19,6 +19,8 @@ interface ContactProps {
 }
 
 export default function Contact({ subheading, description, address, phone, email, openingHours, socialUrl }: ContactProps) {
+  const MotionDiv = motion.div as any;
+  
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -66,7 +68,7 @@ export default function Contact({ subheading, description, address, phone, email
     <section id="contact" className="py-24 bg-linear-to-b from-bg-subtle to-bg-primary">
       <div className="container mx-auto px-4">
         {/* Section Header */}
-        <motion.div
+        <MotionDiv
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -92,11 +94,11 @@ export default function Contact({ subheading, description, address, phone, email
               </div>
             </div>
           </Link>
-        </motion.div>
+        </MotionDiv>
 
         <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
           {/* Contact Information */}
-          <motion.div
+          <MotionDiv
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -194,10 +196,10 @@ export default function Contact({ subheading, description, address, phone, email
             {/* <MapPin className="w-12 h-12" />
               </div>
             </div> */}
-          </motion.div>
+          </MotionDiv>
 
           {/* Contact Form */}
-          <motion.div
+          <MotionDiv
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -319,17 +321,17 @@ export default function Contact({ subheading, description, address, phone, email
                 </button>
 
                 {submitMessage && (
-                  <motion.div
+                  <MotionDiv
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="p-4 bg-green-50 border-2 border-green-200 rounded-xl text-green-800 text-center font-medium"
                   >
                     {submitMessage}
-                  </motion.div>
+                  </MotionDiv>
                 )}
               </form>
             </div>
-          </motion.div>
+          </MotionDiv>
         </div>
       </div>
     </section>

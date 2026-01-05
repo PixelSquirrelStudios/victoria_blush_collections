@@ -1,12 +1,7 @@
-'use client';
-
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
 
 type LogoProps = {
   className?: string;
-  lightSrc?: string;
-  darkSrc?: string;
   alt?: string;
   // Fixed sizing (intrinsic)
   width?: number;
@@ -17,62 +12,19 @@ type LogoProps = {
   fill?: boolean;
   // Object fit
   objectFit?: 'contain' | 'cover' | 'fill' | 'none' | 'scale-down';
-  priority?: boolean;
-
-  /**
-   * Explicitly choose which logo variant to render.
-   * Use 'light' or 'dark' to force that version, independent of any theme.
-   */
-  variant?: 'light' | 'dark';
-
-  /**
-   * Deprecated: kept for backward compatibility.
-   * If provided, it behaves the same as variant.
-   */
-  forceTheme?: 'light' | 'dark';
+  // Keep priority, default to true to avoid lazy loading
 };
 
 export function Logo({
   className,
-  lightSrc = '/assets/images/Logo_Light.png',
-  darkSrc = '/assets/images/Logo_Dark.png',
   alt = 'Logo',
   width = 280,
   height = 40,
   sizes,
   fill = false,
   objectFit = 'contain',
-  priority = true,
-  variant, // new
-  forceTheme, // deprecated alias
 }: LogoProps) {
-  // We no longer depend on next-themes; we simply respect variant/forceTheme
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => setMounted(true), []);
-
-  // Resolve which logo to show
-  const choice = variant ?? forceTheme ?? 'light';
-  const src = choice === 'dark' ? darkSrc : lightSrc;
-
-  // Avoid hydration mismatch by delaying until mount when using fill layout
-  if (!mounted) {
-    if (fill) {
-      return (
-        <div
-          className={className}
-          style={{ position: 'relative' }}
-          aria-hidden
-        />
-      );
-    }
-    return (
-      <div
-        className={className}
-        style={{ width, height }}
-        aria-hidden
-      />
-    );
-  }
+  const src = '/assets/images/Logo_Light.png';
 
   if (fill) {
     // Parent must set size (e.g., className="relative h-12 w-40")
@@ -81,7 +33,7 @@ export function Logo({
         src={src}
         alt={alt}
         fill
-        priority={priority}
+        priority
         sizes={sizes}
         className={className ? `${className} object-${objectFit}` : `object-${objectFit}`}
       />
@@ -95,7 +47,7 @@ export function Logo({
       width={width}
       height={height}
       sizes={sizes}
-      priority={priority}
+      priority
       className={className}
       style={{ objectFit, width: 'auto', height: 'auto' }}
     />
