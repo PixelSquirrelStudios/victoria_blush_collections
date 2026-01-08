@@ -222,7 +222,7 @@ export default function Contact({ subheading, description, address, phone, email
                     onChange={handleChange}
                     required
                     className="w-full px-4 py-3 border-2 border-border-default rounded focus:border-interactive-focus focus:outline-none transition-colors"
-                    placeholder="Jane Doe"
+                    placeholder="Please enter your full name"
                   />
                 </div>
 
@@ -239,7 +239,7 @@ export default function Contact({ subheading, description, address, phone, email
                       onChange={handleChange}
                       required
                       className="w-full px-4 py-3 border-2 border-border-default rounded focus:border-interactive-focus focus:outline-none transition-colors"
-                      placeholder="jane@example.com"
+                      placeholder="email@example.com"
                     />
                   </div>
 
@@ -254,7 +254,7 @@ export default function Contact({ subheading, description, address, phone, email
                       value={formData.phone}
                       onChange={handleChange}
                       className="w-full px-4 py-3 border-2 border-border-default rounded focus:border-interactive-focus focus:outline-none transition-colors"
-                      placeholder="+44 7123 456789"
+                      placeholder="07123 456 789"
                     />
                   </div>
                 </div>
@@ -274,12 +274,14 @@ export default function Contact({ subheading, description, address, phone, email
                     <option value="">Select a service</option>
                     <option value="cut-finish">Cut and Finish</option>
                     <option value="blowdry">Blow Dry & Styling</option>
-                    <option value="balayage">Full Lived In / Balayage</option>
+                    <option value="balayage">Full Lived In Balayage</option>
                     <option value="maintenance">Maintenance Lived In</option>
+                    <option value="grey-blending">Grey Blending</option>
                     <option value="full-foils">Full Head Foils</option>
                     <option value="half-foils">Half Head Foils</option>
                     <option value="global-color">Global Colour</option>
-                    <option value="roots">Global Roots</option>
+                    <option value="global-roots">Global Roots</option>
+                    <option value="global-bleach">Global Bleach</option>
                     <option value="toning">Toning Service</option>
                     <option value="correction">Colour Correction</option>
                     <option value="treatments">Hair Treatments</option>
