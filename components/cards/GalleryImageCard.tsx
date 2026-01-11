@@ -16,6 +16,7 @@ interface GalleryImageCardProps {
   description: string;
   categories: Category[];
   isAdmin?: boolean;
+  onDelete?: (id: string) => void;
 }
 
 export default function GalleryImageCard({
@@ -25,6 +26,7 @@ export default function GalleryImageCard({
   description,
   categories,
   isAdmin = false,
+  onDelete,
 }: GalleryImageCardProps) {
   return (
     <div className="group relative bg-bg-primary rounded-lg shadow-sm hover:shadow-xl transition-all duration-300 h-full border-2 border-border-default hover:border-interactive-active overflow-hidden">
@@ -81,7 +83,7 @@ export default function GalleryImageCard({
                 </Link>
               </div>
               <div className='w-full'>
-                <DeleteGalleryImage imageId={id} variant="large" />
+                <DeleteGalleryImage imageId={id} variant="large" onDelete={onDelete} />
               </div>
             </div>
           )}

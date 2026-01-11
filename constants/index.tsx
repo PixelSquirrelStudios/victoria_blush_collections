@@ -10,10 +10,10 @@ export const DEFAULT_AVATAR_URL =
 
 export const sidebarLinks: SidebarLink[] = [
   { route: '/', label: 'Home' },
-  { route: '/#about', label: 'About' },
-  { route: '/#services', label: 'Services' },
-  { route: '/#gallery', label: 'Gallery' },
-  { route: '/#contact', label: 'Contact' },
+  { route: '/about', label: 'About' },
+  { route: '/services', label: 'Services' },
+  { route: '/gallery', label: 'Gallery' },
+  { route: '/contact', label: 'Contact' },
 ];
 
 export const dashboardLinks: SidebarLink[] = [

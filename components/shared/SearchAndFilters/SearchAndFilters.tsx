@@ -272,7 +272,7 @@ const SearchAndFilters = ({
   return (
     <>
       <div
-        className={`flex w-full flex-col items-center justify-items pb-4 md:flex-row ${isNotificationsPage ? 'gap-6' : 'max-xl:gap-4'
+        className={`flex w-full flex-col items-center justify-items pb-4 2xl:flex-row ${isNotificationsPage ? 'gap-6' : 'max-2xl:gap-4'
           }`}
       >
         <ContentHeading
@@ -283,7 +283,7 @@ const SearchAndFilters = ({
           isLoading={isLoading}
           notificationsCount={notificationsCount}
         />
-        <div className='flex flex-col items-center gap-4 md:flex-row xl:pl-4'>
+        <div className='flex flex-col items-center gap-4 lg:flex-row xl:pl-4'>
           {((currentUser && currentUser.role === 'admin' && hasAdminButton) ||
             hasButton) && (
               <div className='flex gap-2'>

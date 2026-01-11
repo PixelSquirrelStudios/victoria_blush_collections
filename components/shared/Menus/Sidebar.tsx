@@ -17,7 +17,7 @@ interface SidebarProps {
 const Sidebar = ({ profile }: SidebarProps) => {
 
   return (
-    <div className='z-10000 fixed left-0 top-0 hidden h-screen flex-col xl:justify-start gap-1 overflow-y-auto bg-brand-secondary/40 px-10 py-8 shadow-md shadow-primary-hover lg:flex lg:w-[350px]'>
+    <div className='z-10000 fixed left-0 top-0 hidden h-screen flex-col xl:justify-start gap-1 overflow-y-auto bg-brand-secondary/40 px-10 py-8 shadow-md shadow-primary-hover xl:flex xl:w-[350px]'>
       <div className='flex w-full flex-row items-center gap-3 text-lg font-medium text-text-primary bg-brand-secondary rounded-full p-1.5'>
         <Image
           src={profile.avatar_url}

@@ -9,6 +9,12 @@ interface FooterProps {
 export default function Footer({ description }: FooterProps) {
   const currentYear = new Date().getFullYear();
 
+  // Footer links always go to separate pages
+  const aboutHref = '/about';
+  const servicesHref = '/services';
+  const galleryHref = '/gallery';
+  const contactHref = '/contact';
+
   return (
     <footer className="bg-brand-secondary text-text-primary">
       <div className="container mx-auto px-4 py-16">
@@ -74,22 +80,22 @@ export default function Footer({ description }: FooterProps) {
             <h4 className="text-lg font-bold mb-4">Quick Links</h4>
             <ul className="grid grid-cols-2 gap-x-8 gap-y-3">
               <li>
-                <a href="#about" className="text-text-primary hover:text-text-primary/80 transition-colors">
+                <a href={aboutHref} className="text-text-primary hover:text-text-primary/80 transition-colors">
                   About Me
                 </a>
               </li>
               <li>
-                <a href="#prices" className="text-text-primary hover:text-text-primary/80 transition-colors">
+                <a href={servicesHref} className="text-text-primary hover:text-text-primary/80 transition-colors">
                   Services & Prices
                 </a>
               </li>
               <li>
-                <a href="#gallery" className="text-text-primary hover:text-text-primary/80 transition-colors">
+                <a href={galleryHref} className="text-text-primary hover:text-text-primary/80 transition-colors">
                   Gallery Showcase
                 </a>
               </li>
               <li>
-                <a href="#contact" className="text-text-primary hover:text-text-primary/80 transition-colors">
+                <a href={contactHref} className="text-text-primary hover:text-text-primary/80 transition-colors">
                   Book An Appointment
                 </a>
               </li>
@@ -101,7 +107,7 @@ export default function Footer({ description }: FooterProps) {
         <div className="pt-8 border-t border-text-muted">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-text-primary text-sm text-center md:text-left">
-              © {currentYear} Pixel Squirrel Studios. All rights reserved.
+              © 2025 - {currentYear} Designed by Pixel Squirrel Studios. All rights reserved.
             </p>
 
             {/* Single inline line; no flex */}

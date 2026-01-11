@@ -113,7 +113,7 @@ const AllGalleryImages = async (props: SearchParamsProps) => {
                       ))}
                     </div>
                   ) : (
-                    <div className='grid w-full grid-cols-1 gap-x-6 gap-y-6 px-0 pt-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5'>
+                    <div className='grid w-full grid-cols-1 gap-x-6 gap-y-6 px-0 pt-6 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-4'>
                       {images?.map((image: any) => (
                         <GalleryImageCard
                           id={image.id}

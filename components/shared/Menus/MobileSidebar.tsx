@@ -22,14 +22,18 @@ import { FaSignOutAlt } from 'react-icons/fa';
 
 interface MobileSidebarProps {
   variant: string;
+  isHomepage?: boolean;
 }
 
-const MobileSidebar = ({ variant }: MobileSidebarProps) => {
+const MobileSidebar = ({ variant, isHomepage: isHomepageProp }: MobileSidebarProps) => {
   const pathname = usePathname();
   const showDashboardMenu = pathname.includes('/dashboard') || pathname.includes('/profile');
   const [query, setQuery] = useState('');
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
+
+  // Determine if we're on homepage - use the pathname if prop not explicitly set
+  const isHomepage = isHomepageProp !== undefined ? isHomepageProp : pathname === '/';
 
   useEffect(() => {
     supabaseClient.auth.getClaims().then(({ data }) => {
@@ -43,7 +47,7 @@ const MobileSidebar = ({ variant }: MobileSidebarProps) => {
   }, [pathname]);
 
   return (
-    <div className="lg:hidden flex items-center">
+    <div className="xl:hidden flex items-center">
       <Sheet open={open} onOpenChange={setOpen}>
         {variant === 'dashboard' ? (
           <SheetTrigger
@@ -81,23 +85,37 @@ const MobileSidebar = ({ variant }: MobileSidebarProps) => {
                 <Logo sizes='200px' className="h-18 w-auto" />
               </div>
             )}
-            {(showDashboardMenu ? dashboardLinks : sidebarLinks).map((item) => {
-              const isActive =
-                (pathname.includes(item.route + '/') &&
-                  item.route !== '/dashboard' &&
-                  item.route.length > 1) ||
-                pathname === item.route;
+            {(showDashboardMenu ? dashboardLinks : sidebarLinks)
+              .filter((item) => !(isHomepage && !showDashboardMenu && item.route === '/')) // Hide Home link when on homepage
+              .map((item) => {
+                const isActive =
+                  (pathname.includes(item.route + '/') &&
+                    item.route !== '/dashboard' &&
+                    item.route.length > 1) ||
+                  pathname === item.route;
 
-              return (
-                <Link
-                  href={item.route}
-                  key={item.route}
-                  onClick={(e) => {
-                    setOpen(false);
-                    // If it's a hash link, handle scrolling after sheet closes
-                    if (item.route.includes('#')) {
+                // Build href based on isHomepage:
+                // - On homepage: convert page routes to #id anchors
+                // - On other pages: use the page routes as-is
+                let href = item.route;
+                if (!showDashboardMenu && isHomepage) {
+                  // Convert page routes to hash anchors on homepage
+                  if (item.route === '/about') href = '#about';
+                  else if (item.route === '/services') href = '#services';
+                  else if (item.route === '/gallery') href = '#gallery';
+                  else if (item.route === '/contact') href = '#contact';
+                }
+
+                const useAnchor = isHomepage && href.startsWith('#');
+
+                return useAnchor ? (
+                  <a
+                    href={href}
+                    key={item.route}
+                    onClick={(e) => {
+                      setOpen(false);
                       e.preventDefault();
-                      const hash = item.route.split('#')[1];
+                      const hash = href.split('#')[1];
                       setTimeout(() => {
                         window.location.hash = hash;
                         const element = document.getElementById(hash);
@@ -105,17 +123,28 @@ const MobileSidebar = ({ variant }: MobileSidebarProps) => {
                           element.scrollIntoView({ behavior: 'smooth', block: 'start' });
                         }
                       }, 300);
-                    }
-                  }}
-                  className={`${isActive
-                    ? 'rounded-xl bg-brand-secondary text-text-primary shadow-lg'
-                    : 'text-text-primary hover:bg-brand-secondary/60 rounded-xl'
-                    } flex items-center px-4 py-3 text-xl font-medium transition-all duration-200`}
-                >
-                  <div>{item.label}</div>
-                </Link>
-              );
-            })}
+                    }}
+                    className={`${isActive
+                      ? 'rounded-xl bg-brand-secondary text-text-primary shadow-lg'
+                      : 'text-text-primary hover:bg-brand-secondary/60 rounded-xl'
+                      } flex items-center px-4 py-3 text-xl font-medium transition-all duration-200`}
+                  >
+                    <div>{item.label}</div>
+                  </a>
+                ) : (
+                  <Link
+                    href={href}
+                    key={item.route}
+                    onClick={() => setOpen(false)}
+                    className={`${isActive
+                      ? 'rounded-xl bg-brand-secondary text-text-primary shadow-lg'
+                      : 'text-text-primary hover:bg-brand-secondary/60 rounded-xl'
+                      } flex items-center px-4 py-3 text-xl font-medium transition-all duration-200`}
+                  >
+                    <div>{item.label}</div>
+                  </Link>
+                );
+              })}
             {user && (
               <>
                 <Separator className="opacity-10" />

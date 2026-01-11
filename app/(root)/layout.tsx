@@ -28,7 +28,7 @@ async function UserWrapper({
     <div className="w-full h-full">
       <AudioProvider userId={userId}>
         <HashScrollHandler />
-        {showHeader && <Header mobileVariant="main" isHome={true} />}
+        {showHeader && <Header mobileVariant="main" />}
         {children}
       </AudioProvider>
     </div>

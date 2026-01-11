@@ -54,6 +54,11 @@ export default function ReorderGalleryImagesClient({
     setMounted(true);
   }, []);
 
+  // Handle deletion by updating local state
+  const handleDelete = (deletedId: string) => {
+    setImages((prevImages) => prevImages.filter((image) => image.id !== deletedId));
+  };
+
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -202,6 +207,7 @@ export default function ReorderGalleryImagesClient({
                             image_url={image.image_url}
                             title={image.title}
                             categories={categories}
+                            onDelete={handleDelete}
                           />
                         </div>
                       </SortableItem>
@@ -209,7 +215,7 @@ export default function ReorderGalleryImagesClient({
                   })}
                 </div>
               ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-6">
                   {images.map((image) => {
                     const categories =
                       image.categories_images
@@ -233,6 +239,7 @@ export default function ReorderGalleryImagesClient({
                           description={image.description}
                           categories={categories}
                           isAdmin={true}
+                          onDelete={handleDelete}
                         />
                       </SortableItem>
                     );

@@ -14,6 +14,7 @@ interface GalleryImageCardListAdminProps {
   image_url: string;
   title: string;
   categories: Category[];
+  onDelete?: (id: string) => void;
 }
 
 export default function GalleryImageCardListAdmin({
@@ -21,6 +22,7 @@ export default function GalleryImageCardListAdmin({
   image_url,
   title,
   categories,
+  onDelete,
 }: GalleryImageCardListAdminProps) {
   return (
     <div className="group relative bg-bg-primary rounded-lg p-4 shadow-sm hover:shadow-md transition-all duration-300 border border-border-default hover:border-interactive-active">
@@ -64,7 +66,7 @@ export default function GalleryImageCardListAdmin({
               <Pencil className="w-5 h-5" />
             </button>
           </Link>
-          <DeleteGalleryImage imageId={id} variant="admin" />
+          <DeleteGalleryImage imageId={id} variant="admin" onDelete={onDelete} />
         </div>
       </div>
 
@@ -108,7 +110,7 @@ export default function GalleryImageCardListAdmin({
               <Pencil className="w-5 h-5" />
             </button>
           </Link>
-          <DeleteGalleryImage imageId={id} variant="admin" />
+          <DeleteGalleryImage imageId={id} variant="admin" onDelete={onDelete} />
         </div>
       </div>
     </div>
