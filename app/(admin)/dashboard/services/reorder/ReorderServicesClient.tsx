@@ -57,6 +57,11 @@ export default function ReorderServicesClient({
     setMounted(true);
   }, []);
 
+  // Handle deletion by updating local state
+  const handleDelete = (deletedId: string) => {
+    setServices((prevServices) => prevServices.filter((service) => service.id !== deletedId));
+  };
+
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -109,7 +114,7 @@ export default function ReorderServicesClient({
   };
 
   return (
-    <div className="w-full max-w-7xl mx-auto px-4 py-8">
+    <div className="w-full px-4 py-8">
       {/* Header */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
         <div>
@@ -124,22 +129,20 @@ export default function ReorderServicesClient({
         <div className="flex">
           <Button
             onClick={() => setViewMode('list')}
-            className={`gap-2 font-semibold rounded-r-none border-r border-border-default ${
-              viewMode === 'list'
-                ? 'bg-brand-secondary hover:bg-brand-secondary/90 text-text-primary transition-all duration-300'
-                : 'bg-brand-secondary/50 hover:bg-brand-secondary/90 text-text-primary transition-all duration-300'
-            }`}
+            className={`gap-2 font-semibold rounded-r-none border-r border-border-default ${viewMode === 'list'
+              ? 'bg-brand-secondary hover:bg-brand-secondary/90 text-text-primary transition-all duration-300'
+              : 'bg-brand-secondary/50 hover:bg-brand-secondary/90 text-text-primary transition-all duration-300'
+              }`}
           >
             <List className="h-4 w-4" />
             List View
           </Button>
           <Button
             onClick={() => setViewMode('grid')}
-            className={`gap-2 font-semibold rounded-l-none ${
-              viewMode === 'grid'
-                ? 'bg-brand-secondary hover:bg-brand-secondary/90 text-text-primary transition-all duration-300'
-                : 'bg-brand-secondary/50 hover:bg-brand-secondary/90 text-text-primary transition-all duration-300'
-            }`}
+            className={`gap-2 font-semibold rounded-l-none ${viewMode === 'grid'
+              ? 'bg-brand-secondary hover:bg-brand-secondary/90 text-text-primary transition-all duration-300'
+              : 'bg-brand-secondary/50 hover:bg-brand-secondary/90 text-text-primary transition-all duration-300'
+              }`}
           >
             <LayoutGrid className="h-4 w-4" />
             Grid View
@@ -210,6 +213,7 @@ export default function ReorderServicesClient({
                               price={service.price}
                               categories={categories}
                               highlight={service.is_highlighted}
+                              onDelete={handleDelete}
                             />
                           </div>
                         </SortableItem>
@@ -217,7 +221,7 @@ export default function ReorderServicesClient({
                     })}
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-4 gap-6">
                     {services.map((service) => {
                       const categories =
                         service.categories_services
@@ -242,6 +246,7 @@ export default function ReorderServicesClient({
                             price={service.price}
                             categories={categories}
                             highlight={service.is_highlighted}
+                            onDelete={handleDelete}
                             isAdmin={true}
                           />
                         </SortableItem>

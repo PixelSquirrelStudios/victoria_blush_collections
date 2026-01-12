@@ -41,7 +41,8 @@ export async function createService(params: CreateServiceParams) {
           .from('categories')
           .select('id')
           .ilike('name', category)
-          .single();
+          .limit(1)
+          .maybeSingle();
         if (categoryError) {
           console.error('Error checking existing category:', categoryError);
           throw new Error(categoryError.message);

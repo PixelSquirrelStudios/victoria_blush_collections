@@ -7,9 +7,11 @@ import Image from 'next/image';
 interface AboutProps {
   aboutDescription: string;
   aboutImageUrl?: string;
+  isHomepage?: boolean;
 }
 
-export default function About({ aboutDescription, aboutImageUrl }: AboutProps) {
+export default function About({ aboutDescription, aboutImageUrl, isHomepage = true }: AboutProps) {
+  const bookingHref = isHomepage ? '#contact' : '/contact';
 
   const MotionDiv = motion.div as any;
 
@@ -67,7 +69,7 @@ export default function About({ aboutDescription, aboutImageUrl }: AboutProps) {
               {/* CTA Button */}
               <div className="pt-6">
                 <a
-                  href="#contact"
+                  href={bookingHref}
                   className="inline-block bg-interactive-active hover:bg-interactive-active/90 text-white px-8 py-4 rounded-lg font-medium  transition-all duration-300 shadow-md hover:shadow-xl"
                 >
                   Book Your Appointment

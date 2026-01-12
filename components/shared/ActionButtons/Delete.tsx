@@ -24,9 +24,11 @@ import { Trash2 } from 'lucide-react';
 export const DeleteService = ({
   serviceId,
   variant,
+  onDelete,
 }: {
   serviceId: any;
   variant: string;
+  onDelete?: (id: string) => void;
 }) => {
   const router = useRouter();
   const handleDelete = async () => {
@@ -38,7 +40,11 @@ export const DeleteService = ({
         variant: 'success',
         autoDismiss: true,
       });
-      router.refresh();
+      if (onDelete) {
+        onDelete(serviceId);
+      } else {
+        router.refresh();
+      }
     } catch (error) {
       // Handle error
       console.error('Error deleting Service', error);
@@ -103,9 +109,11 @@ export const DeleteService = ({
 export const DeleteGalleryImage = ({
   imageId,
   variant,
+  onDelete,
 }: {
   imageId: any;
   variant: string;
+  onDelete?: (id: string) => void;
 }) => {
   const router = useRouter();
   const handleDelete = async () => {
@@ -117,7 +125,11 @@ export const DeleteGalleryImage = ({
         variant: 'success',
         autoDismiss: true,
       });
-      router.refresh();
+      if (onDelete) {
+        onDelete(imageId);
+      } else {
+        router.refresh();
+      }
     } catch (error) {
       // Handle error
       console.error('Error deleting Gallery Image', error);

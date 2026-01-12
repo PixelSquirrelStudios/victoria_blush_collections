@@ -18,6 +18,7 @@ interface ServiceCardProps {
   categories: Category[];
   highlight?: boolean;
   isAdmin?: boolean;
+  onDelete?: (id: string) => void;
 }
 
 export default function ServiceCard({
@@ -29,6 +30,7 @@ export default function ServiceCard({
   categories,
   highlight = false,
   isAdmin = false,
+  onDelete,
 }: ServiceCardProps) {
   return (
     <div className={`
@@ -107,7 +109,7 @@ export default function ServiceCard({
               </Link>
             </div>
             <div className='w-full'>
-              <DeleteService serviceId={id} variant="large" />
+              <DeleteService serviceId={id} variant="large" onDelete={onDelete} />
             </div>
           </div>
         )}

@@ -16,6 +16,7 @@ interface ServiceCardListAdminProps {
   price: string;
   categories: Category[];
   highlight?: boolean;
+  onDelete?: (id: string) => void;
 }
 
 export default function ServiceCardListAdmin({
@@ -25,6 +26,7 @@ export default function ServiceCardListAdmin({
   price,
   categories,
   highlight = false,
+  onDelete,
 }: ServiceCardListAdminProps) {
   return (
     <div className={`
@@ -87,7 +89,7 @@ export default function ServiceCardListAdmin({
               <Pencil className="w-5 h-5" />
             </button>
           </Link>
-          <DeleteService serviceId={id} variant="admin" />
+          <DeleteService serviceId={id} variant="admin" onDelete={onDelete} />
         </div>
       </div>
 
@@ -136,7 +138,7 @@ export default function ServiceCardListAdmin({
                 <Pencil className="w-5 h-5" />
               </button>
             </Link>
-            <DeleteService serviceId={id} variant="admin" />
+            <DeleteService serviceId={id} variant="admin" onDelete={onDelete} />
           </div>
         </div>
       </div>

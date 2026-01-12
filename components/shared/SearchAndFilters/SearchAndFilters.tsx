@@ -228,7 +228,7 @@ const SearchAndFilters = ({
     const newUrl = formUrlQuery({
       params: searchParams.toString(),
       key: 'is_highlighted',
-      value,
+      value: value,
     });
     router.push(newUrl, { scroll: false });
   };
@@ -272,31 +272,29 @@ const SearchAndFilters = ({
   return (
     <>
       <div
-        className={`flex w-full flex-col items-center md:items-start justify-items pb-4 ${isNotificationsPage ? 'gap-6' : 'gap-2'
+        className={`flex w-full flex-col items-center justify-items pb-4 2xl:flex-row ${isNotificationsPage ? 'gap-6' : 'max-2xl:gap-4'
           }`}
       >
-        <div className='w-full pb-2 md:pb-4 text-center md:text-left'>
-          <ContentHeading
-            contentIcon={contentIcon}
-            contentTitle={contentTitle}
-            contentSubtitle={contentSubtitle}
-            isNotificationsPage={isNotificationsPage}
-            isLoading={isLoading}
-            notificationsCount={notificationsCount}
-          />
-        </div>
-        <div className='flex flex-col items-center md:items-start gap-2 md:gap-4 md:flex-row md:flex-wrap xl:flex-row'>
+        <ContentHeading
+          contentIcon={contentIcon}
+          contentTitle={contentTitle}
+          contentSubtitle={contentSubtitle}
+          isNotificationsPage={isNotificationsPage}
+          isLoading={isLoading}
+          notificationsCount={notificationsCount}
+        />
+        <div className='flex flex-col items-center gap-4 lg:flex-row xl:pl-4'>
           {((currentUser && currentUser.role === 'admin' && hasAdminButton) ||
             hasButton) && (
-              <div className='flex md:flex-row flex-col gap-2'>
+              <div className='flex gap-2'>
                 <Link href={contentUrl}>
-                  <button className='flex w-full xl:w-auto bg-bg-primary rounded-sm px-4 py-1.5 font-semibold tracking-wider text-black/90 hover:bg-bg-primary/90 transition-all duration-300'>
+                  <button className='flex bg-bg-primary rounded-sm px-4 py-1.5 font-semibold tracking-wider text-black/90 hover:bg-bg-primary/90 transition-all duration-300'>
                     Add {contentButtonTitle}
                   </button>
                 </Link>
                 {reorderUrl && currentUser && currentUser.role === 'admin' && (
                   <Link href={reorderUrl}>
-                    <button className='flex justify-center w-full bg-interactive-active rounded-sm px-4 py-1.5 font-semibold tracking-wider text-white hover:bg-interactive-active/90 transition-all duration-300'>
+                    <button className='flex bg-interactive-active rounded-sm px-4 py-1.5 font-semibold tracking-wider text-white hover:bg-interactive-active/90 transition-all duration-300'>
                       Reorder
                     </button>
                   </Link>
@@ -305,7 +303,7 @@ const SearchAndFilters = ({
             )}
           <div>
             <Button
-              className='flex w-full md:w-auto rounded-sm bg-brand-primary px-6 py-4 tracking-wide text-text-primary hover:bg-brand-primary/90'
+              className='flex rounded-sm bg-brand-primary px-6 py-4 tracking-wide text-text-primary hover:bg-brand-primary/90'
               onClick={resetFilters}
               disabled={searchParams.toString() === ''}
             >
@@ -313,7 +311,7 @@ const SearchAndFilters = ({
             </Button>
           </div>
           {showResultsCounter && (
-            <div className='w-full md:w-auto md:ml-2 flex justify-center md:justify-end text-text-primary text-sm md:text-base'>
+            <div className='ml-2 flex justify-end text-text-primary'>
               {totalResults === 1
                 ? 'Showing 1 result'
                 : `Showing ${startRange}-${endRange} of ${totalResults} results`}
@@ -446,7 +444,7 @@ const SearchAndFilters = ({
                 <span className='accordion-open'>Hide Additional Filters</span>
               </AccordionTrigger>
               <AccordionContent className='accordion-content h-full'>
-                <div className='mt-4 flex w-full flex-col gap-3 md:gap-4 md:flex-row md:flex-wrap 2xl:flex-row'>
+                <div className='mt-4 flex w-full flex-col gap-4 2xl:flex-row'>
                   {hasFirstFilter && (
                     <div className='flex w-full flex-col'>
                       <Select
