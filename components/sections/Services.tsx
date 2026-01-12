@@ -2,7 +2,7 @@
 
 import PriceListCard from '../cards/ServiceCard';
 import PriceListCardList from '../cards/ServiceCardList';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { LayoutGrid, List } from 'lucide-react';
 import { cormorant } from '@/app/fonts';

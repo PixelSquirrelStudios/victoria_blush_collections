@@ -1,7 +1,7 @@
 'use client';
 
 import { cormorant } from '@/app/fonts';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -20,7 +20,7 @@ interface ContactProps {
 
 export default function Contact({ subheading, description, address, phone, email, openingHours, socialUrl }: ContactProps) {
   const MotionDiv = motion.div as any;
-  
+
   const [formData, setFormData] = useState({
     name: '',
     email: '',
