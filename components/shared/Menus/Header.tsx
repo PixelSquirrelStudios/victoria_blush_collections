@@ -73,7 +73,7 @@ const Header = ({ mobileVariant, isHomepage: isHomepageProp }: HeaderProps) => {
       <div className="flex w-full h-full items-center justify-between px-5 pr-8 md:px-16 lg:px-24 2xl:px-52">
         {/* Left: Logo */}
         <Link href="/" className="mr-4 lg:mr-10">
-          <Logo width={280} height={40} forceTheme="light" sizes="180px" />
+          <Logo width={280} height={40} sizes="180px" />
         </Link>
 
         {/* Right: Profile + Nav + Mobile sidebar */}
