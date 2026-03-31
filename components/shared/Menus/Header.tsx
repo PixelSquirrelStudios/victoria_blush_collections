@@ -52,6 +52,7 @@ const Header = ({ mobileVariant, isHomepage: isHomepageProp }: HeaderProps) => {
     { name: 'About', id: 'about', page: '/about' },
     { name: 'Services', id: 'services', page: '/services' },
     { name: 'Gallery', id: 'gallery', page: '/gallery' },
+    { name: 'Education & Salon Support', id: 'education', page: '/education' },
   ];
 
   // Build hrefs based on whether we're on the homepage:
@@ -62,6 +63,10 @@ const Header = ({ mobileVariant, isHomepage: isHomepageProp }: HeaderProps) => {
     .map((s) => {
       if (s.name === 'Home') {
         return { name: s.name, href: '/' };
+      }
+      // Education is always a separate page link
+      if (s.page && !['/', '/about', '/services', '/gallery'].includes(s.page)) {
+        return { name: s.name, href: s.page };
       }
       return { name: s.name, href: isHomepage ? `#${s.id}` : s.page };
     });
@@ -136,7 +141,7 @@ const Header = ({ mobileVariant, isHomepage: isHomepageProp }: HeaderProps) => {
             </div>
           ) : null}
 
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden xl:flex items-center gap-8">
             {navLinks.map((link) =>
               isHomepage ? (
                 <a
@@ -173,7 +178,7 @@ const Header = ({ mobileVariant, isHomepage: isHomepageProp }: HeaderProps) => {
             )}
           </div>
 
-          <div className="md:hidden shrink-0">
+          <div className="xl:hidden shrink-0">
             <MobileSidebar variant={mobileVariant} isHomepage={isHomepage} />
           </div>
         </div>

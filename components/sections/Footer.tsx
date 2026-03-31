@@ -14,6 +14,7 @@ export default function Footer({ description }: FooterProps) {
   const servicesHref = '/services';
   const galleryHref = '/gallery';
   const contactHref = '/contact';
+  const educationHref = '/education';
 
   return (
     <footer className="bg-brand-secondary text-text-primary">
@@ -94,6 +95,11 @@ export default function Footer({ description }: FooterProps) {
               <li>
                 <a href={galleryHref} className="text-text-primary hover:text-text-primary/80 transition-colors">
                   Gallery Showcase
+                </a>
+              </li>
+              <li>
+                <a href={educationHref} className="text-text-primary hover:text-text-primary/80 transition-colors">
+                  Education & Salon Support
                 </a>
               </li>
               <li>

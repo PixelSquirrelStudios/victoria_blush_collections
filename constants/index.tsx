@@ -1,5 +1,5 @@
 import { SidebarLink, SidebarLinkExtended } from '@/types';
-import { LucideAppWindow } from 'lucide-react';
+import { GraduationCap, LucideAppWindow } from 'lucide-react';
 import { FaEnvelope, FaHome, FaImage, FaListAlt, FaUser } from 'react-icons/fa';
 import { TbEdit, TbHomeEdit, TbPhotoEdit } from "react-icons/tb";
 import { StylesConfig } from 'react-select';
@@ -13,6 +13,7 @@ export const sidebarLinks: SidebarLink[] = [
   { route: '/about', label: 'About' },
   { route: '/services', label: 'Services' },
   { route: '/gallery', label: 'Gallery' },
+  { route: '/education', label: 'Education & Salon Support' },
   { route: '/contact', label: 'Contact' },
 ];
 
@@ -54,6 +55,11 @@ export const sideBarLinksMain: SidebarLinkExtended[] = [
     icon: < FaImage />,
     route: '/#gallery',
     label: 'Gallery',
+  },
+  {
+    icon: <GraduationCap />,
+    route: '/education',
+    label: 'Education & Salon Support',
   },
   {
     icon: < FaEnvelope />,
