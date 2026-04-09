@@ -71,10 +71,15 @@ const EditEducationForm = ({ educationData, currentUser }: Props) => {
   });
 
   // Field arrays for repeater fields
+  // @ts-ignore - useFieldArray expects object arrays but we use string arrays
   const helpItems = useFieldArray({ control: form.control, name: 'help_items' as any });
+  // @ts-ignore
   const whoDescriptions = useFieldArray({ control: form.control, name: 'who_descriptions' as any });
+  // @ts-ignore
   const approachParagraphs = useFieldArray({ control: form.control, name: 'approach_paragraphs' as any });
+  // @ts-ignore
   const outcomeParagraphs = useFieldArray({ control: form.control, name: 'outcome_paragraphs' as any });
+  // @ts-ignore
   const whyMeParagraphs = useFieldArray({ control: form.control, name: 'why_me_paragraphs' as any });
 
   async function onSubmit(values: z.infer<typeof EducationSchema>) {
@@ -114,13 +119,13 @@ const EditEducationForm = ({ educationData, currentUser }: Props) => {
   // Reusable repeater for simple string arrays
   const renderRepeater = (
     label: string,
-    fieldArray: ReturnType<typeof useFieldArray>,
+    fieldArray: any,
     fieldName: string,
     placeholder: string
   ) => (
     <div className="space-y-4">
       <FormLabel>{label}</FormLabel>
-      {fieldArray.fields.map((item, index) => (
+      {fieldArray.fields.map((item: any, index: number) => (
         <div key={item.id} className="flex gap-2 items-start">
           <FormField
             control={form.control}
@@ -167,13 +172,13 @@ const EditEducationForm = ({ educationData, currentUser }: Props) => {
   // Reusable repeater for textarea (paragraphs)
   const renderTextareaRepeater = (
     label: string,
-    fieldArray: ReturnType<typeof useFieldArray>,
+    fieldArray: any,
     fieldName: string,
     placeholder: string
   ) => (
     <div className="space-y-4">
       <FormLabel>{label}</FormLabel>
-      {fieldArray.fields.map((item, index) => (
+      {fieldArray.fields.map((item: any, index: number) => (
         <div key={item.id} className="flex gap-2 items-start">
           <FormField
             control={form.control}
