@@ -22,6 +22,7 @@ export const dashboardLinks: SidebarLink[] = [
   { route: '/dashboard', label: 'Dashboard Home' },
   { route: '/dashboard/edit-profile', label: 'Edit Profile' },
   { route: '/dashboard/edit-homepage', label: 'Edit Homepage' },
+  { route: '/dashboard/edit-education', label: 'Edit Education' },
   { route: '/dashboard/services', label: 'Services' },
   { route: '/dashboard/gallery-images', label: 'Gallery Images' },
 ];
@@ -59,7 +60,7 @@ export const sideBarLinksMain: SidebarLinkExtended[] = [
   {
     icon: <GraduationCap />,
     route: '/education',
-    label: 'Education & Salon Support',
+    label: 'Education',
   },
   {
     icon: < FaEnvelope />,
@@ -78,6 +79,11 @@ export const sideBarLinksDashboard: SidebarLinkExtended[] = [
     icon: < TbHomeEdit />,
     route: '/dashboard/edit-homepage',
     label: 'Edit Homepage',
+  },
+  {
+    icon: <GraduationCap />,
+    route: '/dashboard/edit-education',
+    label: 'Edit Education',
   },
   {
     icon: <TbEdit />,

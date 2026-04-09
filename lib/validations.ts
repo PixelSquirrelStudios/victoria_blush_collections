@@ -122,7 +122,7 @@ export const HomepageSchema = z.object({
         value: z
           .string()
           .min(1, { message: 'Opening hours value is required' }),
-      })
+      }),
     )
     .min(1, { message: 'At least one opening hours entry is required' }),
   contact_social_media_url: z
@@ -141,4 +141,67 @@ export const HomepageSchema = z.object({
 
   // Maintenance mode
   enable_maintenance: z.boolean().optional(),
+});
+
+export const EducationSchema = z.object({
+  // Hero section
+  hero_heading: z.string().min(1, { message: 'Hero heading is required' }),
+  hero_subheading: z
+    .string()
+    .min(1, { message: 'Hero subheading is required' }),
+  hero_description_1: z
+    .string()
+    .min(1, { message: 'Hero description 1 is required' }),
+  hero_description_2: z
+    .string()
+    .min(1, { message: 'Hero description 2 is required' }),
+  hero_image_url: z.string().min(1, { message: 'Hero image is required' }),
+
+  // Who This Is For section
+  who_heading: z.string().min(1, { message: 'Who heading is required' }),
+  who_descriptions: z
+    .array(z.string().min(1, { message: 'Description cannot be empty' }))
+    .min(1, { message: 'At least one description is required' }),
+
+  // What I Can Help With section
+  help_heading: z.string().min(1, { message: 'Help heading is required' }),
+  help_description: z
+    .string()
+    .min(1, { message: 'Help description is required' }),
+  help_items: z
+    .array(z.string().min(1, { message: 'Item cannot be empty' }))
+    .min(1, { message: 'At least one item is required' }),
+
+  // My Approach & The Outcome section
+  approach_heading: z
+    .string()
+    .min(1, { message: 'Approach heading is required' }),
+  approach_paragraphs: z
+    .array(z.string().min(1, { message: 'Paragraph cannot be empty' }))
+    .min(1, { message: 'At least one paragraph is required' }),
+  outcome_heading: z
+    .string()
+    .min(1, { message: 'Outcome heading is required' }),
+  outcome_paragraphs: z
+    .array(z.string().min(1, { message: 'Paragraph cannot be empty' }))
+    .min(1, { message: 'At least one paragraph is required' }),
+
+  // Why Me section
+  why_me_heading: z.string().min(1, { message: 'Why Me heading is required' }),
+  why_me_paragraphs: z
+    .array(z.string().min(1, { message: 'Paragraph cannot be empty' }))
+    .min(1, { message: 'At least one paragraph is required' }),
+  why_me_image_url: z.string().min(1, { message: 'Why Me image is required' }),
+
+  // Contact / CTA section
+  contact_heading: z
+    .string()
+    .min(1, { message: 'Contact heading is required' }),
+  contact_description: z
+    .string()
+    .min(1, { message: 'Contact description is required' }),
+  contact_button_text: z
+    .string()
+    .min(1, { message: 'Button text is required' }),
+  contact_note: z.string().optional(),
 });

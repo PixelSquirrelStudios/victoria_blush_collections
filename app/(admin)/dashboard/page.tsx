@@ -9,6 +9,7 @@ import { getPublicGalleryImages } from '@/lib/actions/image.actions';
 import { getPublicServices } from '@/lib/actions/service.actions';
 import { IoSwapVerticalOutline } from "react-icons/io5";
 import { TbHomeEdit } from 'react-icons/tb';
+import { GraduationCap } from 'lucide-react';
 
 const DashboardPage = async () => {
   const { user } = await fetchUserData();
@@ -83,6 +84,16 @@ const DashboardPage = async () => {
                 <Link href='/dashboard/edit-homepage'>
                   <div className='md:text-xl text-lg font-semibold underline'>
                     Edit Homepage
+                  </div>
+                </Link>
+              </div>
+              <div className='flex flex-row items-center gap-2'>
+                <div className='rounded-full bg-primary-main bg-opacity-85 md:p-2.5'>
+                  <GraduationCap className='md:text-xl text-lg text-text-primary max-sm:hidden w-5 h-5' />
+                </div>
+                <Link href='/dashboard/edit-education'>
+                  <div className='md:text-xl text-lg font-semibold underline'>
+                    Edit Education
                   </div>
                 </Link>
               </div>

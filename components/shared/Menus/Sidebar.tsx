@@ -33,14 +33,14 @@ const Sidebar = ({ profile }: SidebarProps) => {
       <div className='mb-3 mt-5 text-xl font-semibold uppercase text-stone-800'>
         Main Links
       </div>
-      <div className='flex w-auto flex-col gap-4 pl-3 text-2xl font-semibold text-stone-800'>
+      <div className='flex w-auto flex-col gap-1 pl-3 text-2xl font-semibold text-stone-800'>
         <SidebarMenu sidebarLinks={sideBarLinksMain} />
       </div>
       <Separator className='opacity-40' />
       <div className='mb-3 mt-5 text-xl font-semibold uppercase text-stone-800'>
         Manage Content
       </div>
-      <div className='flex w-auto flex-col gap-4 pl-3 text-2xl font-semibold text-stone-800'>
+      <div className='flex w-auto flex-col gap-1 pl-3 text-2xl font-semibold text-stone-800'>
         <SidebarMenu sidebarLinks={sideBarLinksDashboard} />
       </div>
       <div className='mb-3 mt-6 text-xl font-semibold uppercase text-stone-800'>
@@ -50,8 +50,8 @@ const Sidebar = ({ profile }: SidebarProps) => {
         <button
           className="w-full text-left text-base font-medium rounded-xl flex items-center justify-start gap-1.5 ml-1.5 py-2 px-2 transition-colors duration-200 hover:bg-brand-secondary/60 focus:outline-none focus-visible:ring-0"
         >
-          <FaUserCog className="mr-2 text-2xl" />
-          <span className='text-xl pl-1'>Edit Profile</span>
+          <FaUserCog className="mr-2 text-xl" />
+          <span className='text-base pl-1'>Edit Profile</span>
         </button>
       </Link>
       <form action={signOutAction} className="w-full">
@@ -59,8 +59,8 @@ const Sidebar = ({ profile }: SidebarProps) => {
           type="submit"
           className="w-full text-left text-base font-medium rounded-xl flex items-center justify-start gap-1.5 ml-1.5 py-2 px-2 transition-colors duration-200 hover:bg-brand-secondary/60 focus:outline-none focus-visible:ring-0"
         >
-          <FaSignOutAlt className="mr-2 text-2xl" />
-          <span className='text-xl pl-1'>Sign Out</span>
+          <FaSignOutAlt className="mr-2 text-xl" />
+          <span className='text-base pl-1'>Sign Out</span>
         </button>
       </form>
     </div>
