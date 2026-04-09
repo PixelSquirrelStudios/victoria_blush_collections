@@ -3,6 +3,7 @@
 import { cormorant } from '@/app/fonts';
 import { motion } from 'framer-motion';
 import { GraduationCap, Scissors, MessageCircle, Briefcase, CheckCircle, ArrowRight } from 'lucide-react';
+import Image from 'next/image';
 
 const MotionDiv = motion.div as any;
 
@@ -54,11 +55,12 @@ export default function Education() {
           >
             <div className="relative aspect-3/4 rounded-2xl overflow-hidden shadow-2xl bg-bg-muted">
               <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center space-y-4 text-text-muted">
+                {/* <div className="text-center space-y-4 text-text-muted">
                   <GraduationCap className="w-16 h-16 mx-auto" />
                   <p className="text-lg font-medium">Image Placeholder</p>
                   <p className="text-sm">Training / salon environment</p>
-                </div>
+                </div> */}
+                <Image src="/assets/images/Vicky.jpg" alt="Education & Salon Support" width={400} height={500} className="object-cover w-full h-full" />
               </div>
             </div>
             <div className="absolute -bottom-6 -right-6 w-48 h-48 bg-brand-primary opacity-10 rounded-full -z-10"></div>
@@ -240,11 +242,12 @@ export default function Education() {
               >
                 <div className="relative aspect-4/5 rounded-2xl overflow-hidden shadow-2xl bg-bg-muted">
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center space-y-4 text-text-muted">
+                    {/* <div className="text-center space-y-4 text-text-muted">
                       <Scissors className="w-16 h-16 mx-auto" />
                       <p className="text-lg font-medium">Image Placeholder</p>
                       <p className="text-sm">Working in salon environment</p>
-                    </div>
+                    </div> */}
+                    <Image src="/assets/images/VBC - Salon.jpg" alt="Education & Salon Support" width={400} height={500} className="object-cover w-full h-full" />
                   </div>
                 </div>
                 <div className="absolute -top-6 -left-6 w-48 h-48 bg-brand-primary opacity-10 rounded-full -z-10"></div>
