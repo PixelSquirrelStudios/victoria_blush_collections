@@ -28,6 +28,7 @@ export default async function EducationPage() {
           helpHeading={educationData?.help_heading}
           helpDescription={educationData?.help_description}
           helpItems={educationData?.help_items}
+          expectHeading={educationData?.expect_heading}
           approachHeading={educationData?.approach_heading}
           approachParagraphs={educationData?.approach_paragraphs}
           outcomeHeading={educationData?.outcome_heading}

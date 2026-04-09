@@ -173,6 +173,7 @@ export const EducationSchema = z.object({
     .min(1, { message: 'At least one item is required' }),
 
   // My Approach & The Outcome section
+  expect_heading: z.string().min(1, { message: 'Section heading is required' }),
   approach_heading: z
     .string()
     .min(1, { message: 'Approach heading is required' }),

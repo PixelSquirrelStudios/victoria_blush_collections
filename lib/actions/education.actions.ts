@@ -14,6 +14,7 @@ interface EducationData {
   help_heading: string;
   help_description: string;
   help_items: string[];
+  expect_heading: string;
   approach_heading: string;
   approach_paragraphs: string[];
   outcome_heading: string;

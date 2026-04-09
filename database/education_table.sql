@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS public.education (
   help_items JSONB NOT NULL DEFAULT '[]'::jsonb,
 
   -- My Approach & The Outcome section
+  expect_heading TEXT NOT NULL DEFAULT 'What You Can Expect',
   approach_heading TEXT NOT NULL,
   approach_paragraphs JSONB NOT NULL DEFAULT '[]'::jsonb,
   outcome_heading TEXT NOT NULL,
@@ -96,6 +97,7 @@ INSERT INTO public.education (
   help_heading,
   help_description,
   help_items,
+  expect_heading,
   approach_heading,
   approach_paragraphs,
   outcome_heading,
@@ -118,7 +120,8 @@ INSERT INTO public.education (
   'What I Can Help With',
   'This can be tailored depending on what you need, but often includes:',
   '["Building confidence behind the chair", "Refining cutting, colour and finishing work", "Improving consultations and client connection", "Raising standards across a team", "Creating a better overall client experience", "Supporting salon owners with team and business development"]'::jsonb,
-  'My Approach',
+  'What You Can Expect',
+  'What You Can Expect',
   '["I don''t believe in one-size-fits-all training.", "Everything I offer is personal, honest and based on real experience — what actually works in a busy salon, day in and day out."]'::jsonb,
   'The Outcome',
   '["The goal is simple — to help you feel more confident, more capable and clearer in what you''re doing.", "That might show up in your work, your clients, your team or your business as a whole."]'::jsonb,

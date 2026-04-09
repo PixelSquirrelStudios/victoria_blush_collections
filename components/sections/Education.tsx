@@ -28,6 +28,7 @@ interface EducationProps {
   helpHeading?: string;
   helpDescription?: string;
   helpItems?: string[];
+  expectHeading?: string;
   approachHeading?: string;
   approachParagraphs?: string[];
   outcomeHeading?: string;
@@ -55,7 +56,8 @@ export default function Education({
   helpHeading = 'What I Can Help With',
   helpDescription = 'This can be tailored depending on what you need, but often includes:',
   helpItems = [],
-  approachHeading = 'My Approach',
+  expectHeading = 'What You Can Expect',
+  approachHeading = 'What You Can Expect',
   approachParagraphs = [],
   outcomeHeading = 'The Outcome',
   outcomeParagraphs = [],
@@ -189,7 +191,7 @@ export default function Education({
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              <div className="bg-bg-primary rounded-2xl p-8 md:p-10 shadow-md border border-border-light max-w-3xl mx-auto">
+              <div className="bg-bg-subtle rounded-2xl p-8 md:p-10 shadow-md border border-border-light max-w-3xl mx-auto">
                 <ul className="space-y-4">
                   {helpItems.map((item) => (
                     <li key={item} className="flex items-start gap-3 text-text-body font-light text-lg">
@@ -206,22 +208,22 @@ export default function Education({
 
       {/* ───────── My Approach & The Outcome ───────── */}
       <section className="relative flex items-center bg-bg-subtle overflow-hidden">
-        <div className="container mx-auto px-6 py-24">
+        <div className="container mx-auto px-6 py-32 md:py-40">
           <div className="max-w-7xl mx-auto">
             <MotionDiv
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6 }}
-              className="text-center mb-16"
+              className="text-center mb-20"
             >
               <h2 className={`${cormorant.className} text-4xl md:text-5xl lg:text-6xl font-medium uppercase text-text-primary mb-4`}>
-                {approachHeading} &amp; {outcomeHeading}
+                {expectHeading}
               </h2>
               <div className="w-24 h-1 bg-interactive-active/30 mx-auto"></div>
             </MotionDiv>
 
-            <div className="grid md:grid-cols-[1fr_auto_1fr] gap-8 md:gap-12">
+            <div className="grid md:grid-cols-[1fr_auto_1fr] gap-10 md:gap-16">
               <MotionDiv
                 initial={{ opacity: 0, x: -40 }}
                 whileInView={{ opacity: 1, x: 0 }}

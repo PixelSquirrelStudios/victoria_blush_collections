@@ -54,6 +54,7 @@ const EditEducationForm = ({ educationData, currentUser }: Props) => {
       help_description: educationData?.help_description || '',
       help_items: educationData?.help_items?.length ? educationData.help_items : [''],
       // My Approach & The Outcome
+      expect_heading: educationData?.expect_heading || 'What You Can Expect',
       approach_heading: educationData?.approach_heading || '',
       approach_paragraphs: educationData?.approach_paragraphs?.length ? educationData.approach_paragraphs : [''],
       outcome_heading: educationData?.outcome_heading || '',
@@ -472,6 +473,27 @@ const EditEducationForm = ({ educationData, currentUser }: Props) => {
 
             {/* My Approach & The Outcome Tab */}
             <TabsContent value="approach" className="space-y-8">
+              <div className="border border-border-light rounded-xl p-6 space-y-4">
+                <h3 className="text-lg font-semibold">Section Heading</h3>
+                <FormField
+                  control={form.control}
+                  name="expect_heading"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="mb-2 block text-md">Heading</FormLabel>
+                      <FormControl>
+                        <Input
+                          className="rounded-lg border border-[#666] bg-[#eee] text-[#111]"
+                          placeholder="e.g., What You Can Expect"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
               <div className="border border-border-light rounded-xl p-6 space-y-4">
                 <h3 className="text-lg font-semibold">My Approach</h3>
                 <FormField
