@@ -38,6 +38,14 @@ export async function updateSession(request: NextRequest) {
 
   const url = request.nextUrl.clone();
 
+  const redirectWithCookies = () => {
+    const response = NextResponse.redirect(url);
+    supabaseResponse.cookies.getAll().forEach((cookie) => {
+      response.cookies.set(cookie);
+    });
+    return response;
+  };
+
   // Auth pages that logged-in users should be redirected away from
   const authPages = [
     '/sign-in',
@@ -53,13 +61,13 @@ export async function updateSession(request: NextRequest) {
   // Redirect unauthenticated users away from dashboard routes
   if (!user && url.pathname.startsWith('/dashboard')) {
     url.pathname = '/';
-    return NextResponse.redirect(url);
+    return redirectWithCookies();
   }
 
   // Redirect authenticated users away from auth pages (except callback routes)
   if (user && isAuthPage && !isCallbackRoute) {
     url.pathname = '/';
-    return NextResponse.redirect(url);
+    return redirectWithCookies();
   }
 
   // Handle onboarding page separately
@@ -74,7 +82,7 @@ export async function updateSession(request: NextRequest) {
     // If user has already onboarded, redirect to home
     if (profile?.has_onboarded) {
       url.pathname = '/';
-      return NextResponse.redirect(url);
+      return redirectWithCookies();
     }
   }
 
@@ -88,7 +96,7 @@ export async function updateSession(request: NextRequest) {
 
     if (profile && !profile.has_onboarded) {
       url.pathname = '/onboarding';
-      return NextResponse.redirect(url);
+      return redirectWithCookies();
     }
   }
 

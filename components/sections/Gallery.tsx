@@ -532,7 +532,7 @@ export default function Gallery({ images, subheading, description }: GalleryProp
           className="text-center mt-16"
         >
           <Link
-            href="https://www.instagram.com/victoriablushcollections"
+            href="https://www.instagram.com/byvictoriacollective"
             target="_blank"
             className="inline-block"
           >
@@ -542,7 +542,7 @@ export default function Gallery({ images, subheading, description }: GalleryProp
               </svg>
               <div className="text-left">
                 <p className="text-sm opacity-90 font-medium">Follow me on Instagram</p>
-                <p className="font-bold text-lg">@victoriablushcollections</p>
+                <p className="font-bold text-lg">@byvictoriacollective</p>
               </div>
             </div>
           </Link>

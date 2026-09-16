@@ -14,7 +14,7 @@ const SocialBar = ({ variant = 'default', className = '' }: SocialBarProps) => {
   return (
     <div className={`flex gap-4 ${className}`}>
       <a
-        href="https://instagram.com/victoriablushcollections"
+        href="https://instagram.com/byvictoriacollective"
         target="_blank"
         rel="noopener noreferrer"
         className={buttonClass}
@@ -22,7 +22,7 @@ const SocialBar = ({ variant = 'default', className = '' }: SocialBarProps) => {
       >
         <FaInstagram className="w-5 h-5" />
       </a>
-      <a
+      {/* <a
         href="https://facebook.com/victoriablushcollections"
         target="_blank"
         rel="noopener noreferrer"
@@ -30,7 +30,7 @@ const SocialBar = ({ variant = 'default', className = '' }: SocialBarProps) => {
         aria-label="Facebook"
       >
         <FaFacebookF className="w-5 h-5" />
-      </a>
+      </a> */}
       <a
         href="mailto:hello@victoriablushcollections.co.uk"
         className={buttonClass}

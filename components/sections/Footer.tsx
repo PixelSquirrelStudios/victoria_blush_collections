@@ -52,7 +52,7 @@ export default function Footer({ description }: FooterProps) {
               >
                 <FaInstagram className="w-5 h-5" />
               </a>
-              <a
+              {/* <a
                 href="https://facebook.com/victoriablushcollections"
                 target="_blank"
                 rel="noopener noreferrer"
@@ -60,7 +60,7 @@ export default function Footer({ description }: FooterProps) {
                 aria-label="Facebook"
               >
                 <FaFacebookF className="w-5 h-5" />
-              </a>
+              </a> */}
               <a
                 href="mailto:hello@victoriablushcollections.co.uk"
                 className="p-3 bg-brand-primary rounded-full hover:bg-brand-primary-hover transition-colors duration-300"

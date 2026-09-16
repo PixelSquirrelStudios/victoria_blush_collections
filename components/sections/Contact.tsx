@@ -177,12 +177,12 @@ export default function Contact({ subheading, description, address, phone, email
                   <div>
                     <p className="font-semibold text-text-primary mb-1">Social Media</p>
                     <a
-                      href={socialUrl ? `https://www.instagram.com/${socialUrl}` : 'https://www.instagram.com/victoriablushcollections'}
+                      href={socialUrl ? `https://www.instagram.com/${socialUrl}` : 'https://www.instagram.com/byvictoriacollective'}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-text-body hover:text-text-primary transition-colors"
                     >
-                      @{socialUrl || 'victoriablushcollections'}
+                      @{socialUrl || 'byvictoriacollective'}
                     </a>
                   </div>
                 </div>
