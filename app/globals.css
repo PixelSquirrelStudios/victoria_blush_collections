@@ -2,6 +2,39 @@
 
 @plugin 'tailwindcss-animate';
 
+.app-uploader .uppy-Dashboard-browse {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 28px;
+  margin: 0.25rem;
+  padding: 0.125rem 0.5rem;
+  border: 1px solid var(--color-border-emphasis);
+  border-radius: 6px;
+  background: var(--color-brand-primary);
+  color: var(--color-text-primary);
+  font-size: inherit;
+  font-weight: 300;
+  line-height: 1.5;
+  letter-spacing: 0;
+  text-decoration: none;
+  text-transform: capitalize;
+  box-shadow: none;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+
+.app-uploader .uppy-Dashboard-browse:hover {
+  background: var(--color-brand-primary-hover);
+  border-color: var(--color-interactive-active);
+  color: var(--color-text-primary);
+  text-decoration: none;
+}
+
+.app-uploader .uppy-Dashboard-browse:focus-visible {
+  outline: 2px solid var(--color-interactive-focus);
+  outline-offset: 3px;
+}
+
 .section-copy { overflow-wrap: anywhere; }
 .section-copy > * + * { margin-top: 1.25rem; }
 .section-copy ul, .section-copy ol { padding-left: 1.5rem; }

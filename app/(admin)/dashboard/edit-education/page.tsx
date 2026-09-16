@@ -7,7 +7,7 @@ import SectionsManager from '@/components/forms/SectionsManager';
 import { getSections } from '@/lib/actions/section.actions';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-export default async function EditEducationPage() {
+export default async function EditEducationPage({ searchParams }: { searchParams: Promise<{ action?: string | string[] }> }) {
   const supabase = await createClient();
 
   const { data: userData } = await supabase.auth.getClaims();
@@ -22,6 +22,7 @@ export default async function EditEducationPage() {
   // Fetch the education data
   const { data: educationData } = await getEducationData();
   const [educationSections, homepageSections] = await Promise.all([getSections('education'), getSections('homepage')]);
+  const startWithNewSection = (await searchParams).action === 'new';
 
   return (
     <div className="w-full min-w-0 max-w-4xl rounded-xl bg-brand-secondary p-4 text-text-primary shadow-md md:p-10">
@@ -32,7 +33,7 @@ export default async function EditEducationPage() {
           <TabsTrigger value="hero">Education Hero</TabsTrigger>
         </TabsList>
         <TabsContent value="sections" forceMount className="data-[state=inactive]:hidden">
-          <SectionsManager initialSections={[...educationSections.data, ...homepageSections.data]} loadError={educationSections.error || homepageSections.error} />
+          <SectionsManager key={startWithNewSection ? 'new' : 'list'} userId={userId} initialSections={[...educationSections.data, ...homepageSections.data]} loadError={educationSections.error || homepageSections.error} startWithNewSection={startWithNewSection} />
         </TabsContent>
         <TabsContent value="hero" forceMount className="data-[state=inactive]:hidden">
           <EditEducationForm educationData={educationData} currentUser={profile} />

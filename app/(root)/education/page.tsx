@@ -21,7 +21,7 @@ export default async function EducationPage() {
 
   return (
     <>
-      <div className="pt-10">
+      <div className="pt-10 xl:pt-[90px]">
         <EducationContent
           heroHeading={educationData?.hero_heading}
           heroSubheading={educationData?.hero_subheading}

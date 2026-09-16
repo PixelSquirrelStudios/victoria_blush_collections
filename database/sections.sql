@@ -17,6 +17,10 @@ ALTER TABLE public.sections
   ADD COLUMN IF NOT EXISTS position TEXT NOT NULL DEFAULT 'centre'
   CHECK (position IN ('left', 'centre', 'right'));
 
+ALTER TABLE public.sections
+  ADD COLUMN IF NOT EXISTS image_url TEXT NOT NULL DEFAULT '',
+  ADD COLUMN IF NOT EXISTS image_alt TEXT NOT NULL DEFAULT '';
+
 CREATE INDEX IF NOT EXISTS sections_type_order_idx ON public.sections (type, sort_order, id);
 ALTER TABLE public.sections ENABLE ROW LEVEL SECURITY;
 GRANT SELECT ON public.sections TO anon, authenticated;

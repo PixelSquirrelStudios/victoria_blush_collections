@@ -1,11 +1,13 @@
 'use client';
 
-import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { useCallback, useEffect, useRef, useState, type FormEvent } from 'react';
+import Image from 'next/image';
+import Uploader from '@/components/shared/Uploader';
 import { Editor } from '@tinymce/tinymce-react';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, type DragEndEvent } from '@dnd-kit/core';
 import { SortableContext, arrayMove, sortableKeyboardCoordinates, useSortable, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { AlignHorizontalJustifyStart, AlignHorizontalJustifyCenter, AlignHorizontalJustifyEnd, ArrowDown, ArrowLeft, ArrowUp, GripVertical, Pencil, Plus, Save } from 'lucide-react';
+import { AlignHorizontalJustifyStart, AlignHorizontalJustifyCenter, AlignHorizontalJustifyEnd, ArrowDown, ArrowLeft, ArrowUp, GripVertical, ImageIcon, Pencil, Plus, Save, Trash2 } from 'lucide-react';
 import { Delete } from '@/components/shared/ActionButtons/Delete';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -21,8 +23,10 @@ import { sectionSchema, type PageSection, type SectionInput, type SectionType } 
 import { showCustomToast } from '@/components/shared/CustomToast';
 
 function emptySection(type: SectionType): SectionInput {
-  return { type, heading: '', copy: '', has_cta: false, cta_text: '', cta_link: '', background_colour: 'white', position: 'centre' };
+  return { type, heading: '', copy: '', has_cta: false, cta_text: '', cta_link: '', background_colour: 'white', position: 'centre', image_url: '', image_alt: '' };
 }
+
+const sectionImageTypes = ['image/*'];
 
 const positionOptions = [
   { value: 'left', label: 'Left', icon: AlignHorizontalJustifyStart },
@@ -51,8 +55,9 @@ function SectionRow({ section, index, count, disabled, onEdit, onDelete, onMove 
         <p className="font-medium wrap-break-word">{section.heading}</p>
         <div className="mt-1 flex flex-wrap items-center gap-2 text-sm text-text-secondary">
           <span className="inline-flex items-center gap-2"><span className={`inline-block size-3 shrink-0 rounded-xs border border-border-emphasis ${section.background_colour === 'green' ? 'bg-bg-section' : 'bg-white'}`} />{section.background_colour === 'green' ? 'Green' : 'White'}</span>
-          <span className="inline-flex items-center gap-2"><span aria-hidden="true">|</span><Badge title={`Position: ${position.label}`} className="bg-brand-primary text-text-primary uppercase"><PositionIcon aria-hidden="true" /><span>{position.label}</span></Badge></span>
+          <span className="inline-flex items-center gap-2"><span aria-hidden="true">|</span><Badge title={`Position: ${position.label}`} className="bg-bg-section text-text-primary uppercase"><PositionIcon aria-hidden="true" /><span>{position.label}</span></Badge></span>
           {section.has_cta && <span className="inline-flex items-center gap-2"><span aria-hidden="true">|</span><Badge>Includes CTA</Badge></span>}
+          {section.image_url && <span className="inline-flex items-center gap-2"><span aria-hidden="true">|</span><Badge className="bg-bg-section text-text-primary"><ImageIcon aria-hidden="true" /><span>Includes Image</span></Badge></span>}
         </div>
       </div>
       <div className="flex w-full shrink-0 justify-end gap-1 sm:w-auto">
@@ -65,10 +70,10 @@ function SectionRow({ section, index, count, disabled, onEdit, onDelete, onMove 
   );
 }
 
-export default function SectionsManager({ initialSections, loadError }: { initialSections: PageSection[]; loadError?: string | null }) {
+export default function SectionsManager({ initialSections, userId, loadError, startWithNewSection = false }: { initialSections: PageSection[]; userId: string; loadError?: string | null; startWithNewSection?: boolean }) {
   const [sections, setSections] = useState(initialSections);
   const [pageType, setPageType] = useState<SectionType>('education');
-  const [editing, setEditing] = useState<PageSection | 'new' | null>(null);
+  const [editing, setEditing] = useState<PageSection | 'new' | null>(startWithNewSection && !loadError ? 'new' : null);
   const [values, setValues] = useState<SectionInput>(emptySection('education'));
   const [busy, setBusy] = useState(false);
   const [formError, setFormError] = useState('');
@@ -81,13 +86,18 @@ export default function SectionsManager({ initialSections, loadError }: { initia
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 8 } }), useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }));
   const visibleSections = sections.filter((section) => section.type === pageType).sort((first, second) => first.sort_order - second.sort_order || first.id.localeCompare(second.id));
   const disabled = busy || !!loadError;
+  const handleImageUpload = useCallback((path: string | null) => {
+    if (!path) return;
+    const image_url = path.startsWith('http') ? path : `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/images/${encodeURI(path)}`;
+    setValues((current) => ({ ...current, image_url }));
+  }, []);
 
   useEffect(() => {
     if (editing) headingRef.current?.focus();
   }, [editing]);
 
   function edit(section: PageSection | 'new') {
-    const nextValues = section === 'new' ? emptySection(pageType) : { ...section, position: section.position ?? 'centre' };
+    const nextValues = section === 'new' ? emptySection(pageType) : { ...section, position: section.position ?? 'centre', image_url: section.image_url ?? '', image_alt: section.image_alt ?? '' };
     initialValues.current = nextValues;
     setValues(nextValues);
     setFormError('');
@@ -217,6 +227,18 @@ export default function SectionsManager({ initialSections, loadError }: { initia
                 </div>)}
               </RadioGroup>
             </div>
+            {values.position !== 'centre' && <div className="space-y-4">
+              <p className="text-sm font-medium">Section Image</p>
+              {values.image_url && <div className="flex flex-wrap items-end gap-3">
+                <Image src={values.image_url} alt={values.image_alt || 'Section image preview'} width={300} height={300} className="max-h-72 w-auto max-w-full rounded-md object-contain" />
+                <Button type="button" variant="destructive" className="bg-red-500 text-white hover:bg-red-500/85" onClick={() => setValues((current) => ({ ...current, image_url: '', image_alt: '' }))}><Trash2 className="size-4" />Remove Image</Button>
+              </div>}
+              <Uploader type="modal" userId={userId} contentType="education" uppyId={`section-image-${editing === 'new' ? 'new' : editing.id}`} onUpload={handleImageUpload} previewType="image" bucketName="images" folderPath="education/sections" fileAttached={values.image_url || null} allowedFileTypes={sectionImageTypes} />
+              {values.image_url && <div className="space-y-2">
+                <Label htmlFor="section-image-alt">Image Alt Text</Label>
+                <Input id="section-image-alt" maxLength={500} value={values.image_alt} onChange={(event) => setValues((current) => ({ ...current, image_alt: event.target.value }))} className="bg-white" />
+              </div>}
+            </div>}
             <div className="min-w-0 space-y-2">
               <Label htmlFor="section-copy">Copy</Label>
               {!editorReady && !editorError && <p role="status">Loading editor...</p>}

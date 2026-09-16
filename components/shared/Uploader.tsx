@@ -8,7 +8,7 @@ import '@uppy/core/css/style.min.css';
 import '@uppy/dashboard/css/style.min.css';
 import '@uppy/image-editor/css/style.min.css';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useEffectEvent, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { showCustomToast } from './CustomToast';
 import { Button } from '../ui/button';
@@ -21,7 +21,6 @@ import {
 } from '../ui/dialog';
 import { FaImage } from 'react-icons/fa';
 import { createClient } from '@/lib/supabase/client';
-import { deleteFileFromSupabase } from '@/lib/supabase/deleteFileFromSupabase';
 
 interface Props {
   type: 'standard' | 'modal';
@@ -33,6 +32,7 @@ interface Props {
   previewType?: 'image' | 'video';
   fileAttached: string | null;
   uppyId?: string;
+  allowedFileTypes?: string[];
 }
 
 export default function Uploader({
@@ -45,9 +45,13 @@ export default function Uploader({
   contentType,
   fileAttached,
   uppyId,
+  allowedFileTypes,
 }: Props) {
   const [open, setOpen] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
+  const [uppy, setUppy] = useState<Uppy | null>(null);
+  const notifyUpload = useEffectEvent((path: string) => onUpload(path));
+  const fileTypesKey = JSON.stringify(allowedFileTypes ?? ['image/*', 'video/*']);
   // Ensure fileAttached is unique per uploader instance
   const [localFileAttached, setLocalFileAttached] = useState<string | null>(fileAttached || null);
   // Sync with prop if it changes
@@ -56,26 +60,26 @@ export default function Uploader({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fileAttached, uppyId]);
 
-  const uppy = useMemo(() => {
-    const u = new Uppy({
+  useEffect(() => {
+    const uploader = new Uppy({
       id: uppyId || `uppy-${Math.random().toString(36).substring(2, 10)}`,
       restrictions: {
         maxNumberOfFiles: 1,
-        allowedFileTypes: ['image/*', 'video/*'],
+        allowedFileTypes: JSON.parse(fileTypesKey) as string[],
         maxFileSize: 15 * 1024 * 1024,
       },
       autoProceed: false,
     });
 
     if (contentType === 'profiles') {
-      u.use(ImageEditor, {
+      uploader.use(ImageEditor, {
         id: 'ImageEditor',
         actions: { zoomIn: true, zoomOut: true, cropSquare: false, cropWidescreen: false, cropWidescreenVertical: false },
         cropperOptions: { aspectRatio: 1, viewMode: 1, autoCropArea: 1 }
       });
     }
 
-    u.on('complete', async (res) => {
+    uploader.on('complete', async (res) => {
       const files = res.successful ?? [];
       if (!files.length) return;
       setIsUploading(true);
@@ -88,7 +92,7 @@ export default function Uploader({
           variant: 'error',
         });
         setIsUploading(false);
-        u.cancelAll();
+        uploader.cancelAll();
         return; // Important: Stop the upload process
       }
 
@@ -109,7 +113,7 @@ export default function Uploader({
           showCustomToast({ title: 'Upload failed', message: error.message, variant: 'error' });
         else {
           setLocalFileAttached(path);
-          onUpload(path);
+          notifyUpload(path);
           showCustomToast({
             title: 'Upload successful',
             message: 'Your file has been uploaded.',
@@ -121,24 +125,19 @@ export default function Uploader({
         showCustomToast({ title: 'Upload error', message: e.message, variant: 'error' });
       } finally {
         setIsUploading(false);
-        u.cancelAll();
+        uploader.cancelAll();
       }
     });
 
-    return u;
-  }, [bucketName, folderPath, userId, onUpload, contentType]);
-
-  useEffect(() => {
+    setUppy(uploader);
     return () => {
-      try {
-        uppy.destroy();
-      } catch (e) { }
+      uploader.destroy();
     };
-  }, [uppy]);
+  }, [bucketName, folderPath, userId, contentType, fileTypesKey, uppyId]);
 
-  const dashboard = (
+  const dashboard = uppy ? (
     <Dashboard
-      key={`dashboard-${uppyId || ''}-${Date.now()}`}
+      className="app-uploader"
       uppy={uppy}
       hideUploadButton
       proudlyDisplayPoweredByUppy={false}
@@ -151,7 +150,7 @@ export default function Uploader({
         : {})}
       onRequestCloseModal={() => { }}
     />
-  );
+  ) : <p role="status">Loading uploader...</p>;
 
   if (type === 'standard') return dashboard;
 
@@ -160,6 +159,7 @@ export default function Uploader({
       <DialogTrigger asChild>
         {!localFileAttached && (
           <button
+            type="button"
             disabled={isUploading}
             className="flex items-center justify-center gap-2 rounded-md bg-bg-primary hover:bg-bg-muted text-text-primary px-4 py-1 text-lg"
           >
@@ -175,8 +175,9 @@ export default function Uploader({
         {dashboard}
         <div className="w-full mt-4 flex justify-center">
           <Button
-            disabled={isUploading}
-            onClick={() => uppy.upload()}
+            type="button"
+            disabled={isUploading || !uppy}
+            onClick={() => uppy?.upload()}
             className="xl:w-1/3 w-full bg-bg-primary hover:bg-bg-muted text-text-primary"
           >
             {isUploading ? 'Uploading…' : 'Upload'}

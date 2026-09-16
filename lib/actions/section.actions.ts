@@ -9,6 +9,7 @@ import { hasSectionCopy, sanitizeSectionCopy } from '@/lib/section-html';
 function refreshSections() {
   revalidatePath('/education');
   revalidatePath('/');
+  revalidatePath('/dashboard');
   revalidatePath('/dashboard/edit-education');
 }
 
@@ -34,6 +35,18 @@ export async function getSections(type: SectionType) {
     return { data: data as PageSection[], error: null };
   } catch (error) {
     return { data: [] as PageSection[], error: errorMessage(error) };
+  }
+}
+
+export async function getSectionCount(type: SectionType = 'education') {
+  try {
+    const pageType = sectionTypeSchema.parse(type);
+    const supabase = await createClient();
+    const { count, error } = await supabase.from('sections').select('id', { count: 'exact', head: true }).eq('type', pageType);
+    if (error) throw new Error(error.message);
+    return { count: count ?? 0, error: null };
+  } catch (error) {
+    return { count: 0, error: errorMessage(error) };
   }
 }
 

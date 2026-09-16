@@ -9,6 +9,15 @@ test('section schema and rich text safety', () => {
   const section = { heading: 'Heading', copy: '<p>Copy</p>', has_cta: false, background_colour: 'white' };
   assert.equal(sectionSchema.parse(section).type, 'education');
   assert.equal(sectionSchema.parse(section).position, 'centre');
+  assert.equal(sectionSchema.parse(section).image_url, '');
+  assert.equal(sectionSchema.parse(section).image_alt, '');
+  for (const image_url of ['', '/assets/images/Vicky.jpg', 'https://example.com/image%20one.jpg']) {
+    assert.equal(sectionSchema.parse({ ...section, image_url }).image_url, image_url);
+  }
+  for (const image_url of ['javascript:alert(1)', '//example.com/image.jpg', 'mailto:hello@example.com', 'data:image/png;base64,test', '#image']) {
+    assert.equal(sectionSchema.safeParse({ ...section, image_url }).success, false);
+  }
+  assert.equal(sectionSchema.safeParse({ ...section, image_alt: 'a'.repeat(501) }).success, false);
   for (const position of ['left', 'centre', 'right']) assert.equal(sectionSchema.parse({ ...section, position }).position, position);
   for (const position of ['top', '', null]) assert.equal(sectionSchema.safeParse({ ...section, position }).success, false);
   assert.equal(sectionSchema.safeParse({ ...section, type: 'invalid' }).success, false);
@@ -50,10 +59,12 @@ test('migration, seeds, permissions, CRUD and atomic per-page ordering', async (
       assert.equal(section.sort_order, index);
       assert.equal(section.background_colour, index % 2 === 0 ? 'green' : 'white');
       assert.equal(section.position, 'centre');
+      assert.equal(section.image_url, '');
+      assert.equal(section.image_alt, '');
       assert.ok(sectionSchema.safeParse(section).success);
       assert.ok(hasSectionCopy(sanitizeSectionCopy(section.copy)));
     }
-    await database.exec('ALTER TABLE sections DROP COLUMN position');
+    await database.exec('ALTER TABLE sections DROP COLUMN position, DROP COLUMN image_url, DROP COLUMN image_alt');
     await database.exec(migration);
     const upgraded = (await database.query('SELECT * FROM sections ORDER BY sort_order')).rows;
     assert.deepEqual(upgraded, initial);
@@ -82,10 +93,15 @@ test('migration, seeds, permissions, CRUD and atomic per-page ordering', async (
     const fresh = (await database.query("INSERT INTO sections (heading, copy) VALUES ('Default education', '<p>Copy</p>') RETURNING *")).rows[0];
     assert.equal(fresh.type, 'education');
     assert.equal(fresh.position, 'centre');
+    assert.equal(fresh.image_url, '');
+    await database.query('UPDATE sections SET image_url = $1, image_alt = $2 WHERE id = $3', ['https://example.com/image.jpg', 'Salon education', fresh.id]);
     for (const position of ['left', 'centre', 'right']) {
       await database.query('UPDATE sections SET position = $1 WHERE id = $2', [position, fresh.id]);
       assert.equal((await database.query('SELECT position FROM sections WHERE id = $1', [fresh.id])).rows[0].position, position);
+      assert.equal((await database.query('SELECT image_url FROM sections WHERE id = $1', [fresh.id])).rows[0].image_url, 'https://example.com/image.jpg');
     }
+    await database.query("UPDATE sections SET image_url = '', image_alt = '' WHERE id = $1", [fresh.id]);
+    assert.deepEqual((await database.query('SELECT image_url, image_alt FROM sections WHERE id = $1', [fresh.id])).rows[0], { image_url: '', image_alt: '' });
     await assert.rejects(database.query('UPDATE sections SET position = $1 WHERE id = $2', ['top', fresh.id]));
     await assert.rejects(database.query('UPDATE sections SET position = $1 WHERE id = $2', [null, fresh.id]));
     assert.equal(fresh.sort_order, 10);

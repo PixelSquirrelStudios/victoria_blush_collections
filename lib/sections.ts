@@ -13,6 +13,10 @@ export function isSafeSectionLink(value: string) {
   }
 }
 
+export function isSafeSectionImage(value: string) {
+  return isSafeSectionLink(value) && (/^https?:\/\//i.test(value) || value.startsWith('/'));
+}
+
 export const sectionSchema = z.object({
   type: sectionTypeSchema.default('education'),
   heading: z.string().trim().min(1, 'Enter a heading.').max(500),
@@ -22,6 +26,8 @@ export const sectionSchema = z.object({
   cta_link: z.string().trim().max(2000).default(''),
   background_colour: z.enum(['white', 'green']),
   position: z.enum(['left', 'centre', 'right']).default('centre'),
+  image_url: z.string().trim().max(2000).refine((value) => !value || isSafeSectionImage(value), 'Select a valid image.').default(''),
+  image_alt: z.string().trim().max(500).default(''),
 }).superRefine((section, context) => {
   if (section.has_cta && !section.cta_text) {
     context.addIssue({ code: 'custom', path: ['cta_text'], message: 'Enter button text.' });

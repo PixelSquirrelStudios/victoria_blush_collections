@@ -39,13 +39,13 @@ export default function Education({
   return (
     <main className="min-h-screen">
       {/* ───────── Hero Section ───────── */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-linear-to-br from-rose-50 via-white to-stone-50">
-        <div className="container mx-auto px-4 py-20 grid lg:grid-cols-2 gap-12 items-center">
+      <section className="relative min-h-screen flex items-center xl:items-start justify-center overflow-hidden bg-linear-to-br from-rose-50 via-white to-stone-50">
+        <div className="container mx-auto px-4 py-20 xl:pt-0 grid lg:grid-cols-2 gap-12 items-center">
           <MotionDiv
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="space-y-6"
+            className="space-y-6 xl:py-20"
           >
             <h1 className={`${cormorant.className} uppercase text-bg-dark/95 leading-tight font-medium text-3xl md:text-4xl xl:text-5xl`}>
               {heroHeading}
@@ -72,9 +72,9 @@ export default function Education({
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative hidden lg:block -mt-20"
+            className="relative lg:-mt-20 xl:mt-0 xl:self-start"
           >
-            <div className="relative aspect-3/4 xl:rounded-t-none rounded-b-3xl rounded-t-3xl overflow-hidden shadow-2xl">
+            <div className="relative aspect-square lg:aspect-3/4 xl:rounded-t-none rounded-b-3xl rounded-t-3xl overflow-hidden shadow-2xl">
               <Image src={resolveImageUrl(heroImageUrl)} alt="Education & Salon Support" fill sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" priority />
               <div className="absolute -top-6 -right-6 w-32 h-32 bg-border-medium rounded-full blur-3xl opacity-40"></div>
               <div className="absolute -bottom-6 -left-6 w-32 h-32 bg-border-default rounded-full blur-3xl opacity-40"></div>

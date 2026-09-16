@@ -9,7 +9,8 @@ import { getPublicGalleryImages } from '@/lib/actions/image.actions';
 import { getPublicServices } from '@/lib/actions/service.actions';
 import { IoSwapVerticalOutline } from "react-icons/io5";
 import { TbHomeEdit } from 'react-icons/tb';
-import { GraduationCap } from 'lucide-react';
+import { GraduationCap, ListPlus } from 'lucide-react';
+import { getSectionCount } from '@/lib/actions/section.actions';
 
 const DashboardPage = async () => {
   const { user } = await fetchUserData();
@@ -19,6 +20,7 @@ const DashboardPage = async () => {
 
   const latestServices = await getPublicServices();
   const serviceCount = latestServices?.data?.length || 0;
+  const sections = await getSectionCount('education');
 
   return (
     <>
@@ -46,16 +48,16 @@ const DashboardPage = async () => {
               dashboardCardButtonLink='/dashboard/services/'
               dashboardCardButtonLabel='Services'
             />
-            {/* <DashboardCard
-              dashboardCardCount={serviceCount}
+            {sections.error ? <p role="alert" className="text-red-700">Unable to load section count. Please refresh the dashboard.</p> : <DashboardCard
+              dashboardCardCount={sections.count}
               dashboardCardIcon={
-                <BsFileEarmarkMusicFill className='p-6 text-[16em] text-white/90 md:p-8' />
+                <ListPlus className='size-full p-6 text-text-primary/90 md:p-8' />
               }
-              dashboardCardLabel='Service'
-              dashboardCardLabelPlural='Services'
-              dashboardCardButtonLink='/dashboard/services/'
-              dashboardCardButtonLabel='Services'
-            /> */}
+              dashboardCardLabel='Section'
+              dashboardCardLabelPlural='Sections'
+              dashboardCardButtonLink='/dashboard/edit-education'
+              dashboardCardButtonLabel='Sections'
+            />}
           </div>
         </div>
 
@@ -95,6 +97,22 @@ const DashboardPage = async () => {
                   <div className='md:text-xl text-lg font-semibold underline'>
                     Edit Education
                   </div>
+                </Link>
+              </div>
+              <div className='flex flex-row items-center gap-2'>
+                <div className='rounded-full bg-primary-main bg-opacity-85 md:p-2.5'>
+                  <ListPlus className='size-5 text-text-primary max-sm:hidden' />
+                </div>
+                <Link href='/dashboard/edit-education?action=new'>
+                  <div className='md:text-xl text-lg font-semibold underline'>Add A Section</div>
+                </Link>
+              </div>
+              <div className='flex flex-row items-center gap-2'>
+                <div className='rounded-full bg-primary-main bg-opacity-85 md:p-2.5'>
+                  <IoSwapVerticalOutline className='md:text-xl text-lg text-text-primary max-sm:hidden' />
+                </div>
+                <Link href='/dashboard/edit-education'>
+                  <div className='md:text-xl text-lg font-semibold underline'>Manage / Reorder Sections</div>
                 </Link>
               </div>
               <div className='flex flex-row items-center gap-2'>
