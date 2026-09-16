@@ -2,31 +2,10 @@
 
 import { revalidatePath } from 'next/cache';
 import { createClient } from '../supabase/server';
+import { EducationHeroSchema } from '@/lib/validations';
+import type { z } from 'zod';
 
-interface EducationData {
-  hero_heading: string;
-  hero_subheading: string;
-  hero_description_1: string;
-  hero_description_2: string;
-  hero_image_url: string;
-  who_heading: string;
-  who_descriptions: string[];
-  help_heading: string;
-  help_description: string;
-  help_items: string[];
-  expect_heading: string;
-  approach_heading: string;
-  approach_paragraphs: string[];
-  outcome_heading: string;
-  outcome_paragraphs: string[];
-  why_me_heading: string;
-  why_me_paragraphs: string[];
-  why_me_image_url: string;
-  contact_heading: string;
-  contact_description: string;
-  contact_button_text: string;
-  contact_note?: string;
-}
+type EducationData = z.infer<typeof EducationHeroSchema>;
 
 export async function getEducationData() {
   try {
@@ -55,6 +34,9 @@ export async function updateEducation(
 ) {
   try {
     const supabase = await createClient();
+    const { data: authData, error: authError } = await supabase.auth.getUser();
+    if (authError || !authData.user) return { data: null, error: 'Please sign in to edit education.' };
+    const values = EducationHeroSchema.parse(educationData);
 
     // Check if education data exists
     const { data: existing } = await supabase
@@ -69,7 +51,7 @@ export async function updateEducation(
       result = await supabase
         .from('education')
         .update({
-          ...educationData,
+          ...values,
           updated_at: new Date().toISOString(),
         })
         .eq('id', existing.id)
@@ -80,7 +62,16 @@ export async function updateEducation(
       result = await supabase
         .from('education')
         .insert({
-          ...educationData,
+          ...values,
+          who_heading: '',
+          help_heading: '',
+          help_description: '',
+          approach_heading: '',
+          outcome_heading: '',
+          why_me_heading: '',
+          why_me_image_url: '',
+          contact_heading: '',
+          contact_description: '',
         })
         .select()
         .single();

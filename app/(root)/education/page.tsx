@@ -4,6 +4,8 @@ import { getHomepageData } from '@/lib/actions/homepage.actions';
 import { getEducationData } from '@/lib/actions/education.actions';
 import { fetchUserData } from '@/app/hooks/useUser';
 import Maintenance from '@/components/sections/Maintenance';
+import PageSections from '@/components/sections/PageSections';
+import { getSections } from '@/lib/actions/section.actions';
 
 export default async function EducationPage() {
   const { data: homepageData } = await getHomepageData();
@@ -14,6 +16,9 @@ export default async function EducationPage() {
     return <Maintenance />;
   }
 
+  const { data: sections, error } = await getSections('education');
+  if (error) throw new Error(`Unable to load education sections: ${error}`);
+
   return (
     <>
       <div className="pt-10">
@@ -23,24 +28,10 @@ export default async function EducationPage() {
           heroDescription1={educationData?.hero_description_1}
           heroDescription2={educationData?.hero_description_2}
           heroImageUrl={educationData?.hero_image_url}
-          whoHeading={educationData?.who_heading}
-          whoDescriptions={educationData?.who_descriptions}
-          helpHeading={educationData?.help_heading}
-          helpDescription={educationData?.help_description}
-          helpItems={educationData?.help_items}
-          expectHeading={educationData?.expect_heading}
-          approachHeading={educationData?.approach_heading}
-          approachParagraphs={educationData?.approach_paragraphs}
-          outcomeHeading={educationData?.outcome_heading}
-          outcomeParagraphs={educationData?.outcome_paragraphs}
-          whyMeHeading={educationData?.why_me_heading}
-          whyMeParagraphs={educationData?.why_me_paragraphs}
-          whyMeImageUrl={educationData?.why_me_image_url}
-          contactHeading={educationData?.contact_heading}
-          contactDescription={educationData?.contact_description}
           contactButtonText={educationData?.contact_button_text}
-          contactNote={educationData?.contact_note}
-        />
+        >
+          <PageSections sections={sections} />
+        </EducationContent>
       </div>
       <Footer description={homepageData?.footer_description} />
     </>

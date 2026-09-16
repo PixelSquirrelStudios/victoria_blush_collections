@@ -2,6 +2,19 @@
 
 @plugin 'tailwindcss-animate';
 
+.section-copy { overflow-wrap: anywhere; }
+.section-copy > * + * { margin-top: 1.25rem; }
+.section-copy ul, .section-copy ol { padding-left: 1.5rem; }
+.section-copy ul { list-style: disc; }
+.section-copy ol { list-style: decimal; }
+.section-copy li + li { margin-top: 0.625rem; }
+.section-copy li::marker { color: var(--color-interactive-active); }
+.section-copy h3 { font-size: 1.75rem; line-height: 1.3; font-weight: 500; }
+.section-copy h4 { font-size: 1.375rem; line-height: 1.4; font-weight: 500; }
+.section-copy blockquote { border-left: 3px solid var(--color-brand-secondary); padding-left: 1.25rem; font-style: italic; }
+.section-copy a { text-decoration: underline; text-underline-offset: 3px; }
+.section-copy a:hover { color: var(--color-interactive-active); }
+
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;

@@ -206,3 +206,12 @@ export const EducationSchema = z.object({
     .min(1, { message: 'Button text is required' }),
   contact_note: z.string().optional(),
 });
+
+export const EducationHeroSchema = EducationSchema.pick({
+  hero_heading: true,
+  hero_subheading: true,
+  hero_description_1: true,
+  hero_description_2: true,
+  hero_image_url: true,
+  contact_button_text: true,
+});

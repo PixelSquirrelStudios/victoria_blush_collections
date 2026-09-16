@@ -152,3 +152,6 @@ export const customSelectStyles = (
     }),
   };
 };
+
+export const TINY_MCE_CLOUDFLARE_URL =
+  'https://cdnjs.cloudflare.com/ajax/libs/tinymce/8.9.1/tinymce.min.js';

@@ -74,6 +74,22 @@ Open [http://localhost:3000](http://localhost:3000) to see your app.
 3. Once authenticated, the homepage displays user information
 4. Sessions are automatically refreshed via middleware
 
+## Dynamic Page Sections
+
+Run [database/sections.sql](database/sections.sql) in the Supabase SQL Editor before deploying the updated education page. It creates the `sections` table, access policies and ordering functions, and seeds the supplied education copy. It does not alter the existing `education` row or hero. Do not rerun `education_table.sql`, which drops that table.
+
+- Manage content at `/dashboard/edit-education`: **Sections** contains add, edit, delete and ordering controls; **Education Hero** edits the existing hero separately.
+- Each record has a generated UUID, `type` (education by default, or homepage), heading, HTML copy, optional CTA text/link, background colour and `sort_order`.
+- Drag the handle or use the up/down buttons to save ordering immediately. Ordering is independent for each page. New sections and sections moved to another type are appended to that page.
+- Education sections replace the old content after its hero. Homepage sections appear after the homepage hero, before the existing homepage content; no homepage sections are seeded.
+- The support offerings occupy three records so each can have its own CTA. All supplied copy is included across ten records, alternating light green and white.
+- CTA links initially use email enquiries. Replace the Shift Session links with the actual booking URL when available.
+- Copy uses TinyMCE with the same CDN/GPL configuration as the example form. HTML and CTA links are validated and sanitised on the server. Review TinyMCE's licensing requirements for your deployment.
+- Public visitors can read sections. Writes require a signed-in Supabase user, matching the existing education content policy. Restrict these policies to an editor role before allowing non-editor accounts.
+- The migration can be rerun without overwriting existing sections. Seeds are inserted only when no education sections exist; rerunning after deliberately deleting every education section will restore the seeds.
+
+Run `npm run test:sections` with Node.js 22.6+ to check migration safety, seeded content, permissions, editing, deletion, ordering and rich-text sanitisation in an isolated PostgreSQL engine. No live database credentials are used. Existing dependency peer conflicts may require `npm install --legacy-peer-deps`.
+
 ## Learn More
 
 - [Next.js Documentation](https://nextjs.org/docs)

@@ -12,6 +12,8 @@ import { getPublicGalleryImages } from '@/lib/actions/image.actions';
 import Services from '@/components/sections/Services';
 import Maintenance from '@/components/sections/Maintenance';
 import { fetchUserData } from '../hooks/useUser';
+import PageSections from '@/components/sections/PageSections';
+import { getSections } from '@/lib/actions/section.actions';
 
 
 export default async function Home() {
@@ -25,6 +27,9 @@ export default async function Home() {
     return <Maintenance />;
   }
 
+  const { data: sections, error } = await getSections('homepage');
+  if (error) console.error('Unable to load homepage sections:', error);
+
   return (
     <main className="min-h-screen">
       <HashScrollHandler />
@@ -33,6 +38,7 @@ export default async function Home() {
         subheading={homepageData?.hero_subheading}
         description={homepageData?.hero_description}
       />
+      <PageSections sections={sections} />
       <About aboutDescription={homepageData?.about_description || ''} aboutImageUrl={homepageData?.about_image_url || ''} isHomepage={true} />
       <Services
         services={services || []}
