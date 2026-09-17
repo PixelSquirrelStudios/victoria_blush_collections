@@ -15,7 +15,7 @@ export default function Hero({ imageUrl, subheading, description }: HeroProps) {
   const MotionDiv = motion.div as any;
 
   // Calculate years of experience from June 1st, 2010
-  const startDate = new Date(2010, 5, 1); // Month is 0-indexed, so 5 = June
+  const startDate = new Date(2001, 5, 1); // Month is 0-indexed, so 5 = June
   const currentDate = new Date();
 
   let yearsExperience = currentDate.getFullYear() - startDate.getFullYear();
@@ -42,11 +42,16 @@ export default function Hero({ imageUrl, subheading, description }: HeroProps) {
             </p>
             <h1 className={`${cormorant.className} text-6xl max-sm:text-[44px] max-lg:text-6xl xl:text-[80px] font-semibold uppercase text-bg-dark/95 leading-tight text-nowrap`}>
               Victoria Blush
-              <span className="block text-5xl md:text-[4rem] max-sm:text-[40px] text-text-primary/60 tracking-wide">Collections</span>
+              {/* <span className="block text-5xl md:text-[4rem] max-sm:text-[40px] text-text-primary/60 tracking-wide">Collections</span> */}
             </h1>
-            <p className='text-lg text-text-body font-light leading-8 max-w-og-2xl'>
-              {description || 'A calm, friendly space where you can relax and enjoy beautiful hair. One-to-one appointments specialising in balayage, lived-in colour, colour correction and precision cutting — helping you feel like the best version of you.'}
-            </p>
+            <div className='text-lg text-text-body font-light leading-8 max-w-og-2xl space-y-4'>
+              {(description || 'A calm, friendly space where you can relax and enjoy beautiful hair. One-to-one appointments specialising in balayage, lived-in colour, colour correction and precision cutting — helping you feel like the best version of you.')
+                .trim()
+                .split(/\r?\n(?:[ \t]*\r?\n)+/)
+                .map((paragraph, index) => (
+                  <p key={index} className='whitespace-pre-line'>{paragraph}</p>
+                ))}
+            </div>
           </div>
 
           {/* Image Content - Mobile Only */}
