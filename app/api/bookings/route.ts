@@ -9,6 +9,12 @@ export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 const uuid = z.string().uuid();
 
+async function assertBookingsOpen(admin: boolean) {
+  if (admin) return;
+  const settings = checked(await bookingDatabase().from('booking_settings').select('enabled').eq('id', 1).single());
+  if (!settings?.enabled) throw new Error('Online booking is currently paused. Please check back soon or contact Victoria.');
+}
+
 export async function GET(request: Request) {
   try {
     const params = new URL(request.url).searchParams;
@@ -31,9 +37,10 @@ export async function GET(request: Request) {
       return NextResponse.json(await loadBookingSchedule(database), { headers: { 'Cache-Control': 'no-store' } });
     }
     const settings = checked(await database.from('booking_settings').select('enabled,price_pence,duration_minutes,buffer_minutes,notice_hours,horizon_days,cancellation_hours,timezone').single());
-    const slots = checked(await database.rpc('booking_slots', { include_blocked: false }));
-    const { user } = await bookingIdentity();
-    return NextResponse.json({ settings, slots, user: user ? { email: user.email, name: user.user_metadata?.username || '' } : null }, { headers: { 'Cache-Control': 'no-store' } });
+    if (!settings) throw new Error('Booking settings are missing');
+    const { user, admin } = await bookingIdentity();
+    const slots = settings.enabled || admin ? checked(await database.rpc('booking_slots', { include_blocked: false })) : [];
+    return NextResponse.json({ settings, slots, adminPreview: !settings.enabled && admin, user: user ? { email: user.email, name: user.user_metadata?.username || '' } : null }, { headers: { 'Cache-Control': 'no-store' } });
   } catch (error) {
     console.error('Unable to load booking information:', error instanceof Error ? error.message : 'Unknown error');
     return NextResponse.json({ error: 'Booking information is unavailable. Please try again or contact Victoria.' }, { status: 503 });
@@ -48,8 +55,9 @@ export async function POST(request: Request) {
     const database = bookingDatabase();
     if (body.action === 'checkout') {
       const input = z.object({ starts_at: z.iso.datetime({ offset: true }), name: z.string().trim().min(2).max(150), email: z.email().max(254), terms: z.literal(true), early_start: z.literal(true) }).parse(body);
-      const { user } = await bookingIdentity();
+      const { user, admin } = await bookingIdentity();
       if (user && user.email?.toLowerCase() !== input.email.toLowerCase()) throw new Error('Please use the email address on your signed-in account.');
+      await assertBookingsOpen(admin);
       await consumeBookingLimit(`checkout:${input.email.toLowerCase()}`, 5, 3600);
       const booking = checked(await database.rpc('reserve_booking', { slot_start: input.starts_at, customer_name: input.name, customer_email: input.email, customer_id: user?.id || null, early_start: input.early_start }));
       try {
@@ -78,8 +86,9 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: 'If you have a booking account, a sign-in link is on its way. Check your inbox.' });
     }
     if (body.action === 'cancel' || body.action === 'reschedule') {
-      const { user } = await bookingIdentity();
+      const { user, admin } = await bookingIdentity();
       if (!user) throw new Error('Please sign in to manage your booking');
+      if (body.action === 'reschedule') await assertBookingsOpen(admin);
       checked(await database.rpc('manage_booking', { booking_uuid: uuid.parse(body.id), actor_id: user.id, operation: body.action, new_start: body.action === 'reschedule' ? z.iso.datetime({ offset: true }).parse(body.starts_at) : null }));
       return NextResponse.json({ message: body.action === 'cancel' ? 'Booking cancelled. Your full refund is being processed.' : 'Your booking has been rescheduled.' });
     }

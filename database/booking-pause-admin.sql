@@ -1,3 +1,5 @@
+-- Lets admins manage availability and make test bookings while online bookings are paused.
+-- The pause is enforced by the booking API for customers instead of inside slot generation.
 BEGIN;
 
 CREATE OR REPLACE FUNCTION public.booking_slots(include_blocked boolean DEFAULT false)

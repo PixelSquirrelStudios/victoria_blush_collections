@@ -449,7 +449,7 @@ test('date-specific add controls explain unavailable dates and permit dates with
   assert.equal(reason(date), '');
   data.availability = [...weeklyRules];
   data.settings.enabled = false;
-  assert.match(reason(date), /paused/);
+  assert.equal(reason(date), '');
   data.settings.enabled = true;
   data.sync.last_success = now.minus({ hours: 1 }).toISO();
   assert.match(reason(date), /synced successfully/);

@@ -94,7 +94,6 @@ export default function ScheduleManager({ initialView = 'Availability', initialD
     if (closure) return closure;
     if (day.endOf('day') < earliestStart) return `Specific availability cannot be added before ${earliestStart.toFormat('d LLL yyyy')}, because of the ${noticeLabel} minimum notice.`;
     if (day > latestStart) return `Specific availability cannot be added this far ahead. Clients can only book up to ${data.settings.horizon_days} days ahead. Adjust the booking limits in Settings.`;
-    if (!data.settings.enabled) return 'Specific availability cannot be added while online bookings are paused. Turn bookings on using the header toggle.';
     if (!data.sync.last_success || now.toMillis() - Date.parse(data.sync.last_success) > data.settings.sync_max_age_minutes * 60000) return 'Specific availability cannot be added until the Ovatu calendar has synced successfully. Refresh the schedule after syncing.';
     const slots: Slot[] = data.slots.filter((slot: Slot) => DateTime.fromISO(slot.starts_at).setZone('Europe/London').toISODate() === selectedDay);
     if (slots.some(slot => slot.available)) return '';

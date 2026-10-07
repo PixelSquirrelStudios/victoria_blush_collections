@@ -141,7 +141,6 @@ LANGUAGE sql STABLE SECURITY DEFINER SET search_path = public AS $$
     SELECT candidate.*, CASE
       WHEN EXISTS (SELECT 1 FROM booking_slot_blocks blocked
         WHERE candidate.starts_at < blocked.ends_at AND candidate.ends_at > blocked.starts_at) THEN 'Blocked by Admin'
-      WHEN NOT settings.enabled THEN 'Bookings are currently paused'
       WHEN NOT EXISTS (SELECT 1 FROM booking_sync_state WHERE last_success > now() - sync_max_age_minutes * interval '1 minute') THEN 'Calendar sync needs attention'
       WHEN EXISTS (SELECT 1 FROM appointments busy WHERE NOT busy.cancelled
         AND candidate.starts_at < busy.ends_at + buffer_minutes * interval '1 minute'

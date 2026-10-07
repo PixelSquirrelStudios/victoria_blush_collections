@@ -66,6 +66,7 @@ export default function BookingWidget({ onReschedule }: { onReschedule?: (start:
   return <div className={styles.surface}>
     {data && <div className={`${styles.row} mb-5`}><span className={styles.badge}><Video size={16} /> 1-to-1 Zoom</span><span className={styles.badge}><Clock3 size={16} /> {data.settings.duration_minutes} minutes</span><strong className="text-xl">{new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP', maximumFractionDigits: 2 }).format(data.settings.price_pence / 100)}</strong></div>}
     {error && <div role="alert" className={`${styles.message} ${styles.error}`}>{error} <button type="button" className={styles.link} onClick={() => setRefresh(value => value + 1)}>Try again</button></div>}
+    {data?.adminPreview && <div role="note" className={`${styles.slotNotice} ${styles.infoSlotNotice} mb-4`}><Info size={18} aria-hidden="true" /><p>Online bookings are paused, so customers can&apos;t see these times. As an admin you can still make test bookings.</p></div>}
     {!data && !error && <p role="status" className={styles.message}>Loading available sessions...</p>}
     {data && <div className={styles.frame} aria-busy={busy}>
       {!slots.length && <p role="status" className={`${styles.message} mx-4`}>{data.settings.enabled ? 'There are no available sessions at the moment. Please check back soon or contact Victoria.' : 'Online booking is not open yet. Please contact Victoria to enquire.'}</p>}
