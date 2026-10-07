@@ -20,7 +20,8 @@ export function bookingDatabase() {
 export function stripeClient() { return new Stripe(requiredEnv('STRIPE_SECRET_KEY')); }
 
 export function siteUrl() {
-  return (process.env.APP_URL || (process.env.NODE_ENV !== 'production' ? 'http://localhost:3000' : requiredEnv('APP_URL'))).replace(/\/$/, '');
+  const vercelUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : '';
+  return (process.env.APP_URL || vercelUrl || (process.env.NODE_ENV !== 'production' ? 'http://localhost:3000' : requiredEnv('APP_URL'))).replace(/\/$/, '');
 }
 
 export function checked<T>({ data, error }: { data: T; error: { message: string } | null }): T {
@@ -85,7 +86,8 @@ export async function accessibleBooking(id: string, allowReceipt = false) {
 }
 
 export function assertSameOrigin(request: Request) {
-  if (request.headers.get('origin') !== new URL(siteUrl()).origin) throw new Error('Invalid request origin');
+  const origin = request.headers.get('origin');
+  if (!origin || (origin !== new URL(request.url).origin && origin !== new URL(siteUrl()).origin)) throw new Error('Invalid request origin');
 }
 
 export async function consumeBookingLimit(key: string, limit: number, seconds: number) {
