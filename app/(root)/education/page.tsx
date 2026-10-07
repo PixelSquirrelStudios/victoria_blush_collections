@@ -6,6 +6,8 @@ import { fetchUserData } from '@/app/hooks/useUser';
 import Maintenance from '@/components/sections/Maintenance';
 import PageSections from '@/components/sections/PageSections';
 import { getSections } from '@/lib/actions/section.actions';
+import EducationQuestionForm from '@/components/forms/EducationQuestionForm';
+import ShiftSessionSection from '@/components/booking/ShiftSessionSection';
 
 export default async function EducationPage() {
   const { data: homepageData } = await getHomepageData();
@@ -31,6 +33,8 @@ export default async function EducationPage() {
           contactButtonText={educationData?.contact_button_text}
         >
           <PageSections sections={sections} />
+          <ShiftSessionSection />
+          <EducationQuestionForm />
         </EducationContent>
       </div>
       <Footer description={homepageData?.footer_description} />

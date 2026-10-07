@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "node --max-http-header-size=65536 node_modules/next/dist/bin/next dev",
+    "dev:bookings": "node scripts/booking-dev.mjs",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "bookings:sync": "node --experimental-strip-types scripts/booking-sync.mjs",
     "test:sections": "node --experimental-strip-types --test database/sections.test.mjs"
   },
   "dependencies": {
@@ -47,11 +49,14 @@
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^13.4.0",
     "lucide-react": "^1.46.0",
+    "luxon": "^3.7.2",
     "moment": "^2.31.0",
     "next": "^16.3.5",
     "next-themes": "^0.4.6",
+    "node-ical": "^0.27.2",
     "query-string": "^9.5.1",
     "react": "^19.3.0",
+    "react-day-picker": "^9.14.0",
     "react-dom": "^19.3.0",
     "react-hook-form": "^7.88.0",
     "react-icons": "^5.7.0",
@@ -59,6 +64,7 @@
     "resend": "^6.28.1",
     "sanitize-html": "^2.17.7",
     "sonner": "^2.0.8",
+    "stripe": "^22.6.2",
     "tailwind-merge": "^3.7.0",
     "tailwindcss-animate": "^1.0.7",
     "uuid": "^14.0.2",
@@ -68,6 +74,7 @@
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.8",
     "@tailwindcss/postcss": "^4",
+    "@types/luxon": "^3.7.5",
     "@types/node": "^25.5.0",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",

@@ -76,10 +76,10 @@ export default function Hero({ imageUrl, subheading, description }: HeroProps) {
             </div>
           </MotionDiv>
 
-          <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex flex-col sm:grid sm:grid-cols-2 2xl:grid-cols-3 gap-4">
             <a
               href="#contact"
-              className="px-8 py-4 bg-interactive-active text-brand-primary font-medium tracking-wide rounded-md hover:bg-interactive-active/90 transition-all duration-300 shadow-lg hover:shadow-xl text-center"
+              className="px-8 py-4 border-2 border-transparent bg-interactive-active text-brand-primary font-medium tracking-wide rounded-md hover:bg-interactive-active/90 transition-all duration-300 shadow-lg hover:shadow-xl text-center"
             >
               Book Appointment
             </a>
@@ -88,6 +88,12 @@ export default function Hero({ imageUrl, subheading, description }: HeroProps) {
               className="px-8 py-4 bg-brand-primary border-2 border-interactive-hover text-text-primary font-medium tracking-wide rounded-md hover:bg-brand-secondary transition-all duration-300 text-center"
             >
               View Services
+            </a>
+            <a
+              href="#shift-session"
+              className="sm:col-span-2 2xl:col-span-1 px-8 py-4 border-2 border-transparent bg-interactive-active text-brand-primary font-medium tracking-wide rounded-md hover:bg-interactive-active/90 transition-all duration-300 shadow-lg hover:shadow-xl text-center"
+            >
+              Book Shift Session
             </a>
           </div>
           <div className="grid grid-cols-3 gap-8 pt-8 border-t border-border-medium">

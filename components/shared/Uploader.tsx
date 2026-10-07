@@ -1,6 +1,6 @@
 'use client';
 
-import Uppy from '@uppy/core';
+import Uppy, { type Meta } from '@uppy/core';
 import Dashboard from '@uppy/react/dashboard';
 import ImageEditor from '@uppy/image-editor';
 
@@ -21,6 +21,14 @@ import {
 } from '../ui/dialog';
 import { FaImage } from 'react-icons/fa';
 import { createClient } from '@/lib/supabase/client';
+
+type UploaderBody = Record<string, never>;
+
+class AvatarImageEditor extends ImageEditor<Meta, UploaderBody> {
+  canEditFile(file: Parameters<ImageEditor<Meta, UploaderBody>['canEditFile']>[0]) {
+    return Boolean(file) && super.canEditFile(file);
+  }
+}
 
 interface Props {
   type: 'standard' | 'modal';
@@ -61,6 +69,7 @@ export default function Uploader({
   }, [fileAttached, uppyId]);
 
   useEffect(() => {
+    let active = true;
     const uploader = new Uppy({
       id: uppyId || `uppy-${Math.random().toString(36).substring(2, 10)}`,
       restrictions: {
@@ -72,7 +81,7 @@ export default function Uploader({
     });
 
     if (contentType === 'profiles') {
-      uploader.use(ImageEditor, {
+      uploader.use(AvatarImageEditor, {
         id: 'ImageEditor',
         actions: { zoomIn: true, zoomOut: true, cropSquare: false, cropWidescreen: false, cropWidescreenVertical: false },
         cropperOptions: { aspectRatio: 1, viewMode: 1, autoCropArea: 1 }
@@ -112,6 +121,11 @@ export default function Uploader({
         if (error)
           showCustomToast({ title: 'Upload failed', message: error.message, variant: 'error' });
         else {
+          // Close any open file card/editor first; otherwise Uppy re-renders it
+          // during teardown if the parent unmounts this uploader.
+          uploader.iteratePlugins((plugin) => {
+            if ('hideAllPanels' in plugin && typeof plugin.hideAllPanels === 'function') plugin.hideAllPanels();
+          });
           setLocalFileAttached(path);
           notifyUpload(path);
           showCustomToast({
@@ -124,13 +138,16 @@ export default function Uploader({
       } catch (e: any) {
         showCustomToast({ title: 'Upload error', message: e.message, variant: 'error' });
       } finally {
-        setIsUploading(false);
-        uploader.cancelAll();
+        if (active) {
+          setIsUploading(false);
+          uploader.cancelAll();
+        }
       }
     });
 
     setUppy(uploader);
     return () => {
+      active = false;
       uploader.destroy();
     };
   }, [bucketName, folderPath, userId, contentType, fileTypesKey, uppyId]);

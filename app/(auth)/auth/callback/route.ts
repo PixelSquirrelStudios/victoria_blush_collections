@@ -1,6 +1,7 @@
 import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import { NextResponse } from 'next/server';
+import { postSignInPath } from '@/lib/auth-redirect';
 
 export async function GET(request: Request) {
   const requestUrl = new URL(request.url);
@@ -54,7 +55,7 @@ export async function GET(request: Request) {
 
   const { data: profile, error: profileErr } = await updatedSupabase
     .from('profiles')
-    .select('has_onboarded')
+    .select('has_onboarded, role')
     .eq('id', user as string)
     .single();
 
@@ -64,7 +65,5 @@ export async function GET(request: Request) {
     return NextResponse.redirect(url);
   }
 
-  const isOnboarded = profile?.has_onboarded as boolean;
-  if (isOnboarded === false) return redirect('/onboarding');
-  return redirect('/');
+  return redirect(postSignInPath(profile, userData?.claims?.app_metadata?.role));
 }

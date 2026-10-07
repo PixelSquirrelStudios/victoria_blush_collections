@@ -1,7 +1,9 @@
 import { createServerClient } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
+import { isClientAccount } from '@/lib/auth-redirect';
 
 export async function updateSession(request: NextRequest) {
+  if (request.nextUrl.pathname.startsWith('/api/')) return NextResponse.next({ request });
   let supabaseResponse = NextResponse.next({
     request,
   });
@@ -37,6 +39,7 @@ export async function updateSession(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   const url = request.nextUrl.clone();
+  const isClientDashboardPage = ['/dashboard/bookings', '/dashboard/book-session', '/dashboard/questionnaire', '/dashboard/edit-profile'].includes(url.pathname);
 
   const redirectWithCookies = () => {
     const response = NextResponse.redirect(url);
@@ -60,13 +63,24 @@ export async function updateSession(request: NextRequest) {
 
   // Redirect unauthenticated users away from dashboard routes
   if (!user && url.pathname.startsWith('/dashboard')) {
-    url.pathname = '/';
+    url.pathname = '/booking/login';
     return redirectWithCookies();
+  }
+
+  if (user && url.pathname.startsWith('/dashboard')) {
+    const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).maybeSingle();
+    const isAdmin = profile?.role === 'admin';
+    const isClient = !isAdmin && (profile?.role === 'client' || user.app_metadata?.role === 'client');
+    if (!isAdmin && (!isClient || !isClientDashboardPage)) {
+      url.pathname = isClient ? '/dashboard/bookings' : '/';
+      return redirectWithCookies();
+    }
   }
 
   // Redirect authenticated users away from auth pages (except callback routes)
   if (user && isAuthPage && !isCallbackRoute) {
-    url.pathname = '/';
+    const { data: profile } = await supabase.from('profiles').select('role').eq('id', user.id).maybeSingle();
+    url.pathname = isClientAccount(profile, user.app_metadata?.role) ? '/dashboard/bookings' : '/';
     return redirectWithCookies();
   }
 
@@ -75,19 +89,19 @@ export async function updateSession(request: NextRequest) {
     // Fetch user profile to check has_onboarded status
     const { data: profile } = await supabase
       .from('profiles')
-      .select('has_onboarded')
+      .select('has_onboarded, role')
       .eq('id', user.id)
       .single();
 
-    // If user has already onboarded, redirect to home
+    // If user has already onboarded, send them to their usual landing page
     if (profile?.has_onboarded) {
-      url.pathname = '/';
+      url.pathname = isClientAccount(profile, user.app_metadata?.role) ? '/dashboard/bookings' : '/';
       return redirectWithCookies();
     }
   }
 
   // If user hasn't onboarded, redirect from any page to onboarding (except auth routes and onboarding itself)
-  if (user && !isCallbackRoute && !url.pathname.startsWith('/onboarding')) {
+  if (user && !isCallbackRoute && !url.pathname.startsWith('/onboarding') && !url.pathname.startsWith('/booking') && !isClientDashboardPage && user.app_metadata?.role !== 'client') {
     const { data: profile } = await supabase
       .from('profiles')
       .select('has_onboarded')

@@ -25,6 +25,20 @@ export async function getUserWithProfile(userId: string) {
   }
 }
 
+export async function updateOwnAvatar(filePath: string | null) {
+  const supabase = await createClient();
+  const { data: { user }, error: authError } = await supabase.auth.getUser();
+  if (authError || !user) return { error: 'Please sign in to update your avatar.' };
+  if (filePath !== null && (!filePath.startsWith(`avatars/${user.id}/`) || filePath.split('/').length !== 3 || /[\\?#]|\.\./.test(filePath))) {
+    return { error: 'Please upload an avatar for your own account.' };
+  }
+  const avatarUrl = filePath ? supabase.storage.from('images').getPublicUrl(filePath).data.publicUrl : null;
+  const { error } = await supabase.from('profiles').update({ avatar_url: avatarUrl }).eq('id', user.id).select('id').single();
+  if (error) return { error: 'Your avatar could not be saved. Please try again.' };
+  revalidatePath('/dashboard', 'layout');
+  return { error: null };
+}
+
 export async function updateUser(params: UpdateUserParams) {
   try {
     const supabase = await createClient();

@@ -1,5 +1,5 @@
 import { SidebarLink, SidebarLinkExtended } from '@/types';
-import { GraduationCap, LucideAppWindow } from 'lucide-react';
+import { CalendarDays, GraduationCap, LucideAppWindow } from 'lucide-react';
 import { FaEnvelope, FaHome, FaImage, FaListAlt, FaUser } from 'react-icons/fa';
 import { TbEdit, TbHomeEdit, TbPhotoEdit } from "react-icons/tb";
 import { StylesConfig } from 'react-select';
@@ -18,6 +18,9 @@ export const sidebarLinks: SidebarLink[] = [
 ];
 
 export const dashboardLinks: SidebarLink[] = [
+  { route: '/dashboard/schedule', label: 'Schedule & Availability' },
+  { route: '/dashboard/schedule?view=bookings', label: 'Shift Session Bookings' },
+  { route: '/dashboard/schedule?view=appointments', label: 'Ovatu Appointments' },
   { route: '/', label: 'Site Home' },
   { route: '/dashboard', label: 'Dashboard Home' },
   { route: '/dashboard/edit-profile', label: 'Edit Profile' },
@@ -70,6 +73,9 @@ export const sideBarLinksMain: SidebarLinkExtended[] = [
 ];
 
 export const sideBarLinksDashboard: SidebarLinkExtended[] = [
+  { icon: <CalendarDays />, route: '/dashboard/schedule', label: 'Schedule & Availability' },
+  { icon: <CalendarDays />, route: '/dashboard/schedule?view=bookings', label: 'Shift Session Bookings' },
+  { icon: <CalendarDays />, route: '/dashboard/schedule?view=appointments', label: 'Ovatu Appointments' },
   {
     icon: < LucideAppWindow />,
     route: '/dashboard',

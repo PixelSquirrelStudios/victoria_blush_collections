@@ -11,8 +11,9 @@ import { FaBars } from 'react-icons/fa';
 import { Separator } from '@/components/ui/separator';
 import Link from 'next/link';
 import { sidebarLinks, settingsLinks, dashboardLinks } from '@/constants';
-import { useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation';
+import { Suspense, useEffect, useState } from 'react';
+import { usePathname, useSearchParams } from 'next/navigation';
+import { isSidebarLinkActive } from '@/lib/sidebar-navigation';
 import { cn } from '@/lib/utils';
 import SocialBar from '../SocialBar';
 import { Logo } from '../Logo';
@@ -27,24 +28,33 @@ interface MobileSidebarProps {
 
 const MobileSidebar = ({ variant, isHomepage: isHomepageProp }: MobileSidebarProps) => {
   const pathname = usePathname();
-  const showDashboardMenu = pathname.includes('/dashboard') || pathname.includes('/profile');
+  const searchParams = useSearchParams();
+  const searchString = searchParams.toString();
   const [query, setQuery] = useState('');
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState<any>(null);
+  const [profileRole, setProfileRole] = useState<string | null>(null);
+  const isAdmin = profileRole === 'admin';
+  const isClient = !isAdmin && (profileRole === 'client' || user?.app_metadata?.role === 'client');
+  const showDashboardMenu = isAdmin && (pathname.includes('/dashboard') || pathname.includes('/profile'));
 
   // Determine if we're on homepage - use the pathname if prop not explicitly set
   const isHomepage = isHomepageProp !== undefined ? isHomepageProp : pathname === '/';
 
   useEffect(() => {
-    supabaseClient.auth.getClaims().then(({ data }) => {
-      setUser(data?.claims || null);
+    supabaseClient.auth.getUser().then(async ({ data: { user: authUser } }) => {
+      setUser(authUser);
+      if (authUser) {
+        const { data: profile } = await supabaseClient.from('profiles').select('role').eq('id', authUser.id).maybeSingle();
+        setProfileRole(profile?.role ?? null);
+      }
     });
   }, []);
 
   useEffect(() => {
     setQuery('');
     setOpen(false); // Close the sheet on route change
-  }, [pathname]);
+  }, [pathname, searchString]);
 
   return (
     <div className="xl:hidden flex items-center">
@@ -88,11 +98,7 @@ const MobileSidebar = ({ variant, isHomepage: isHomepageProp }: MobileSidebarPro
             {(showDashboardMenu ? dashboardLinks : sidebarLinks)
               .filter((item) => !(isHomepage && !showDashboardMenu && item.route === '/')) // Hide Home link when on homepage
               .map((item) => {
-                const isActive =
-                  (pathname.includes(item.route + '/') &&
-                    item.route !== '/dashboard' &&
-                    item.route.length > 1) ||
-                  pathname === item.route;
+                const isActive = isSidebarLinkActive(item.route, pathname, searchParams, (showDashboardMenu ? dashboardLinks : sidebarLinks).map(link => link.route));
 
                 // Build href based on isHomepage:
                 // - On homepage: convert page routes to #id anchors
@@ -134,6 +140,7 @@ const MobileSidebar = ({ variant, isHomepage: isHomepageProp }: MobileSidebarPro
                 ) : (
                   <Link
                     href={href}
+                    aria-current={isActive ? 'page' : undefined}
                     key={item.route}
                     onClick={() => setOpen(false)}
                     className={`${isActive
@@ -148,16 +155,15 @@ const MobileSidebar = ({ variant, isHomepage: isHomepageProp }: MobileSidebarPro
             {user && (
               <>
                 <Separator className="opacity-10" />
-                {settingsLinks.map((item) => {
-                  const isActive =
-                    (pathname.includes(item.route + '/') &&
-                      item.route !== '/dashboard' &&
-                      item.route.length > 1) ||
-                    pathname === item.route;
+                {isClient && <Link href="/dashboard/bookings" onClick={() => setOpen(false)} className="px-4 py-3 text-lg font-medium">Manage Bookings</Link>}
+                {isAdmin && !showDashboardMenu && <Link href="/dashboard" onClick={() => setOpen(false)} className="px-4 py-3 text-lg font-medium">Dashboard</Link>}
+                {isAdmin && settingsLinks.map((item) => {
+                  const isActive = isSidebarLinkActive(item.route, pathname, searchParams, settingsLinks.map(link => link.route));
 
                   return (
                     <Link
                       href={item.route}
+                      aria-current={isActive ? 'page' : undefined}
                       key={item.route}
                       onClick={() => setOpen(false)}
                       className={`${isActive
@@ -193,4 +199,6 @@ const MobileSidebar = ({ variant, isHomepage: isHomepageProp }: MobileSidebarPro
   );
 };
 
-export default MobileSidebar;
+export default function MobileSidebarWithSuspense(props: MobileSidebarProps) {
+  return <Suspense fallback={null}><MobileSidebar {...props} /></Suspense>;
+}

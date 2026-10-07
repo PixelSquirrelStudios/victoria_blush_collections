@@ -7,7 +7,6 @@ import { Input } from "../ui/input";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -21,7 +20,8 @@ import Uploader from '../shared/Uploader';
 import { UserSchema } from '@/lib/validations';
 import { showCustomToast } from '../shared/CustomToast';
 import { supabaseClient } from '@/lib/supabase/browserClient';
-import { FaTrash } from 'react-icons/fa';
+import { Save, Trash2 } from 'lucide-react';
+import styles from '@/components/booking/booking.module.css';
 
 interface Props {
   profileDetails?: string;
@@ -225,29 +225,25 @@ const EditUserForm = ({ profileDetails }: Props) => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="flex w-full max-w-xl flex-col items-start gap-10 bg-brand-secondary p-10 text-text-primary rounded-xl shadow-md"
+        className={`${styles.surface} ${styles.avatarForm}`}
       >
-        <div className='text-2xl font-bold'>
-          Edit Profile
-        </div>
+        <fieldset disabled={isSubmitting} className={styles.avatarFields}>
+          <legend className="sr-only">Your Profile</legend>
         <FormField
           control={form.control}
           name="username"
           render={({ field }) => (
-            <FormItem className="flex w-full flex-col">
+            <FormItem className={styles.field}>
               <FormLabel className="text-md">
                 Username
               </FormLabel>
-              <FormControl className="mt-1.5">
+              <FormControl>
                 <Input
                   {...field}
                   placeholder="Enter your username..."
-                  className="rounded-lg border-[#666] bg-[#eee] text-[#111]"
+                  className={styles.input}
                 />
               </FormControl>
-              <FormDescription className='mt-1 text-xs text-text-primary/70'>
-                Change your username here if you wish
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -256,78 +252,50 @@ const EditUserForm = ({ profileDetails }: Props) => {
           control={form.control}
           name="avatar_url"
           render={() => (
-            <FormItem className="flex w-full flex-col">
-              <FormLabel className="text-md">
-                Avatar
-              </FormLabel>
-              <FormControl className="mt-1.5">
-                <div className="flex md:flex-row flex-col items-center gap-4">
-                  {avatarUrl ? (
-                    <>
-                      <div className='flex md:flex-row flex-col items-center gap-4 w-full h-auto'>
-                        <Image
-                          src={avatarUrl}
-                          alt="Avatar"
-                          width={150}
-                          height={150}
-                          className="h-[100px] w-[100px] object-cover"
-                        />
-                        <button
-                          type="button"
-                          className="flex w-auto justify-center items-center rounded-md bg-red-500 hover:bg-red-500/85 transition-all duration-500 px-3 py-1 text-lg text-brand-primary"
-                          onClick={handleRemove}
-                        >
-                          <div className="flex flex-row items-center gap-1">
-                            <div>
-                              <FaTrash className="inline mr-2 text-lg" />
-                            </div>
-                            <div>
-                              Remove Image
-                            </div>
-                          </div>
-                        </button>
-                      </div>
-                    </>
-                  ) : (
-                    <Uploader
-                      type="modal"
-                      contentType="profiles"
-                      onUpload={onAvatarUpload}
-                      previewType="image"
-                      bucketName="images"
-                      folderPath="avatars"
-                      userId={parsedProfileDetails?.id}
-                      fileAttached={form.watch('avatar_url') || null}
-                    />
-                  )}
+            <FormItem>
+                <div className={styles.avatarBody}>
+                  <Image src={avatarUrl || '/assets/images/Default_Avatar.jpg'} alt="Your avatar preview" width={128} height={128} className={styles.avatarPreview} />
+                  <div className={styles.avatarControls}>
+                    <h2>Profile Photo</h2>
+                    <div className={styles.avatarUpload}>
+                      <Uploader
+                        type="modal"
+                        contentType="profiles"
+                        onUpload={onAvatarUpload}
+                        previewType="image"
+                        bucketName="images"
+                        folderPath="avatars"
+                        userId={parsedProfileDetails?.id}
+                        fileAttached={null}
+                        uppyId="admin-profile-avatar"
+                        allowedFileTypes={['image/jpeg', 'image/png', 'image/webp']}
+                      />
+                    </div>
+                    {avatarUrl && <button type="button" className={`${styles.button} ${styles.secondary}`} onClick={handleRemove}><Trash2 size={18} />Remove Avatar</button>}
+                  </div>
                 </div>
-              </FormControl>
-              <FormDescription className="text-text-primary/70 mt-1">
-                {avatarUrl
-                  ? 'Your current avatar is shown. Click the Remove button to upload a different one'
-                  : 'No avatar uploaded. Click the button to add one now or a default avatar will be used.'}
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <div className="w-full flex md:flex-row flex-col justify-center gap-4">
+        <div className={styles.avatarActions}>
           <button
             type="button"
             onClick={() => router.push('/dashboard')}
-            className="bg-brand-primary hover:bg-brand-primary/90 transition-all duration-300 text-text-primary font-semibold py-2 px-6 rounded-md"
+            className={`${styles.button} ${styles.secondary}`}
             disabled={isSubmitting}
           >
             Cancel
           </button>
           <button
             type="submit"
-            className="bg-interactive-active hover:bg-interactive-active/90 transition-all duration-300 text-brand-primary font-semibold py-2 px-6 rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+            className={styles.button}
             disabled={isSubmitting}
           >
-            {isSubmitting ? 'Saving...' : 'Save Changes'}
+            <Save size={18} />{isSubmitting ? 'Saving...' : 'Save Changes'}
           </button>
         </div>
+        </fieldset>
       </form>
     </Form>
   );

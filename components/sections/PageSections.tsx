@@ -17,7 +17,7 @@ export default function PageSections({ sections }: { sections: PageSection[] }) 
           </h2>
           <div className="section-copy text-lg leading-8 text-text-primary/85" dangerouslySetInnerHTML={{ __html: sanitizeSectionCopy(section.copy) }} />
           {section.has_cta && section.cta_text && isSafeSectionLink(section.cta_link) && (
-            <a href={section.cta_link} className="mt-8 inline-flex max-w-full items-center gap-3 rounded-md bg-interactive-active px-6 py-4 font-medium text-white transition-colors hover:bg-bg-dark focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-interactive-focus">
+            <a href={section.type === 'education' && /(?:book|start with) the shift session/i.test(section.cta_text) ? '#shift-session' : section.cta_link} className="mt-8 inline-flex max-w-full items-center gap-3 rounded-md bg-interactive-active px-6 py-4 font-medium text-white transition-colors hover:bg-bg-dark focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-interactive-focus">
               <span className="min-w-0 wrap-break-word">{section.cta_text}</span><ArrowRight className="size-5 shrink-0" />
             </a>
           )}

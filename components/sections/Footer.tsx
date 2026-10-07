@@ -107,6 +107,16 @@ export default function Footer({ description }: FooterProps) {
                   Book An Appointment
                 </a>
               </li>
+              <li>
+                <a href="/booking-terms" className="text-text-primary hover:text-text-primary/80 transition-colors">
+                  Booking Terms
+                </a>
+              </li>
+              <li>
+                <a href="/privacy-policy" className="text-text-primary hover:text-text-primary/80 transition-colors">
+                  Privacy Policy
+                </a>
+              </li>
             </ul>
           </div>
         </div>

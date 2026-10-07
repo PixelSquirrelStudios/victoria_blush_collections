@@ -14,6 +14,8 @@ import Maintenance from '@/components/sections/Maintenance';
 import { fetchUserData } from '../hooks/useUser';
 import PageSections from '@/components/sections/PageSections';
 import { getSections } from '@/lib/actions/section.actions';
+import ShiftSessionSection from '@/components/booking/ShiftSessionSection';
+import EducationQuestionForm from '@/components/forms/EducationQuestionForm';
 
 
 export default async function Home() {
@@ -60,6 +62,8 @@ export default async function Home() {
         openingHours={homepageData?.opening_hours}
         socialUrl={homepageData?.contact_social_media_url}
       />
+      <ShiftSessionSection homepage />
+      <EducationQuestionForm />
       <Footer description={homepageData?.footer_description} />
     </main>
   );

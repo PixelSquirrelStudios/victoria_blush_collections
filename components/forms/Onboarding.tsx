@@ -20,6 +20,7 @@ import Uploader from '../shared/Uploader';
 import { OnboardingSchema } from '@/lib/validations';
 import { showCustomToast } from '../shared/CustomToast';
 import { supabaseClient } from '@/lib/supabase/browserClient';
+import { postSignInPath } from '@/lib/auth-redirect';
 
 interface Props {
   profileDetails?: string;
@@ -199,7 +200,7 @@ const Onboarding = ({ profileDetails }: Props) => {
         has_onboarded: parsedProfileDetails?.has_onboarded === false ? true : false,
         path: pathname,
       });
-      router.push("/");
+      router.push(postSignInPath({ ...parsedProfileDetails, has_onboarded: true }));
     } catch (error) {
       console.error(error);
       showCustomToast({

@@ -1,165 +1,69 @@
-import { FaImage, FaImages, FaListAlt, FaUserCog } from 'react-icons/fa';
-
-import Link from 'next/link';
-
-import DashboardCard from '@/components/cards/DashboardCard';
+import { redirect } from 'next/navigation';
+import { DateTime } from 'luxon';
+import { bookingDatabase, bookingIdentity } from '@/lib/booking-server';
 import { fetchUserData } from '@/app/hooks/useUser';
+import DashboardOverview, { type DashboardSnapshot } from '@/components/booking/DashboardOverview';
 
-import { getPublicGalleryImages } from '@/lib/actions/image.actions';
-import { getPublicServices } from '@/lib/actions/service.actions';
-import { IoSwapVerticalOutline } from "react-icons/io5";
-import { TbHomeEdit } from 'react-icons/tb';
-import { GraduationCap, ListPlus } from 'lucide-react';
-import { getSectionCount } from '@/lib/actions/section.actions';
+export const dynamic = 'force-dynamic';
 
-const DashboardPage = async () => {
-  const { user } = await fetchUserData();
+export default async function DashboardPage() {
+  const { user, admin } = await bookingIdentity();
+  if (!user) redirect('/booking/login');
+  if (!admin) redirect('/dashboard/bookings');
 
-  const latestGalleryImages = await getPublicGalleryImages();
-  const imageCount = latestGalleryImages?.data?.length || 0;
+  const { profile } = await fetchUserData();
+  const database = bookingDatabase();
+  const now = DateTime.now().setZone('Europe/London');
+  const timestamp = now.toISO()!;
+  const today = now.startOf('day').toISO()!;
+  const tomorrow = now.startOf('day').plus({ days: 1 }).toISO()!;
+  const issues: string[] = [];
+  async function result<Value extends { error: unknown }>(label: string, query: PromiseLike<Value>): Promise<Value | null> {
+    try {
+      const response = await query;
+      if (response.error) throw new Error(label);
+      return response;
+    } catch {
+      issues.push(label);
+      return null;
+    }
+  }
 
-  const latestServices = await getPublicServices();
-  const serviceCount = latestServices?.data?.length || 0;
-  const sections = await getSectionCount('education');
+  const [settings, sync, sessions, sessionCount, questionnaireCount, refundedCount, appointments, appointmentCount, images, services, sections, slots] = await Promise.all([
+    result('booking settings', database.from('booking_settings').select('enabled,sync_max_age_minutes').eq('id', 1).single()),
+    result('calendar sync', database.from('booking_sync_state').select('last_success,last_error').eq('id', 1).single()),
+    result('upcoming sessions', database.from('bookings').select('id,name,starts_at,ends_at,questionnaire_completed_at,zoom_join_url').eq('status', 'confirmed').not('paid_at', 'is', null).gte('ends_at', timestamp).order('starts_at').limit(4)),
+    result('session count', database.from('bookings').select('id', { count: 'exact', head: true }).eq('status', 'confirmed').not('paid_at', 'is', null).gte('ends_at', timestamp)),
+    result('questionnaires', database.from('bookings').select('id', { count: 'exact', head: true }).eq('status', 'confirmed').not('paid_at', 'is', null).gte('ends_at', timestamp).is('questionnaire_completed_at', null)),
+    result('refunded bookings', database.from('bookings').select('id', { count: 'exact', head: true }).eq('status', 'refunded').not('paid_at', 'is', null)),
+    result('next salon appointment', database.from('appointments').select('id,client_name,starts_at,ends_at').eq('cancelled', false).gte('starts_at', timestamp).order('starts_at').limit(1)),
+    result('appointment count', database.from('appointments').select('id', { count: 'exact', head: true }).eq('cancelled', false).gt('ends_at', today).lt('starts_at', tomorrow)),
+    result('gallery count', database.from('gallery_images').select('id', { count: 'exact', head: true })),
+    result('service count', database.from('services').select('id', { count: 'exact', head: true })),
+    result('education sections', database.from('sections').select('id', { count: 'exact', head: true }).eq('type', 'education')),
+    result('available times', database.rpc('booking_slots', { include_blocked: false })),
+  ]);
 
-  return (
-    <>
-      <div className='py-8 flex h-full items-start justify-start w-full flex-col gap-6'>
-        <div className='mb-4 text-6xl text-text-primary font-medium'>Dashboard</div>
-        <div className='flex flex-col gap-6 2xl:flex-row w-full'>
-          <div className='grid w-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3'>
-            <DashboardCard
-              dashboardCardCount={imageCount}
-              dashboardCardIcon={
-                <FaImages className='p-6 text-[16em] text-text-primary/90 md:p-8' />
-              }
-              dashboardCardLabel='Image'
-              dashboardCardLabelPlural='Images'
-              dashboardCardButtonLink='/dashboard/gallery-images/'
-              dashboardCardButtonLabel='Images'
-            />
-            <DashboardCard
-              dashboardCardCount={serviceCount}
-              dashboardCardIcon={
-                <FaListAlt className='p-6 text-[16em] text-text-primary/90 md:p-8' />
-              }
-              dashboardCardLabel='Service'
-              dashboardCardLabelPlural='Services'
-              dashboardCardButtonLink='/dashboard/services/'
-              dashboardCardButtonLabel='Services'
-            />
-            {sections.error ? <p role="alert" className="text-red-700">Unable to load section count. Please refresh the dashboard.</p> : <DashboardCard
-              dashboardCardCount={sections.count}
-              dashboardCardIcon={
-                <ListPlus className='size-full p-6 text-text-primary/90 md:p-8' />
-              }
-              dashboardCardLabel='Section'
-              dashboardCardLabelPlural='Sections'
-              dashboardCardButtonLink='/dashboard/edit-education'
-              dashboardCardButtonLabel='Sections'
-            />}
-          </div>
-        </div>
-
-        <div className='grid w-full grid-cols-1 gap-6 xl:grid-cols-2 2xl:grid-cols-2'>
-          {/* <div className='h-full min-h-[280px] w-auto rounded-xl bg-brand-secondary bg-opacity-85 p-8 text-gray-700 shadow-md'>
-            <div className='mb-4 text-3xl font-bold'>Content Stats</div>
-            Stats
-          </div> */}
-          <div className='flex h-full w-auto flex-col gap-2 rounded-xl bg-brand-secondary bg-opacity-85 p-8 text-gray-700 shadow-md'>
-            <div className='mb-4 text-3xl font-bold'>Quick Links</div>
-            <div className='grid h-auto grid-cols-2 content-center items-center justify-center gap-x-2 gap-y-8'>
-              <div className='flex flex-row items-center gap-2'>
-                <div className='rounded-full bg-primary-main bg-opacity-85 md:p-2.5'>
-                  <FaUserCog className='text-2xl text-text-primary max-sm:hidden' />
-                </div>
-                <Link href='/dashboard/edit-profile'>
-                  <div className='md:text-xl text-lg font-semibold underline'>
-                    Edit Profile
-                  </div>
-                </Link>
-              </div>
-              <div className='flex flex-row items-center gap-2'>
-                <div className='rounded-full bg-primary-main bg-opacity-85 md:p-2.5'>
-                  <TbHomeEdit className='md:text-xl text-lg text-text-primary max-sm:hidden' />
-                </div>
-                <Link href='/dashboard/edit-homepage'>
-                  <div className='md:text-xl text-lg font-semibold underline'>
-                    Edit Homepage
-                  </div>
-                </Link>
-              </div>
-              <div className='flex flex-row items-center gap-2'>
-                <div className='rounded-full bg-primary-main bg-opacity-85 md:p-2.5'>
-                  <GraduationCap className='md:text-xl text-lg text-text-primary max-sm:hidden w-5 h-5' />
-                </div>
-                <Link href='/dashboard/edit-education'>
-                  <div className='md:text-xl text-lg font-semibold underline'>
-                    Edit Education
-                  </div>
-                </Link>
-              </div>
-              <div className='flex flex-row items-center gap-2'>
-                <div className='rounded-full bg-primary-main bg-opacity-85 md:p-2.5'>
-                  <ListPlus className='size-5 text-text-primary max-sm:hidden' />
-                </div>
-                <Link href='/dashboard/edit-education?action=new'>
-                  <div className='md:text-xl text-lg font-semibold underline'>Add A Section</div>
-                </Link>
-              </div>
-              <div className='flex flex-row items-center gap-2'>
-                <div className='rounded-full bg-primary-main bg-opacity-85 md:p-2.5'>
-                  <IoSwapVerticalOutline className='md:text-xl text-lg text-text-primary max-sm:hidden' />
-                </div>
-                <Link href='/dashboard/edit-education'>
-                  <div className='md:text-xl text-lg font-semibold underline'>Manage / Reorder Sections</div>
-                </Link>
-              </div>
-              <div className='flex flex-row items-center gap-2'>
-                <div className='rounded-full bg-primary-main bg-opacity-85 md:p-2.5'>
-                  <FaListAlt className='md:text-xl text-lg text-text-primary max-sm:hidden' />
-                </div>
-                <Link href='/dashboard/services/add-service'>
-                  <div className='md:text-xl text-lg font-semibold underline'>
-                    Add A Service
-                  </div>
-                </Link>
-              </div>
-              <div className='flex flex-row items-center gap-2'>
-                <div className='rounded-full bg-primary-main bg-opacity-85 md:p-2.5'>
-                  <IoSwapVerticalOutline className='md:text-xl text-lg text-text-primary max-sm:hidden' />
-                </div>
-                <Link href='/dashboard/services/reorder/'>
-                  <div className='md:text-xl text-lg font-semibold underline'>
-                    Reorder Services
-                  </div>
-                </Link>
-              </div>
-              <div className='flex flex-row items-center gap-2'>
-                <div className='rounded-full bg-primary-main bg-opacity-85 md:p-2.5'>
-                  <FaImage className='md:text-xl text-lg text-text-primary max-sm:hidden' />
-                </div>
-                <Link href='/dashboard/gallery-images/add-gallery-image/'>
-                  <div className='md:text-xl text-lg font-semibold underline'>
-                    Add A Gallery Image
-                  </div>
-                </Link>
-              </div>
-              <div className='flex flex-row items-center gap-2'>
-                <div className='rounded-full bg-primary-main bg-opacity-85 md:p-2.5'>
-                  <IoSwapVerticalOutline className='md:text-xl text-lg text-text-primary max-sm:hidden' />
-                </div>
-                <Link href='/dashboard/gallery-images/reorder/'>
-                  <div className='md:text-xl text-lg font-semibold underline'>
-                    Reorder Images
-                  </div>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
-  );
-};
-export default DashboardPage;
+  const data: DashboardSnapshot = {
+    profile: { username: profile?.username ?? null, avatar_url: profile?.avatar_url ?? null, email: user.email ?? null },
+    generatedAt: timestamp,
+    enabled: settings?.data?.enabled ?? null,
+    sync: sync?.data ?? null,
+    syncMaxAge: settings?.data?.sync_max_age_minutes ?? 30,
+    counts: {
+      sessions: sessionCount?.count ?? null,
+      questionnaires: questionnaireCount?.count ?? null,
+      refunded: refundedCount?.count ?? null,
+      appointments: appointmentCount?.count ?? null,
+      images: images?.count ?? null,
+      services: services?.count ?? null,
+      sections: sections?.count ?? null,
+    },
+    sessions: sessions?.data ?? null,
+    appointments: appointments?.data ?? null,
+    nextSlot: slots?.data?.[0]?.starts_at ?? null,
+    slotsLoaded: slots !== null,
+    issues,
+  };
+  return <DashboardOverview data={data} />;
+}

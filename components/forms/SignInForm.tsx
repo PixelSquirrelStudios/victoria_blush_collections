@@ -21,6 +21,7 @@ import { SignInSchema } from '@/lib/validations';
 import { supabaseClient } from '@/lib/supabase/browserClient';
 import { signIn } from '@/app/(auth)/actions';
 import { PasswordInput } from '../ui/password-input';
+import { postSignInPath } from '@/lib/auth-redirect';
 
 interface Props {
   currentUser?: string;
@@ -58,14 +59,13 @@ const SignInForm = ({ currentUser, profileDetails, onCancel }: Props) => {
 
         const { data: profile, error } = await supabase
           .from('profiles')
-          .select('has_onboarded')
+          .select('has_onboarded, role')
           .eq('id', claims.sub)
           .single();
 
         if (error) throw error;
 
-        // Redirect based on onboarding status
-        router.push(profile?.has_onboarded ? '/' : '/onboarding');
+        router.push(postSignInPath(profile, claims.app_metadata?.role));
         showCustomToast({
           title: "Logged In.",
           message: "You have successfully logged in.",

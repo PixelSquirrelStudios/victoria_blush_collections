@@ -83,12 +83,38 @@ html {
     background: oklch(45% 0.018 127.44 / 0.9);
   }
 
-  button,
-  [role='button'] {
+  :where(button,
+  a[href],
+  select,
+  summary,
+  input[type='checkbox'],
+  input[type='radio'],
+  input[type='range'],
+  input[type='color'],
+  input[type='file'],
+  input[type='submit'],
+  input[type='reset'],
+  input[type='button'],
+  [role='button'],
+  [role='checkbox'],
+  [role='radio'],
+  [role='switch'],
+  [role='tab'],
+  [role='option'],
+  [role='menuitem'],
+  [role='menuitemcheckbox'],
+  [role='menuitemradio'],
+  button[role='combobox'],
+  label:has(input:is([type='checkbox'], [type='radio']):enabled),
+  label:has([role='checkbox']:not(:disabled)),
+  label:has([role='radio']:not(:disabled))) {
     cursor: pointer;
   }
 
-  :disabled {
+  :disabled,
+  [aria-disabled='true'],
+  [data-disabled],
+  label:has(input:is([type='checkbox'], [type='radio']):disabled) {
     cursor: default;
   }
   /* Scroll margin to account for fixed navigation */

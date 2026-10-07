@@ -43,7 +43,6 @@ const SignUpForm = ({ profileDetails, onCancel }: Props) => {
   });
 
   async function onSubmit(values: z.infer<typeof SignUpSchema>) {
-    console.log("Submitting form with values:", values);
     if (values.password !== values.repeat_password) {
       showCustomToast({
         title: "Error",
@@ -56,7 +55,16 @@ const SignUpForm = ({ profileDetails, onCancel }: Props) => {
 
     setIsSubmitting(true);
     try {
-      await signUp(values);
+      const error = await signUp(values);
+      if (error) {
+        showCustomToast({
+          title: "Sign up failed",
+          message: error,
+          variant: "error",
+          autoDismiss: true,
+        });
+        return;
+      }
       onCancel && onCancel();
       router.push("/onboarding");
       showCustomToast({
@@ -67,6 +75,12 @@ const SignUpForm = ({ profileDetails, onCancel }: Props) => {
       });
     } catch (error) {
       console.error(error);
+      showCustomToast({
+        title: "Sign up failed",
+        message: "Something went wrong. Please try again.",
+        variant: "error",
+        autoDismiss: true,
+      });
     } finally {
       setIsSubmitting(false);
     }

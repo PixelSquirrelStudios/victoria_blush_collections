@@ -12,7 +12,7 @@ type OAuthProvider = {
   icon?: JSX.Element;
 };
 
-export function OAUthButtons() {
+export function OAUthButtons({ mode = 'sign-in' }: { mode?: 'sign-in' | 'sign-up' }) {
   const oAuthProviders: OAuthProvider[] = [
     {
       name: 'google',
@@ -34,7 +34,7 @@ export function OAUthButtons() {
           }}
         >
           {provider.icon}
-          Login With {provider.displayName}
+          {mode === 'sign-up' ? 'Sign Up' : 'Login'} With {provider.displayName}
         </Button>
       ))}
     </div>

@@ -5,6 +5,7 @@ import MobileSidebar from './MobileSidebar';
 import { Logo } from '../Logo';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import type { User } from '@supabase/supabase-js';
 import { supabaseClient } from '@/lib/supabase/browserClient';
 import Image from 'next/image';
 import { DEFAULT_AVATAR_URL } from '@/constants';
@@ -14,8 +15,9 @@ import {
   PopoverContent,
 } from '@/components/ui/popover';
 import { Separator } from '@/components/ui/separator';
-import { FaSignOutAlt, FaUserCog } from 'react-icons/fa';
-import { LucideAppWindow } from 'lucide-react';
+import { FaSignOutAlt } from 'react-icons/fa';
+import { toast } from 'sonner';
+import { CalendarDays, CircleUserRound, LucideAppWindow, UserPlus } from 'lucide-react';
 import { signOutAction } from '@/app/(auth)/actions';
 
 interface HeaderProps {
@@ -23,28 +25,52 @@ interface HeaderProps {
   isHomepage?: boolean;
 }
 
+interface HeaderProfile {
+  id: string;
+  username: string | null;
+  avatar_url: string | null;
+  role: string | null;
+}
+
 const Header = ({ mobileVariant, isHomepage: isHomepageProp }: HeaderProps) => {
   const pathname = usePathname();
-  const [user, setUser] = useState<any>(null);
-  const [profile, setProfile] = useState<any>(null);
+  const [user, setUser] = useState<User | null>(null);
+  const [loadedProfile, setProfile] = useState<HeaderProfile | null>(null);
+  const profile = loadedProfile?.id === user?.id ? loadedProfile : null;
+  const userId = user?.id;
+  const displayName = profile?.username || user?.user_metadata?.username || 'Your Account';
+  const isAdmin = profile?.role === 'admin';
+  const isClient = !isAdmin && (profile?.role === 'client' || user?.app_metadata?.role === 'client');
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const { data: { user: authUser } } = await supabaseClient.auth.getUser();
-      setUser(authUser);
+    const { data: { subscription } } = supabaseClient.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user ?? null);
+    });
 
-      if (authUser) {
-        const { data: profileData } = await supabaseClient
-          .from('profiles')
-          .select('*')
-          .eq('id', authUser.id)
-          .single();
-        setProfile(profileData);
+    return () => subscription.unsubscribe();
+  }, []);
+
+  useEffect(() => {
+    if (!userId) return;
+    let active = true;
+    const fetchProfile = async () => {
+      const { data, error } = await supabaseClient
+        .from('profiles')
+        .select('id,username,avatar_url,role')
+        .eq('id', userId)
+        .maybeSingle();
+      if (!active) return;
+      if (error) {
+        console.error('Could not load header profile:', error);
+        toast.error('Could not load your profile. Please refresh to try again.');
+        return;
       }
+      setProfile(data);
     };
 
-    fetchUser();
-  }, []);
+    void fetchProfile();
+    return () => { active = false; };
+  }, [userId, pathname]);
   const isHomepage = isHomepageProp !== undefined ? isHomepageProp : pathname === '/';
 
   const sections = [
@@ -83,19 +109,24 @@ const Header = ({ mobileVariant, isHomepage: isHomepageProp }: HeaderProps) => {
 
         {/* Right: Profile + Nav + Mobile sidebar */}
         <div className="flex flex-row items-center gap-3 md:gap-6 lg:gap-8">
-          {profile && user ? (
             <div className="flex items-center gap-4 text-md font-semibold text-foreground">
               <Popover>
                 <PopoverTrigger asChild>
-                  <div className="cursor-pointer">
-                    <Image
-                      src={profile.avatar_url || DEFAULT_AVATAR_URL}
-                      alt={`${profile.username || 'User'}'s avatar`}
+                  <button
+                    type="button"
+                    aria-label={user ? 'Open account menu' : 'Sign In'}
+                    className={user
+                      ? 'flex items-center gap-2 whitespace-nowrap cursor-pointer'
+                      : 'flex items-center justify-center cursor-pointer rounded-full border border-text-secondary bg-brand-primary p-1 text-text-primary shadow-sm transition-colors hover:bg-bg-muted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-text-secondary'}
+                  >
+                    {user ? <Image
+                      src={profile?.avatar_url || DEFAULT_AVATAR_URL}
+                      alt={`${displayName}'s avatar`}
                       width={36}
                       height={36}
                       className="rounded-full object-cover border-2 border-text-secondary"
-                    />
-                  </div>
+                    /> : <CircleUserRound size={24} aria-hidden="true" />}
+                  </button>
                 </PopoverTrigger>
                 <PopoverContent
                   className="z-10000 w-84 px-6 pt-6 pb-4 bg-brand-primary text-text-primary border border-text-secondary rounded-xl shadow-lg"
@@ -103,22 +134,25 @@ const Header = ({ mobileVariant, isHomepage: isHomepageProp }: HeaderProps) => {
                   sideOffset={36}
                   align="start"
                 >
+                  {user ? <>
                   <div className="flex gap-3 items-center">
                     <Image
-                      src={profile.avatar_url || DEFAULT_AVATAR_URL}
-                      alt={`${profile.username || 'User'}'s avatar`}
+                      src={profile?.avatar_url || DEFAULT_AVATAR_URL}
+                      alt={`${displayName}'s avatar`}
                       width={40}
                       height={40}
                       className="rounded-full object-cover border-2 border-text-secondary"
                     />
                     <div className="flex flex-col">
                       <div className="text-text-primary flex flex-row flex-wrap items-center gap-2">
-                        <div className="mt-0.5 font-semibold">{profile.username || 'Unknown User'}</div>
+                        <div className="mt-0.5 font-semibold">{displayName}</div>
                       </div>
                     </div>
                   </div>
                   <Separator className="my-4 opacity-50" />
                   <div className="flex flex-col gap-1">
+                    {isClient && <Link href="/dashboard/bookings" className="w-full flex items-center gap-2 py-2 px-2 rounded text-base hover:bg-brand-secondary/60"><CalendarDays size={20} /> Manage Bookings</Link>}
+                    {isAdmin && (
                     <Link
                       href="/dashboard"
                       className="w-full flex items-center gap-1.5 py-2 px-2 rounded-xl text-[16px] font-medium transition-colors duration-200 hover:bg-brand-secondary/60 focus:outline-none focus-visible:ring-0"
@@ -126,6 +160,7 @@ const Header = ({ mobileVariant, isHomepage: isHomepageProp }: HeaderProps) => {
                       <LucideAppWindow className="mr-1 text-xl" />
                       Dashboard
                     </Link>
+                    )}
                     <form action={signOutAction} className="w-full">
                       <button
                         type="submit"
@@ -136,10 +171,25 @@ const Header = ({ mobileVariant, isHomepage: isHomepageProp }: HeaderProps) => {
                       </button>
                     </form>
                   </div>
+                  </> : <>
+                  <Link
+                    href="/sign-in"
+                    className="w-full flex items-center gap-2 py-2 px-2 rounded-xl text-base font-medium transition-colors duration-200 hover:bg-brand-secondary/60"
+                  >
+                    <CircleUserRound size={20} aria-hidden="true" />
+                    Sign In
+                  </Link>
+                  <Link
+                    href="/sign-up"
+                    className="w-full flex items-center gap-2 py-2 px-2 rounded-xl text-base font-medium transition-colors duration-200 hover:bg-brand-secondary/60"
+                  >
+                    <UserPlus size={20} aria-hidden="true" />
+                    Sign Up
+                  </Link>
+                  </>}
                 </PopoverContent>
               </Popover>
             </div>
-          ) : null}
 
           <div className="hidden xl:flex items-center gap-8">
             {navLinks.map((link) =>

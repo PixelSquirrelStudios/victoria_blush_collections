@@ -71,6 +71,44 @@ export const signIn = async (values: { email: string; password: string }) => {
 };
 
 /**
+ * Passwordless email link. Sign-in only reaches existing accounts; sign-up may create one.
+ * Returns an object { success, message }
+ */
+export const magicLinkAction = async (values: { email: string; mode: 'sign-in' | 'sign-up' }) => {
+  const email = values.email?.trim();
+  if (!email) return { success: false, message: 'Email is required' };
+
+  const supabase = await createClient();
+  const origin = (await headers()).get('origin');
+  const creating = values.mode === 'sign-up';
+
+  const { error } = await supabase.auth.signInWithOtp({
+    email,
+    options: {
+      shouldCreateUser: creating,
+      emailRedirectTo: `${origin}/auth/callback`,
+      ...(creating ? { data: { email } } : {}),
+    },
+  });
+
+  if (error) {
+    const m = error.message.toLowerCase();
+    if (!creating && (m.includes('signups not allowed') || m.includes('not found')))
+      return { success: false, message: 'No account found for this email. Please sign up instead.' };
+    if (m.includes('signups not allowed'))
+      return { success: false, message: 'New sign-ups are currently disabled.' };
+    if (m.includes('rate limit') || m.includes('security purposes'))
+      return { success: false, message: 'Please wait a moment before requesting another link.' };
+    return { success: false, message: normalizeAuthError(error.message) };
+  }
+
+  return {
+    success: true,
+    message: `Check ${email} for your ${creating ? 'sign-up' : 'sign-in'} link. Open it in this browser to continue.`,
+  };
+};
+
+/**
  * Resend confirmation email for an existing (unconfirmed) user
  * Returns an object { success, message }
  */

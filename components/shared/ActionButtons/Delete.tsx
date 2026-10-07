@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useRef, useState, type ReactElement } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { deleteService } from '@/lib/actions/service.actions';
@@ -25,11 +25,21 @@ import { Trash2 } from 'lucide-react';
 export const Delete = ({
   title,
   variant,
+  description = 'This action cannot be undone.',
+  trigger,
+  confirmationTitle,
+  confirmLabel = 'Delete',
+  pendingLabel = 'Deleting...',
   disabled = false,
   onConfirm,
 }: {
   title: string;
   variant: string;
+  description?: string;
+  trigger?: ReactElement;
+  confirmationTitle?: string;
+  confirmLabel?: string;
+  pendingLabel?: string;
   disabled?: boolean;
   onConfirm: () => Promise<boolean | void>;
 }) => {
@@ -45,7 +55,7 @@ export const Delete = ({
     try {
       if (await onConfirm() !== false) setOpen(false);
     } catch (error) {
-      showCustomToast({ title: 'Error', message: error instanceof Error ? error.message : 'Unable to delete. Please try again.', variant: 'error' });
+      showCustomToast({ title: 'Error', message: error instanceof Error ? error.message : 'Unable to complete this action. Please try again.', variant: 'error' });
     } finally {
       operationLock.current = false;
       setPending(false);
@@ -54,7 +64,7 @@ export const Delete = ({
 
   return (
     <AlertDialog open={open} onOpenChange={(nextOpen) => { if (!blocked) setOpen(nextOpen); }}>
-      {variant === 'large' ? (
+      {trigger ? <AlertDialogTrigger asChild>{trigger}</AlertDialogTrigger> : variant === 'large' ? (
         <AlertDialogTrigger asChild>
           <Button type="button" disabled={blocked} className='w-full h-auto rounded-md bg-red-500/10 hover:bg-red-500/20 text-red-600 hover:text-red-700 transition-colors duration-300'>
             <div className='flex flex-row items-center gap-2'>
@@ -78,25 +88,25 @@ export const Delete = ({
           </Button>
         </AlertDialogTrigger>
       )}
-      <AlertDialogContent className='flex flex-col items-center justify-center border-none bg-brand-secondary p-12'>
-        <AlertDialogHeader className='text-text-primary'>
-          <AlertDialogTitle>
-            Are you sure you want to delete this {title}?
+      <AlertDialogContent className='gap-6 rounded-lg border-[#b9c8ad] bg-[#e1e9d9] p-6 text-zinc-900 shadow-xl sm:p-8'>
+        <AlertDialogHeader className='gap-4 text-left'>
+          <AlertDialogTitle className='min-w-0 text-xl font-medium leading-snug tracking-normal wrap-break-word'>
+            {confirmationTitle || `Are you sure you want to delete this ${title}?`}
           </AlertDialogTitle>
-          <AlertDialogDescription className='text-text-primary'>
-            This action cannot be undone.
+          <AlertDialogDescription className='rounded border border-[#c5d2bb] border-l-4 border-l-[#839a6f] bg-[#eef3e8] px-4 py-3 text-sm leading-relaxed text-zinc-700 wrap-break-word'>
+            {description}
           </AlertDialogDescription>
         </AlertDialogHeader>
-        <AlertDialogFooter className='flex flex-row items-center justify-center gap-2'>
-          <AlertDialogCancel disabled={blocked} className='border-interactive-hover/50 bg-bg-subtle text-text-primary hover:bg-bg-subtle/80 transition-all duration-300'>
+        <AlertDialogFooter className='gap-3 border-t border-[#c5d2bb] pt-5'>
+          <AlertDialogCancel disabled={blocked} className='box-border h-11 min-h-11 rounded border border-zinc-300 bg-white px-6 py-0 text-zinc-700 hover:bg-zinc-50 hover:text-zinc-700'>
             Cancel
           </AlertDialogCancel>
           <AlertDialogAction
             disabled={blocked}
-            className='bg-red-700 text-white transition-all duration-300 hover:bg-red-600 max-sm:mt-2'
+            className='box-border h-11 min-h-11 rounded border border-transparent bg-red-700 px-6 py-0 text-white transition-colors hover:bg-red-800'
             onClick={(event) => { event.preventDefault(); void confirm(); }}
           >
-            {pending ? 'Deleting...' : 'Delete'}
+            {pending ? pendingLabel : confirmLabel}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
