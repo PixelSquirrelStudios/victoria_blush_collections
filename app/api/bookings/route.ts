@@ -147,6 +147,7 @@ export async function POST(request: Request) {
   } catch (error) {
     const message = error instanceof z.ZodError ? 'Please check the form fields and required agreements.' : error instanceof Error ? error.message : 'Unable to complete your request';
     const safe = /Missing |relation |column |permission denied|API Key|Invalid API|fetch failed/i.test(message) ? 'Booking services need attention. Please contact Victoria.' : message;
+    if (safe !== message) console.error('Booking API configuration error:', message);
     return NextResponse.json({ error: safe }, { status: 400 });
   }
 }
