@@ -101,14 +101,14 @@ const Header = ({ mobileVariant, isHomepage: isHomepageProp }: HeaderProps) => {
 
   return (
     <div className="fixed top-0 left-0 z-10000 w-full h-[75px] lg:h-[90px] bg-brand-secondary border-b border-brand-secondary text-stone-800 shadow-md">
-      <div className="flex w-full h-full items-center justify-between px-5 pr-8 md:px-16 lg:px-24 2xl:px-52">
+      <div className="container mx-auto flex h-full items-center justify-between px-4">
         {/* Left: Logo */}
-        <Link href="/" className="mr-4 lg:mr-10">
-          <Logo width={280} height={40} sizes="180px" />
+        <Link href="/" className="mr-4">
+          <Logo width={180} height={40} sizes="180px" className="max-w-[180px]" />
         </Link>
 
         {/* Right: Profile + Nav + Mobile sidebar */}
-        <div className="flex flex-row items-center gap-3 md:gap-6 lg:gap-8">
+        <div className="flex flex-row items-center gap-3 md:gap-4 2xl:gap-8">
             <div className="flex items-center gap-4 text-md font-semibold text-foreground">
               <Popover>
                 <PopoverTrigger asChild>
@@ -191,13 +191,13 @@ const Header = ({ mobileVariant, isHomepage: isHomepageProp }: HeaderProps) => {
               </Popover>
             </div>
 
-          <div className="hidden xl:flex items-center gap-8">
+          <div className="hidden xl:flex items-center gap-4 2xl:gap-6 whitespace-nowrap">
             {navLinks.map((link) =>
               isHomepage ? (
                 <a
                   key={link.name}
                   href={link.href}
-                  className="font-medium transition-colors duration-300 text-lg text-stone-800 hover:text-stone-700"
+                  className="font-medium transition-colors duration-300 text-base 2xl:text-lg text-stone-800 hover:text-stone-700"
                 >
                   {link.name}
                 </a>
@@ -205,27 +205,35 @@ const Header = ({ mobileVariant, isHomepage: isHomepageProp }: HeaderProps) => {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className="font-medium transition-colors duration-300 text-lg text-stone-800 hover:text-stone-700"
+                  className="font-medium transition-colors duration-300 text-base 2xl:text-lg text-stone-800 hover:text-stone-700"
                 >
                   {link.name}
                 </Link>
               )
             )}
+            <div className="flex items-center gap-3 text-base">
             {isHomepage ? (
               <a
                 href={bookNowHref}
-                className="px-6 py-2 bg-bg-muted text-text-primary font-semibold rounded hover:bg-bg-muted/90 transition-all duration-300 shadow-md hover:shadow-lg"
+                className="px-4 py-2 bg-bg-muted text-text-primary font-semibold rounded hover:bg-bg-muted/90 transition-all duration-300 shadow-md hover:shadow-lg"
               >
-                Book Now
+                Book Appointment
               </a>
             ) : (
               <Link
                 href={bookNowHref}
-                className="px-6 py-2 bg-bg-muted text-text-primary font-semibold rounded hover:bg-bg-muted/90 transition-all duration-300 shadow-md hover:shadow-lg"
+                className="px-4 py-2 bg-bg-muted text-text-primary font-semibold rounded hover:bg-bg-muted/90 transition-all duration-300 shadow-md hover:shadow-lg"
               >
-                Book Now
+                Book Appointment
               </Link>
             )}
+              <Link
+                href="/shift-session"
+                className="px-4 py-2 bg-interactive-active text-bg-primary font-semibold rounded hover:bg-interactive-active/90 transition-all duration-300 shadow-md hover:shadow-lg"
+              >
+                Book Shift Session
+              </Link>
+            </div>
           </div>
 
           <div className="xl:hidden shrink-0">

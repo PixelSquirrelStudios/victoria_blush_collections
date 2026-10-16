@@ -40,7 +40,7 @@ export default function Hero({ imageUrl, subheading, description }: HeroProps) {
             <p className="text-text-primary tracking-widest uppercase inline-block pt-3 pb-1">
               {subheading || 'Premium Hair Artistry'}
             </p>
-            <h1 className={`${cormorant.className} text-6xl max-sm:text-[44px] max-lg:text-6xl xl:text-[80px] font-semibold uppercase text-bg-dark/95 leading-tight text-nowrap`}>
+            <h1 className={`${cormorant.className} text-6xl max-sm:text-[44px] max-lg:text-6xl lg:text-[52px] xl:text-[68px] 2xl:text-[80px] font-semibold uppercase text-bg-dark/95 leading-tight text-nowrap`}>
               Victoria Blush
               {/* <span className="block text-5xl md:text-[4rem] max-sm:text-[40px] text-text-primary/60 tracking-wide">Collections</span> */}
             </h1>

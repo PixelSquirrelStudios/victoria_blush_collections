@@ -71,6 +71,7 @@ const MobileSidebar = ({ variant, isHomepage: isHomepageProp }: MobileSidebarPro
           </SheetTrigger>
         ) : (
           <SheetTrigger
+            aria-label="Open menu"
             className="bg-bg-primary px-2 py-1 rounded-sm text-xl text-text-primary"
             onClick={() => setOpen(true)}
           >
@@ -152,6 +153,24 @@ const MobileSidebar = ({ variant, isHomepage: isHomepageProp }: MobileSidebarPro
                   </Link>
                 );
               })}
+            {!showDashboardMenu && (
+              <div className="flex flex-col gap-3">
+                <Link
+                  href={isHomepage ? '/#contact' : '/contact'}
+                  onClick={() => setOpen(false)}
+                  className="px-4 py-3 bg-brand-secondary text-text-primary text-center font-semibold rounded hover:bg-brand-secondary/90 transition-all duration-300 shadow-md hover:shadow-lg"
+                >
+                  Book Appointment
+                </Link>
+                <Link
+                  href="/shift-session"
+                  onClick={() => setOpen(false)}
+                  className="px-4 py-3 bg-interactive-active text-bg-primary text-center font-semibold rounded hover:bg-interactive-active/90 transition-all duration-300 shadow-md hover:shadow-lg"
+                >
+                  Book Shift Session
+                </Link>
+              </div>
+            )}
             {user && (
               <>
                 <Separator className="opacity-10" />

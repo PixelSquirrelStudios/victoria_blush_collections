@@ -43,6 +43,10 @@ Open [http://localhost:3000](http://localhost:3000) to see your app.
 
 ### Local Booking Payments And Emails
 
+The standalone `/shift-session` page puts the session title first, followed by a smaller support heading and the booking calendar, with tight top spacing and the descriptive summary below the calendar, for sharing without an anchor link. The existing homepage and education-page booking sections and their `#shift-session` anchors remain available.
+
+The public header and mobile menu offer **Book Appointment** for the existing contact destination and a sage **Book Shift Session** button linking directly to `/shift-session`.
+
 Use Node.js 22.6+ and install the [Stripe CLI](https://docs.stripe.com/stripe-cli). The booking runner finds it on `PATH` or in `~/.local/bin`; `STRIPE_CLI_PATH` can override its location.
 
 Apply [database/bookings.sql](database/bookings.sql) in Supabase before testing. It can be rerun to add the `booking_jobs.scheduled_for` and `booking_jobs.payload` columns to older installations without removing data.
